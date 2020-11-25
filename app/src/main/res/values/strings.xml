@@ -3,4 +3,6 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">First fragment</string>
+    <string name="openNavMenu">Navigation Drawer Open</string>
+    <string name="closeNavMenu">Navigation Drawer Close</string>
 </resources>
