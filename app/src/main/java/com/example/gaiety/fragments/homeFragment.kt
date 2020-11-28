@@ -2,6 +2,7 @@ package com.example.gaiety.fragments
 
 import android.content.res.Configuration
 import android.os.Bundle
+import android.os.Handler
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.gaiety.NumAdapter
 
 import com.example.gaiety.R
+import com.google.gson.GsonBuilder
+import okhttp3.*
+import java.io.IOException
+import kotlin.concurrent.thread
 
 class homeFragment : Fragment() {
     lateinit var numList: RecyclerView
@@ -25,7 +30,6 @@ class homeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         numList = view.findViewById(R.id.recyclerView)
         if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
             numList.layoutManager =
@@ -33,8 +37,47 @@ class homeFragment : Fragment() {
         else
             numList.layoutManager =
                 GridLayoutManager(requireContext(), 2, RecyclerView.VERTICAL, false)
-        var adapter = NumAdapter()
-        adapter.init()
-        numList.adapter = adapter
+
+        fetchJson()
     }
+
+    private fun fetchJson() {
+        val url = "https://api.timepad.ru/v1/events.json?limit=20&skip=0&cities=Москва,Санкт-Петербург&fields=location&sort=+starts_at"
+        val token = "4df6676a1f216b99b184c75fe65bb971b140473c"
+
+        val request = Request.Builder()
+            .url(url)
+            .header("Authorization", "Bearer " + token)
+            .build()
+
+        val client = OkHttpClient()
+        client.newCall(request).enqueue(object: Callback {
+            override fun onResponse(call: Call, response: Response) {
+                val body = response?.body?.string()
+                println(body)
+
+                val gson = GsonBuilder().create()
+
+                val homeFeed = gson.fromJson(body, HomeFeed::class.java)
+
+                activity?.runOnUiThread {
+                    numList.adapter = NumAdapter(homeFeed)
+                }
+            }
+
+            override fun onFailure(call: Call, e: IOException) {
+                println("Bad request")
+            }
+        })
+
+    }
+
+    class HomeFeed (val total:Int, val values: List<Event>)
+    class Event(val id: Int, val starts_at: String, val name: String, val url: String,
+                val poster_image: PosterImagemage, val location: Location,
+                val categories: List<Сategories>, val moderation_status: String)
+    class PosterImagemage(val default_url: String, val uploadcare_url: String)
+    class Location(val country: String, val city: String, val address: String)
+    class Сategories(val id : Int, val name: String)
+
 }

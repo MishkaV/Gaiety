@@ -6,32 +6,25 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.example.gaiety.fragments.homeFragment
 
-class NumAdapter() : RecyclerView.Adapter<NumAdapter.NumHolder>() {
+class NumAdapter(val homeFeed: homeFragment.HomeFeed) : RecyclerView.Adapter<NumAdapter.NumHolder>() {
 
-    private var numbers: ArrayList<String> = ArrayList()
-
-    fun init() {
-        for (i in 1..100)
-            this.numbers.add("$i")
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NumHolder {
         val itemHolder = LayoutInflater.from(parent?.context).inflate(R.layout.recyclerview_item, parent, false)
         return NumHolder(itemHolder)
     }
     override fun onBindViewHolder(holder: NumHolder, position: Int) {
-        holder.number.text = numbers.get(position)
-        if (position % 2 == 0) {
-            holder.number.setTextColor(ContextCompat.getColor(holder.number.context, R.color.design_default_color_primary_dark))
-        } else {
-            holder.number.setTextColor(ContextCompat.getColor(holder.number.context, R.color.colorAccent))
-        }
+        holder.number.text =homeFeed.values.get(position).name
+
+        holder.number.setTextColor(ContextCompat.getColor(holder.number.context, R.color.design_default_color_primary_dark))
+
     }
 
 
     override fun getItemCount(): Int {
-        return numbers.size
+        return homeFeed.values.count()
     }
 
     class NumHolder(view: View) : RecyclerView.ViewHolder(view) {
