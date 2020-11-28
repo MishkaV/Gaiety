@@ -42,7 +42,7 @@ class homeFragment : Fragment() {
     }
 
     private fun fetchJson() {
-        val url = "https://api.timepad.ru/v1/events.json?limit=20&skip=0&cities=Москва,Санкт-Петербург&fields=location&sort=+starts_at"
+        val url = "https://api.timepad.ru/v1/events.json?limit=40&skip=0&cities=Москва,Санкт-Петербург&fields=location&sort=+starts_at"
         val token = "4df6676a1f216b99b184c75fe65bb971b140473c"
 
         val request = Request.Builder()
