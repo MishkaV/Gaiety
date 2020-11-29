@@ -1,10 +1,18 @@
 package com.example.gaiety
 
+import android.app.ActivityOptions
+import android.content.Intent
+import android.content.res.Resources
+import android.graphics.Bitmap
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.ViewCompat
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gaiety.fragments.homeFragment
 import com.squareup.picasso.Picasso
@@ -18,13 +26,17 @@ class NumAdapter(val homeFeed: homeFragment.HomeFeed) : RecyclerView.Adapter<Num
         return NumHolder(itemHolder)
     }
     override fun onBindViewHolder(holder: NumHolder, position: Int) {
-        holder.homeName.text = homeFeed.values.get(position).name
-        holder.homeCity.text = homeFeed.values.get(position).location.city
+        holder.itemView.homeName.text = homeFeed.values.get(position).name
+        holder.itemView.homeCity.text = homeFeed.values.get(position).location.city
         holder.itemView.homeDate.text = homeFeed.values.get(position).starts_at
-        //holder.number.setTextColor(ContextCompat.getColor(holder.number.context, R.color.design_default_color_primary_dark))
-        Picasso.get()
-            .load(homeFeed?.values?.get(position)?.poster_image?.default_url)
-            .into(holder.itemView.homeImageUrl)
+
+        if (homeFeed?.values?.get(position)?.poster_image == null){
+            holder.itemView.homeImageUrl.setImageResource(R.drawable.logo)
+        } else {
+            Picasso.get()
+                .load(homeFeed?.values?.get(position)?.poster_image?.default_url)
+                .into(holder.itemView.homeImageUrl)
+        }
     }
 
 
@@ -33,12 +45,13 @@ class NumAdapter(val homeFeed: homeFragment.HomeFeed) : RecyclerView.Adapter<Num
     }
 
     class NumHolder(view: View) : RecyclerView.ViewHolder(view) {
-        var homeName = itemView.findViewById<TextView>(R.id.homeName)
-        var homeCity = itemView.findViewById<TextView>(R.id.homeCity)
-
-/*        var homeImageUrl = itemView.findViewById<TextView>(R.id.homeImageUrl)
-        var homeProfileImage = itemView.findViewById<TextView>(R.id.homeProfileImage)
-        var homeDate = itemView.findViewById<TextView>(R.id.homeDate)
-        */
+        /*init {
+            view.setOnClickListener {
+                val intent = Intent(view.context, Test::class.java)
+                //val act = itemView.findViewById<View>(R.id.homeImageUrl)
+                //val options = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this, act, "kek")
+                view.context.startActivity(intent)
+            }
+        }*/
     }
 }

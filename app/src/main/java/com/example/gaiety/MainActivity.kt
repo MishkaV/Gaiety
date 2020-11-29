@@ -1,16 +1,21 @@
 package com.example.gaiety
 
+import android.app.ActivityOptions
 import android.app.job.JobInfo
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Parcel
 import android.os.Parcelable
 import android.print.PrinterInfo
+import android.transition.TransitionInflater
 import android.view.MenuItem
+import android.view.SurfaceControl
 import android.view.View
 import android.widget.Toolbar
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.os.bundleOf
+import androidx.core.view.ViewCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.example.gaiety.fragments.homeFragment
@@ -51,5 +56,5 @@ class MainActivity : AppCompatActivity() {
             replace(R.id.fl_wrapper, fragment)
             commit()
         }
-
+    
 }

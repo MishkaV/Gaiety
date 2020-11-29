@@ -1,6 +1,7 @@
 package com.example.gaiety.fragments
 
 import android.content.res.Configuration
+import android.icu.util.LocaleData
 import android.os.Bundle
 import android.os.Handler
 import androidx.fragment.app.Fragment
@@ -15,6 +16,7 @@ import com.example.gaiety.R
 import com.google.gson.GsonBuilder
 import okhttp3.*
 import java.io.IOException
+import java.time.format.DateTimeFormatter
 import kotlin.concurrent.thread
 
 class homeFragment : Fragment() {
@@ -43,7 +45,7 @@ class homeFragment : Fragment() {
 
     private fun fetchJson() {
         val url = "https://api.timepad.ru/v1/events.json?limit=40&skip=0&cities=Москва,Санкт-Петербург&fields=location&sort=+starts_at"
-        val token = "4df6676a1f216b99b184c75fe65bb971b140473c"
+        val token = "993e92d9a94e12efb66ab5ee29b0fbdba217f725"
 
         val request = Request.Builder()
             .url(url)
@@ -59,6 +61,7 @@ class homeFragment : Fragment() {
                 val gson = GsonBuilder().create()
 
                 val homeFeed = gson.fromJson(body, HomeFeed::class.java)
+
 
                 activity?.runOnUiThread {
                     numList.adapter = NumAdapter(homeFeed)
