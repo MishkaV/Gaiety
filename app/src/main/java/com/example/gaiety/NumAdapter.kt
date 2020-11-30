@@ -45,13 +45,13 @@ class NumAdapter(val homeFeed: homeFragment.HomeFeed) : RecyclerView.Adapter<Num
     }
 
     class NumHolder(view: View) : RecyclerView.ViewHolder(view) {
-        /*init {
+        init {
             view.setOnClickListener {
                 val intent = Intent(view.context, Test::class.java)
                 //val act = itemView.findViewById<View>(R.id.homeImageUrl)
                 //val options = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this, act, "kek")
                 view.context.startActivity(intent)
             }
-        }*/
+        }
     }
 }

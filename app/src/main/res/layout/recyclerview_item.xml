@@ -11,7 +11,6 @@
     app:cardElevation="5dp"
     app:cardUseCompatPadding="true"
     style="@style/Widget.MaterialComponents.CardView"
-    android:onClick="onClick"
     >
 
     <LinearLayout

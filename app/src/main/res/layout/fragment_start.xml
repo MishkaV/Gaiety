@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.StartFragment">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/frameButtons"
+        >
+
+        <ImageView
+            android:id="@+id/imageStart"
+            android:scaleType="centerCrop"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/background" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/logo_start"
+            android:paddingHorizontal="24dp"
+            android:layout_centerInParent="true" />
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/frameButtons"
+        android:background="@color/colorWhite"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="24dp"
+        android:layout_alignParentBottom="true"
+        >
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true">
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/user"
+                android:onClick="onClick"
+                android:layout_width="155dp"
+                android:layout_height="48dp"
+                android:layout_centerVertical="true"
+                android:text="ПОЛЬЗОВАТЕЛЬ" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/organisation"
+                android:layout_width="155dp"
+                android:layout_height="48dp"
+                android:layout_toRightOf="@+id/user"
+                android:text="ОРГАНИЗАТОР"
+                android:layout_marginLeft="48dp"
+                />
+        </RelativeLayout>
+    </RelativeLayout>
+
+
+</RelativeLayout>

@@ -18,43 +18,71 @@ import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import com.example.gaiety.fragments.MainFragment
+import com.example.gaiety.fragments.StartFragment
 import com.example.gaiety.fragments.homeFragment
 import com.example.gaiety.fragments.meFragment
-import com.example.gaiety.fragments.settingsFragment
 import com.google.android.material.navigation.NavigationView
 import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_main.*
+import kotlinx.android.synthetic.main.fragment_start.*
 import okhttp3.*
 import java.io.IOException
 import java.util.*
 import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
-    var nameList = ArrayList<String>()
+    lateinit var homeFrag: homeFragment
+    lateinit var meFrag: meFragment
+    lateinit var startFrag: StartFragment
+    lateinit var mainFrag: MainFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val homeFrag = homeFragment()
-        val meFrag = meFragment()
-        val settingsFrag = settingsFragment()
+        homeFrag = homeFragment()
+        meFrag = meFragment()
+        startFrag = StartFragment()
+        mainFrag = MainFragment()
 
-        makeCurrentFragment(homeFrag)
+        makeCurrentFragment(startFrag)
 
-        bottom_navigation.setOnNavigationItemSelectedListener {
-            when (it.itemId) {
-                R.id.ic_home -> makeCurrentFragment(homeFrag)
-                R.id.ic_me -> makeCurrentFragment(meFrag)
-                R.id.ic_settings -> makeCurrentFragment(settingsFrag)
-            }
-            true
+        user?.setOnClickListener {
+            makeCurrentFragment(mainFrag)
+            makeCurrentFragmentMain(homeFrag)
         }
+
+
     }
 
     private fun makeCurrentFragment(fragment: Fragment) =
         supportFragmentManager.beginTransaction().apply {
-            replace(R.id.fl_wrapper, fragment)
+            replace(R.id.window_fragment, fragment)
             commit()
         }
-    
+
+    private fun makeCurrentFragmentMain(fragment: Fragment) =
+        supportFragmentManager.beginTransaction().apply {
+            replace(R.id.main_fragment, fragment)
+            commit()
+        }
+
+    private fun changeFramentMain() =
+        bottom_navigation?.setOnNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.ic_home -> makeCurrentFragmentMain(homeFrag)
+                R.id.ic_me -> makeCurrentFragmentMain(meFrag)
+            }
+            true
+        }
+
+    fun onClick(view: View){
+        when (view.id)
+        {
+            R.id.user -> { makeCurrentFragment(mainFrag)
+                makeCurrentFragmentMain(homeFrag)
+                }
+        }
+    }
 }
