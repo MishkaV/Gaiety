@@ -14,6 +14,7 @@ import com.example.gaiety.NumAdapter
 
 import com.example.gaiety.R
 import com.google.gson.GsonBuilder
+import kotlinx.android.synthetic.main.fragment_main.*
 import okhttp3.*
 import java.io.IOException
 import java.time.format.DateTimeFormatter

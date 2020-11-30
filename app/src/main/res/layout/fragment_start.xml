@@ -41,15 +41,15 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/user"
                 android:onClick="onClick"
-                android:layout_width="155dp"
-                android:layout_height="48dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:text="ПОЛЬЗОВАТЕЛЬ" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/organisation"
-                android:layout_width="155dp"
-                android:layout_height="48dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/user"
                 android:text="ОРГАНИЗАТОР"
                 android:layout_marginLeft="48dp"

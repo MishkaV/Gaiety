@@ -22,6 +22,8 @@ import com.example.gaiety.fragments.MainFragment
 import com.example.gaiety.fragments.StartFragment
 import com.example.gaiety.fragments.homeFragment
 import com.example.gaiety.fragments.meFragment
+import com.google.android.material.bottomnavigation.BottomNavigationItemView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.activity_main.*
@@ -48,12 +50,6 @@ class MainActivity : AppCompatActivity() {
 
         makeCurrentFragment(startFrag)
 
-        user?.setOnClickListener {
-            makeCurrentFragment(mainFrag)
-            makeCurrentFragmentMain(homeFrag)
-        }
-
-
     }
 
     private fun makeCurrentFragment(fragment: Fragment) =
@@ -62,27 +58,29 @@ class MainActivity : AppCompatActivity() {
             commit()
         }
 
-    private fun makeCurrentFragmentMain(fragment: Fragment) =
+    private fun makeCurrentFragmentMain(fragment: Fragment) {
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.main_fragment, fragment)
             commit()
         }
+    }
 
-    private fun changeFramentMain() =
-        bottom_navigation?.setOnNavigationItemSelectedListener {
-            when (it.itemId) {
+
+    fun changeFragmentsInMain(item : MenuItem){
+            when (item.itemId) {
                 R.id.ic_home -> makeCurrentFragmentMain(homeFrag)
                 R.id.ic_me -> makeCurrentFragmentMain(meFrag)
             }
             true
-        }
+    }
 
     fun onClick(view: View){
+        println(view.id)
         when (view.id)
         {
             R.id.user -> { makeCurrentFragment(mainFrag)
                 makeCurrentFragmentMain(homeFrag)
-                }
+            }
         }
     }
 }

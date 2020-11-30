@@ -3,11 +3,14 @@
     <item
         android:id="@+id/ic_home"
         android:icon="@drawable/ic_home_black_24dp"
-        android:title="Home"/>
+        android:title="Home"
+        android:onClick="changeFragmentsInMain"
+        />
     <item
         android:id="@+id/ic_me"
         android:icon="@drawable/ic_accessibility_black_24dp"
-        android:title="Me"/>
+        android:title="Me"
+        android:onClick="changeFragmentsInMain"/>
 
 
 </menu>
