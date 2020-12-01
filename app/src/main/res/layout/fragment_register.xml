@@ -19,29 +19,31 @@
         android:textSize="36sp" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/loginEdit"
+        android:id="@+id/mailEditLayoutReg"
         android:layout_below="@+id/loginText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:hint="Логин"
+        android:hint="Почта"
         android:layout_centerHorizontal="true"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/mailEditTextReg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
             />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/passwordEdit"
+        android:id="@+id/passwordEditLayoutReg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/loginEdit"
+        android:layout_below="@+id/mailEditLayout"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
@@ -49,8 +51,10 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/passwordEditTextReg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="textPassword"
             />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -60,7 +64,7 @@
         android:onClick="onClick"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_below="@+id/passwordEdit"
+        android:layout_below="@+id/passwordEditLayout"
         android:layout_alignParentLeft="true"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="14dp"

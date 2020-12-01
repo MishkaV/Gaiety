@@ -1,12 +1,22 @@
 package com.example.gaiety
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import com.example.gaiety.fragments.*
-import kotlinx.android.synthetic.main.fragment_home.*
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.auth.AuthResult
+import com.google.firebase.auth.FirebaseAuth
+import kotlinx.android.synthetic.main.fragment_login.*
+import kotlinx.android.synthetic.main.fragment_register.*
+
+
+private var mAuth: FirebaseAuth? = null
 
 class MainActivity : AppCompatActivity() {
     lateinit var homeFrag: homeFragment
@@ -55,12 +65,49 @@ class MainActivity : AppCompatActivity() {
             true
     }
 
+    fun authorization (){
+        val email = mailEditTextLog?.text.toString()
+        val password = passwordEditTextLog?.text.toString()
+
+        Log.d("MainActivity", email)
+        Log.d("MainActivity", password)
+
+
+        FirebaseAuth
+            .getInstance()
+            .signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener {
+                if (!it.isSuccessful)
+                    return@addOnCompleteListener
+                Log.d("MainActivity", "Successfull!")
+            }
+    }
+
+    fun registration (){
+        val email = mailEditTextReg?.text.toString()
+        val password = passwordEditTextReg?.text.toString()
+
+        Log.d("MainActivity", email)
+        Log.d("MainActivity", password)
+
+
+        FirebaseAuth
+            .getInstance()
+            .createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener {
+                if (!it.isSuccessful)
+                    return@addOnCompleteListener
+                Log.d("MainActivity", "Successfull!")
+            }
+    }
+
     fun onClick(view: View){
         when (view.id)
         {
             R.id.loginButton -> makeCurrentFragment(loginFrag, "loginFrag")
             R.id.registrationButton -> makeCurrentFragment(registerFrag, "registerFrag")
             R.id.loginButtonFrag -> {
+                authorization()
                 makeCurrentFragment(mainFrag, "mainFrag")
                 makeCurrentFragmentMain(homeFrag, "homeFrag")
             }
@@ -76,3 +123,5 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
+
+
