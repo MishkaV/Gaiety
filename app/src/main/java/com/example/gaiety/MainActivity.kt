@@ -77,8 +77,12 @@ class MainActivity : AppCompatActivity() {
             .getInstance()
             .signInWithEmailAndPassword(email, password)
             .addOnCompleteListener {
-                if (!it.isSuccessful)
+                if (!it.isSuccessful) {
+                    Toast.makeText(this, "Sorry, but it's wrong email/passwor", Toast.LENGTH_SHORT).show()
                     return@addOnCompleteListener
+                }
+                makeCurrentFragment(mainFrag, "mainFrag")
+                makeCurrentFragmentMain(homeFrag, "homeFrag")
                 Log.d("MainActivity", "Successfull!")
             }
     }
@@ -95,8 +99,12 @@ class MainActivity : AppCompatActivity() {
             .getInstance()
             .createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener {
-                if (!it.isSuccessful)
+                if (!it.isSuccessful) {
+                    Toast.makeText(this, "Sorry, but this user is already exist", Toast.LENGTH_SHORT).show()
                     return@addOnCompleteListener
+                }
+                makeCurrentFragment(mainFrag, "mainFrag")
+                makeCurrentFragmentMain(homeFrag, "homeFrag")
                 Log.d("MainActivity", "Successfull!")
             }
     }
@@ -108,12 +116,9 @@ class MainActivity : AppCompatActivity() {
             R.id.registrationButton -> makeCurrentFragment(registerFrag, "registerFrag")
             R.id.loginButtonFrag -> {
                 authorization()
-                makeCurrentFragment(mainFrag, "mainFrag")
-                makeCurrentFragmentMain(homeFrag, "homeFrag")
             }
             R.id.registrationButtonFrag-> {
-                makeCurrentFragment(mainFrag, "mainFrag")
-                makeCurrentFragmentMain(homeFrag, "homeFrag")
+                registration()
             }
 
             R.id.recyclerViewCard -> {
