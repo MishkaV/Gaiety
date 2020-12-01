@@ -52,20 +52,21 @@ class MainActivity : AppCompatActivity() {
         loginFrag = LoginFragment()
         registerFrag = RegisterFragment()
 
-        makeCurrentFragment(startFrag)
+        makeCurrentFragment(startFrag, "startFrag")
 
     }
 
-    private fun makeCurrentFragment(fragment: Fragment) =
+    private fun makeCurrentFragment(fragment: Fragment, name : String) =
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.window_fragment, fragment)
-            addToBackStack(null)
+            addToBackStack(name)
             commit()
         }
 
-    private fun makeCurrentFragmentMain(fragment: Fragment) {
+    private fun makeCurrentFragmentMain(fragment: Fragment, name : String) {
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.main_fragment, fragment)
+            addToBackStack(name)
             commit()
         }
     }
@@ -73,8 +74,8 @@ class MainActivity : AppCompatActivity() {
 
     fun changeFragmentsInMain(item : MenuItem){
             when (item.itemId) {
-                R.id.ic_home -> makeCurrentFragmentMain(homeFrag)
-                R.id.ic_me -> makeCurrentFragmentMain(meFrag)
+                R.id.ic_home -> makeCurrentFragmentMain(homeFrag, "homeFrag")
+                R.id.ic_me -> makeCurrentFragmentMain(meFrag, "meFrag")
             }
             true
     }
@@ -83,19 +84,19 @@ class MainActivity : AppCompatActivity() {
         println(view.id)
         when (view.id)
         {
-            R.id.loginButton -> makeCurrentFragment(loginFrag)
-            R.id.registrationButton -> makeCurrentFragment(registerFrag)
-            R.id.loginButtonFrag -> { makeCurrentFragment(mainFrag)
-                makeCurrentFragmentMain(homeFrag)
+            R.id.loginButton -> makeCurrentFragment(loginFrag, "loginFrag")
+            R.id.registrationButton -> makeCurrentFragment(registerFrag, "registerFrag")
+            R.id.loginButtonFrag -> { makeCurrentFragment(mainFrag, "mainFrag")
+                makeCurrentFragmentMain(homeFrag, "homeFrag")
             }
-            R.id.registrationButtonFrag-> { makeCurrentFragment(mainFrag)
-                makeCurrentFragmentMain(homeFrag)
+            R.id.registrationButtonFrag-> { makeCurrentFragment(mainFrag, "mainFrag")
+                makeCurrentFragmentMain(homeFrag, "homeFrag")
             }
         }
     }
 
     fun onClickItemRecycler(view: View) {
             itemFrag = ItemRecyclerMore()
-            makeCurrentFragmentMain(itemFrag)
+            makeCurrentFragmentMain(itemFrag, "itemFrag")
     }
 }
