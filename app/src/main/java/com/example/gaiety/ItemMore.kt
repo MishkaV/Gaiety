@@ -72,7 +72,7 @@ class ItemMore : AppCompatActivity() {
         }
 
         itemRecycler = findViewById(R.id.recyclerViewItemMore)
-        itemRecycler.layoutManager = LinearLayoutManager(this,  RecyclerView.VERTICAL, false)
+        itemRecycler.layoutManager = LinearLayoutManager(this,  RecyclerView.HORIZONTAL, false)
         itemRecycler.adapter = ItemMoreAdapter(event)
     }
 

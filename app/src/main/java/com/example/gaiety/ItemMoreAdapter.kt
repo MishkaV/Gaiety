@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gaiety.fragments.homeFragment
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_item_more.view.*
 import kotlinx.android.synthetic.main.recyclerview_item.view.*
 import kotlinx.android.synthetic.main.recyclerview_item_more.view.*
 
@@ -26,12 +27,26 @@ class ItemMoreAdapter(val event: ItemMore.Event) : RecyclerView.Adapter<ItemMore
                 holder.itemView.textOfHead.movementMethod = ScrollingMovementMethod ()
                 holder.itemView.head.text = "Описание"
             }
+            1 -> {
+                holder.itemView.textOfHead.text = Html.fromHtml("Начало: "
+                        + event.starts_at + "\nКонец: " + event.ends_at)
+                holder.itemView.textOfHead.movementMethod = ScrollingMovementMethod ()
+                holder.itemView.head.text = "Когда"
+
+            }
+            2 -> {
+                holder.itemView.textOfHead.text = "Страна: " +
+                        event.location.country + "\nГород: " +
+                        event.location.city +"\nАдрес: " + event.location.address
+                holder.itemView.textOfHead.movementMethod = ScrollingMovementMethod ()
+                holder.itemView.head.text = "Где"
+            }
 
         }
     }
 
     override fun getItemCount(): Int {
-        return 1
+        return 3
     }
     class ItemHolder(view: View) : RecyclerView.ViewHolder(view) {
     }
