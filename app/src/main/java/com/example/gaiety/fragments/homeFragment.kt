@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.gaiety.MainActivity
 import com.example.gaiety.NumAdapter
 
 import com.example.gaiety.R
@@ -47,7 +48,7 @@ class homeFragment : Fragment() {
     }
 
     private fun fetchJson() {
-        val url = "https://api.timepad.ru/v1/events.json?limit=40&skip=0&cities=Москва,Санкт-Петербург&fields=location&sort=+starts_at"
+        val url = "https://api.timepad.ru/v1/events.json?limit=40&skip=0&fields=location&sort=+starts_at"
         val token = "993e92d9a94e12efb66ab5ee29b0fbdba217f725"
 
         val request = Request.Builder()
@@ -59,7 +60,6 @@ class homeFragment : Fragment() {
         client.newCall(request).enqueue(object: Callback {
             override fun onResponse(call: Call, response: Response) {
                 val body = response?.body?.string()
-                //println(body)
 
                 val gson = GsonBuilder().create()
 
