@@ -1,9 +1,7 @@
 package com.example.gaiety.fragments
 
 import android.content.res.Configuration
-import android.icu.util.LocaleData
 import android.os.Bundle
-import android.os.Handler
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,16 +12,11 @@ import com.example.gaiety.NumAdapter
 
 import com.example.gaiety.R
 import com.google.gson.GsonBuilder
-import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_main.*
 import okhttp3.*
 import java.io.IOException
-import java.time.format.DateTimeFormatter
-import kotlin.concurrent.thread
 
 class homeFragment : Fragment() {
     lateinit var numList: RecyclerView
-    lateinit var adapter: NumAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

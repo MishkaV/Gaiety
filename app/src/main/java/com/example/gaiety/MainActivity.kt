@@ -35,6 +35,10 @@ import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
     lateinit var homeFrag: homeFragment
+    lateinit var myTicketsFrag: myTicketsFragment
+    lateinit var myOrganizationsFrag: myOrganizationsFragment
+    lateinit var addOrganizationFrag: addOrganizationFragment
+    lateinit var favoriteFrag: favoriteFragment
     lateinit var meFrag: meFragment
     lateinit var startFrag: StartFragment
     lateinit var mainFrag: MainFragment
@@ -46,6 +50,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         homeFrag = homeFragment()
+        myTicketsFrag = myTicketsFragment()
+        myOrganizationsFrag = myOrganizationsFragment()
+        addOrganizationFrag = addOrganizationFragment()
+        favoriteFrag = favoriteFragment()
         meFrag = meFragment()
         startFrag = StartFragment()
         mainFrag = MainFragment()
@@ -92,6 +100,11 @@ class MainActivity : AppCompatActivity() {
             R.id.registrationButtonFrag-> { makeCurrentFragment(mainFrag, "mainFrag")
                 makeCurrentFragmentMain(homeFrag, "homeFrag")
             }
+            R.id.myTicketsMe -> makeCurrentFragmentMain(myTicketsFrag, "myTicketsFrag")
+            R.id.favoriteEventsMe -> makeCurrentFragmentMain(favoriteFrag, "homeFrag")
+            R.id.myOrganizationsMe -> makeCurrentFragmentMain(myOrganizationsFrag, "myOrganizationFrag")
+            R.id.floating_action_button_myorganizations -> makeCurrentFragmentMain(addOrganizationFrag, "addOrganizationFrag")
+            R.id.exitMe -> makeCurrentFragment(startFrag, "startFrag")
         }
     }
 

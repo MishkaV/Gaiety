@@ -5,47 +5,63 @@
     android:layout_height="match_parent"
     tools:context=".fragments.meFragment">
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/login"
+    <LinearLayout
+        android:id="@+id/framePersonalButtons"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/password"
-        android:hint="Логин"
-        android:paddingHorizontal="24dp"
-        android:layout_centerHorizontal="true"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        android:layout_height="610dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="121dp"
+        android:background="@color/colorWhite"
+        android:orientation="vertical"
+        android:padding="24dp">
 
-        <com.google.android.material.textfield.TextInputEditText
+        <TextView
+            android:id="@+id/personalAreaMe"
+            android:layout_width="311dp"
+            android:layout_height="23dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/comfortaa_bold"
+            android:gravity="center_vertical"
+            android:text="Личный кабинет"
+            android:textSize="36sp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/myTicketsMe"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="0dp"
+            android:layout_marginTop="12dp"
+            android:layout_weight="1"
+            android:onClick="onClick"
+            android:text="Мои билеты" />
 
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingHorizontal="24dp"
-        android:paddingTop="12dp"
-        android:layout_centerInParent="true"
-        android:hint="Пароль"
-        android:layout_centerHorizontal="true"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-        <com.google.android.material.textfield.TextInputEditText
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/favoriteEventsMe"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="0dp"
+            android:layout_marginTop="12dp"
+            android:layout_weight="1"
+            android:onClick="onClick"
+            android:text="Избранные мероприятия" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/myOrganizationsMe"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="12dp"
+            android:layout_weight="1"
+            android:onClick="onClick"
+            android:text="Мои организации" />
 
-    <com.google.android.material.button.MaterialButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Войти"
-        android:layout_marginTop="12dp"
-        android:layout_below="@+id/password"
-        android:layout_centerHorizontal="true"
-        />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/exitMe"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="12dp"
+            android:layout_weight="1"
+            android:onClick="onClick"
+            android:text="Выйти" />
+    </LinearLayout>
+
 </RelativeLayout>
