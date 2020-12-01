@@ -14,6 +14,7 @@ import com.example.gaiety.NumAdapter
 
 import com.example.gaiety.R
 import com.google.gson.GsonBuilder
+import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_main.*
 import okhttp3.*
 import java.io.IOException
@@ -22,6 +23,7 @@ import kotlin.concurrent.thread
 
 class homeFragment : Fragment() {
     lateinit var numList: RecyclerView
+    lateinit var adapter: NumAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -63,9 +65,10 @@ class homeFragment : Fragment() {
 
                 val homeFeed = gson.fromJson(body, HomeFeed::class.java)
 
+                val adapter = NumAdapter(homeFeed)
 
                 activity?.runOnUiThread {
-                    numList.adapter = NumAdapter(homeFeed)
+                    numList.adapter = adapter
                 }
             }
 

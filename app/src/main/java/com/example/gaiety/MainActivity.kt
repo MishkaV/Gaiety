@@ -18,17 +18,16 @@ import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
-import com.example.gaiety.fragments.MainFragment
-import com.example.gaiety.fragments.StartFragment
-import com.example.gaiety.fragments.homeFragment
-import com.example.gaiety.fragments.meFragment
+import com.example.gaiety.fragments.*
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationView
 import com.google.gson.GsonBuilder
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.fragment_start.*
+import kotlinx.android.synthetic.main.recyclerview_item.view.*
 import okhttp3.*
 import java.io.IOException
 import java.util.*
@@ -39,6 +38,9 @@ class MainActivity : AppCompatActivity() {
     lateinit var meFrag: meFragment
     lateinit var startFrag: StartFragment
     lateinit var mainFrag: MainFragment
+    lateinit var itemFrag: ItemRecyclerMore
+    lateinit var loginFrag : LoginFragment
+    lateinit var registerFrag : RegisterFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +49,8 @@ class MainActivity : AppCompatActivity() {
         meFrag = meFragment()
         startFrag = StartFragment()
         mainFrag = MainFragment()
+        loginFrag = LoginFragment()
+        registerFrag = RegisterFragment()
 
         makeCurrentFragment(startFrag)
 
@@ -55,6 +59,7 @@ class MainActivity : AppCompatActivity() {
     private fun makeCurrentFragment(fragment: Fragment) =
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.window_fragment, fragment)
+            addToBackStack(null)
             commit()
         }
 
@@ -78,9 +83,19 @@ class MainActivity : AppCompatActivity() {
         println(view.id)
         when (view.id)
         {
-            R.id.user -> { makeCurrentFragment(mainFrag)
+            R.id.loginButton -> makeCurrentFragment(loginFrag)
+            R.id.registrationButton -> makeCurrentFragment(registerFrag)
+            R.id.loginButtonFrag -> { makeCurrentFragment(mainFrag)
+                makeCurrentFragmentMain(homeFrag)
+            }
+            R.id.registrationButtonFrag-> { makeCurrentFragment(mainFrag)
                 makeCurrentFragmentMain(homeFrag)
             }
         }
+    }
+
+    fun onClickItemRecycler(view: View) {
+            itemFrag = ItemRecyclerMore()
+            makeCurrentFragmentMain(itemFrag)
     }
 }

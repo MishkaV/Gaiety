@@ -1,5 +1,6 @@
 package com.example.gaiety
 
+import android.app.Activity
 import android.app.ActivityOptions
 import android.content.Intent
 import android.content.res.Resources
@@ -11,9 +12,11 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.view.ViewCompat
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
+import com.example.gaiety.fragments.ItemRecyclerMore
 import com.example.gaiety.fragments.homeFragment
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.recyclerview_item.view.*
@@ -37,21 +40,22 @@ class NumAdapter(val homeFeed: homeFragment.HomeFeed) : RecyclerView.Adapter<Num
                 .load(homeFeed?.values?.get(position)?.poster_image?.default_url)
                 .into(holder.itemView.homeImageUrl)
         }
-    }
 
+    }
 
     override fun getItemCount(): Int {
         return homeFeed.values.count()
     }
 
     class NumHolder(view: View) : RecyclerView.ViewHolder(view) {
-        init {
+        /*init {
             view.setOnClickListener {
-                val intent = Intent(view.context, Test::class.java)
+                //val intent = Intent(view.context, Test::class.java)
                 //val act = itemView.findViewById<View>(R.id.homeImageUrl)
                 //val options = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this, act, "kek")
-                view.context.startActivity(intent)
+                //view.context.startActivity(intent)
+                val itemMore = ItemRecyclerMore()
             }
-        }
+        }*/
     }
 }

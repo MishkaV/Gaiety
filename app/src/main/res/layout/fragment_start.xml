@@ -25,7 +25,7 @@
             android:paddingHorizontal="24dp"
             android:layout_centerInParent="true" />
     </RelativeLayout>
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/frameButtons"
         android:background="@color/colorWhite"
         android:layout_width="match_parent"
@@ -33,29 +33,26 @@
         android:padding="24dp"
         android:layout_alignParentBottom="true"
         >
-        <RelativeLayout
-            android:layout_width="wrap_content"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/loginButton"
+            android:layout_weight="1"
+            android:layout_marginRight="8dp"
+            android:onClick="onClick"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true">
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/user"
-                android:onClick="onClick"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:text="ПОЛЬЗОВАТЕЛЬ" />
+            android:text="ВОЙТИ" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/organisation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/user"
-                android:text="ОРГАНИЗАТОР"
-                android:layout_marginLeft="48dp"
-                />
-        </RelativeLayout>
-    </RelativeLayout>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/registrationButton"
+            android:layout_marginLeft="8dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="РЕГИСТАЦИЯ"
+            android:onClick="onClick"
+            />
+
+    </LinearLayout>
 
 
 </RelativeLayout>
