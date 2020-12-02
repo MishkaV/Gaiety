@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.myTicketsFragment">
+    tools:context=".fragments.MyTicketsFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -18,13 +18,13 @@
             android:layout_marginTop="30dp"
             >
             <com.google.android.material.chip.Chip
-                android:text="My"
+                android:text="@string/my"
                 style="@style/Widget.MaterialComponents.Chip.Filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
             <com.google.android.material.chip.Chip
-                android:text="Tickets"
+                android:text="@string/tickets"
                 style="@style/Widget.MaterialComponents.Chip.Filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>

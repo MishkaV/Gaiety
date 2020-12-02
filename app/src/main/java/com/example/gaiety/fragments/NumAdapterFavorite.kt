@@ -4,14 +4,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.gaiety.fragments.favoriteFragment
+import com.example.gaiety.fragments.FavoriteFragment
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.recyclerview_item_favorite.view.*
 
-class NumAdapterFavorite(val homeFeed: favoriteFragment.HomeFeed) : RecyclerView.Adapter<NumAdapterFavorite.NumHolder>() {
+class NumAdapterFavorite(
+    val homeFeed: FavoriteFragment.HomeFeed
+) : RecyclerView.Adapter<NumAdapterFavorite.NumHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NumHolder {
-        val itemHolder = LayoutInflater.from(parent?.context).inflate(R.layout.recyclerview_item_favorite, parent, false)
+        val itemHolder = LayoutInflater
+            .from(parent?.context)
+            .inflate(R.layout.recyclerview_item_favorite, parent, false)
         return NumHolder(itemHolder)
     }
     override fun onBindViewHolder(holder: NumHolder, position: Int) {

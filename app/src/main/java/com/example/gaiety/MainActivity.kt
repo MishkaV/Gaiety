@@ -1,5 +1,7 @@
 package com.example.gaiety
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -13,12 +15,12 @@ import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.android.synthetic.main.fragment_register.*
 
 class MainActivity : AppCompatActivity() {
-    lateinit var homeFrag: homeFragment
-    lateinit var myTicketsFrag: myTicketsFragment
-    lateinit var myOrganizationsFrag: myOrganizationsFragment
-    lateinit var addOrganizationFrag: addOrganizationFragment
-    lateinit var favoriteFrag: favoriteFragment
-    lateinit var meFrag: meFragment
+    lateinit var homeFrag: HomeFragment
+    lateinit var myTicketsFrag: MyTicketsFragment
+    lateinit var myOrganizationsFrag: MyOrganizationsFragment
+    lateinit var addOrganizationFrag: AddOrganizationFragment
+    lateinit var favoriteFrag: FavoriteFragment
+    lateinit var meFrag: MeFragment
     lateinit var startFrag: StartFragment
     lateinit var mainFrag: MainFragment
     lateinit var itemFrag: ItemRecyclerMore
@@ -28,12 +30,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        homeFrag = homeFragment()
-        myTicketsFrag = myTicketsFragment()
-        myOrganizationsFrag = myOrganizationsFragment()
-        addOrganizationFrag = addOrganizationFragment()
-        favoriteFrag = favoriteFragment()
-        meFrag = meFragment()
+        homeFrag = HomeFragment()
+        myTicketsFrag = MyTicketsFragment()
+        myOrganizationsFrag = MyOrganizationsFragment()
+        addOrganizationFrag = AddOrganizationFragment()
+        favoriteFrag = FavoriteFragment()
+        meFrag = MeFragment()
         startFrag = StartFragment()
         mainFrag = MainFragment()
         loginFrag = LoginFragment()
@@ -141,11 +143,19 @@ class MainActivity : AppCompatActivity() {
             R.id.myTicketsMe -> makeCurrentFragmentMain(myTicketsFrag, "myTicketsFrag")
             R.id.favoriteEventsMe -> makeCurrentFragmentMain(favoriteFrag, "homeFrag")
             R.id.myOrganizationsMe -> makeCurrentFragmentMain(myOrganizationsFrag, "myOrganizationFrag")
-            R.id.floating_action_button_myorganizations -> makeCurrentFragmentMain(addOrganizationFrag, "addOrganizationFrag")
+            R.id.floating_action_button_myorganizations ->
+                makeCurrentFragmentMain(
+                    addOrganizationFrag,
+                    "addOrganizationFrag"
+                )
             R.id.exitMe -> makeCurrentFragment(startFrag, "startFrag")
             R.id.recyclerViewCard -> {
                 itemFrag = ItemRecyclerMore()
                 makeCurrentFragmentMain(itemFrag, "itemFrag")
+            }
+            R.id.floating_action_button -> {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://afisha.timepad.ru/"))
+                startActivity(intent)
             }
         }
     }

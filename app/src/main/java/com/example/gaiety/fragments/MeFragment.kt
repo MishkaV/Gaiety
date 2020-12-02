@@ -10,7 +10,7 @@ import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import java.io.IOException
 
-class meFragment : Fragment() {
+class MeFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,

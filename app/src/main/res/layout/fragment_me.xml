@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.meFragment">
+    tools:context=".fragments.MeFragment">
 
     <LinearLayout
         android:id="@+id/framePersonalButtons"
@@ -24,7 +24,7 @@
             android:layout_weight="1"
             android:fontFamily="@font/comfortaa_bold"
             android:gravity="center_vertical"
-            android:text="Личный кабинет"
+            android:text="@string/myProfile"
             android:textSize="36sp" />
 
         <com.google.android.material.button.MaterialButton
@@ -34,7 +34,7 @@
             android:layout_marginTop="12dp"
             android:layout_weight="1"
             android:onClick="onClick"
-            android:text="Мои билеты" />
+            android:text="@string/myTickets" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/favoriteEventsMe"
@@ -43,7 +43,7 @@
             android:layout_marginTop="12dp"
             android:layout_weight="1"
             android:onClick="onClick"
-            android:text="Избранные мероприятия" />
+            android:text="@string/favoriteEvents" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/myOrganizationsMe"
@@ -52,7 +52,7 @@
             android:layout_marginTop="12dp"
             android:layout_weight="1"
             android:onClick="onClick"
-            android:text="Мои организации" />
+            android:text="@string/myOrganisation" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/exitMe"
@@ -61,7 +61,7 @@
             android:layout_marginTop="12dp"
             android:layout_weight="1"
             android:onClick="onClick"
-            android:text="Выйти" />
+            android:text="@string/leave" />
     </LinearLayout>
 
 </RelativeLayout>
