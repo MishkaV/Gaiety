@@ -1,5 +1,7 @@
 package com.example.gaiety
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -130,6 +132,10 @@ class MainActivity : AppCompatActivity() {
             R.id.recyclerViewCard -> {
                 itemFrag = ItemRecyclerMore()
                 makeCurrentFragmentMain(itemFrag, "itemFrag")
+            }
+            R.id.floating_action_button -> {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://afisha.timepad.ru/"))
+                startActivity(intent)
             }
         }
     }
