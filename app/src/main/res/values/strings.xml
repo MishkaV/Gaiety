@@ -14,4 +14,19 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+    <string name="cityMoscow">Москва</string>
+    <string name="cityKazan">Казань</string>
+    <string name="mail">Почта</string>
+    <string name="password">Пароль</string>
+    <string name="myProfile">Личный кабинет</string>
+    <string name="myTickets">Мои билеты</string>
+    <string name="favoriteEvents">Избранные мероприятия</string>
+    <string name="myOrganisation">Мои организации</string>
+    <string name="leave">Выйти</string>
+    <string name="my">My</string>
+    <string name="tickets">Tickets</string>
+    <string name="registration">Регистрация</string>
+    <string name="registrationUpper">ЗАРЕГИСТРИРОВАТЬСЯ</string>
+    <string name="loginUpper">ВОЙТИ</string>
+    <string name="registerUpperSimple">РЕГИСТАЦИЯ</string>
 </resources>

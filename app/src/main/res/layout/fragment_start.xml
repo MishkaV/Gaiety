@@ -34,19 +34,19 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/loginButton"
             android:layout_weight="1"
-            android:layout_marginRight="8dp"
+            android:layout_marginEnd="8dp"
             android:onClick="onClick"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="ВОЙТИ" />
+            android:text="@string/loginUpper" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/registrationButton"
-            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="РЕГИСТАЦИЯ"
+            android:text="@string/registerUpperSimple"
             android:onClick="onClick"
             />
 

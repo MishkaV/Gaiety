@@ -9,13 +9,12 @@
         android:id="@+id/loginText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="80dp"
         android:gravity="center_vertical"
         android:fontFamily="@font/comfortaa_bold"
-        android:text="Регистрация"
+        android:text="@string/registration"
         android:textSize="36sp" />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -26,7 +25,7 @@
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:hint="Почта"
+        android:hint="@string/mail"
         android:layout_centerHorizontal="true"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
@@ -44,10 +43,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/mailEditLayoutReg"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:hint="Пароль"
+        android:hint="@string/password"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -65,11 +64,11 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_below="@+id/passwordEditLayoutReg"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginLeft="14dp"
+        android:layout_marginStart="14dp"
         android:layout_marginTop="0dp"
-        android:layout_marginRight="16dp"
-        android:text="ЗАРЕГИСТРИРОВАТЬСЯ" />
+        android:layout_marginEnd="16dp"
+        android:text="@string/registrationUpper" />
 
 </RelativeLayout>

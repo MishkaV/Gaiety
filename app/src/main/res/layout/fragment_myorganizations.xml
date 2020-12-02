@@ -4,15 +4,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.myOrganizationsFragment">
+    tools:context=".fragments.MyOrganizationsFragment">
 
 
     <LinearLayout
         android:id="@+id/framePersonalButtons"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentBottom="true"
         android:layout_marginTop="0dp"
         android:background="@color/colorWhite"
         android:orientation="vertical"
@@ -26,10 +24,9 @@
                 android:id="@+id/headMyOrganizations"
                 android:layout_width="323dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:fontFamily="@font/comfortaa_bold"
                 android:gravity="center_vertical"
-                android:text="Мои организации"
+                android:text="@string/myOrganisation"
                 android:textSize="36sp" />
 
         </RelativeLayout>
