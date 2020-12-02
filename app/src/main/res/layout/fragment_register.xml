@@ -48,12 +48,8 @@
         android:layout_alignParentStart="true"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-<<<<<<< HEAD
-        android:hint="Пароль"
         app:errorEnabled="true"
-=======
         android:hint="@string/password"
->>>>>>> 6af2f474d41e12e868b27e7f1ccc50b8080716de
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
         <com.google.android.material.textfield.TextInputEditText
