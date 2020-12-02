@@ -13,7 +13,7 @@
         android:layout_alignParentTop="true"
         android:scaleType="centerCrop"
         android:adjustViewBounds="true"
-        android:src="@drawable/logo_start"/>
+        android:src="@mipmap/logo_start"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewItemMore"
