@@ -8,13 +8,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.gaiety.NumAdapter
+import com.example.gaiety.NumAdapterFavorite
 import com.example.gaiety.R
 import com.google.gson.GsonBuilder
 import okhttp3.*
 import java.io.IOException
 
-class homeFragment : Fragment() {
+class FavoriteFragment : Fragment() {
     lateinit var numList: RecyclerView
 
     override fun onCreateView(
@@ -23,12 +23,12 @@ class homeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        return inflater.inflate(R.layout.fragment_favorite, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        numList = view.findViewById(R.id.recyclerView)
+        numList = view.findViewById(R.id.recyclerViewFavorite)
         if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
             numList.layoutManager =
                 GridLayoutManager(requireContext(), 1, RecyclerView.VERTICAL, false)
@@ -40,7 +40,8 @@ class homeFragment : Fragment() {
     }
 
     private fun fetchJson() {
-        val url = "https://api.timepad.ru/v1/events.json?limit=40&skip=0&fields=location&sort=+starts_at"
+        var url = "https://api.timepad.ru/v1/"
+        url = url + "events.json?limit=40&skip=0&cities=Москва,Санкт-Петербург&fields=location&sort=+starts_at"
         val token = "993e92d9a94e12efb66ab5ee29b0fbdba217f725"
 
         val request = Request.Builder()
@@ -58,7 +59,7 @@ class homeFragment : Fragment() {
 
                     val homeFeed = gson.fromJson(body, HomeFeed::class.java)
 
-                    val adapter = NumAdapter(homeFeed)
+                    val adapter = NumAdapterFavorite(homeFeed)
 
                     activity?.runOnUiThread {
                         numList.adapter = adapter
@@ -80,10 +81,10 @@ class homeFragment : Fragment() {
         val url: String,
         val poster_image: PosterImagemage,
         val location: Location,
-        val categories: List<Сategories>,
+        val categories: List<Categories>,
         val moderation_status: String
     )
     class PosterImagemage(val default_url: String, val uploadcare_url: String)
     class Location(val country: String, val city: String, val address: String)
-    class Сategories(val id: Int, val name: String)
+    class Categories(val id: Int, val name: String)
 }

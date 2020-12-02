@@ -85,7 +85,7 @@ class ItemMore : AppCompatActivity() {
         val locale: String,
         val location: Location,
         val organization: Organization,
-        val categories: List<Сategories>
+        val categories: List<Categories>
     )
 
     class PosterImagemage(val default_url: String, val uploadcare_url: String)
@@ -98,5 +98,5 @@ class ItemMore : AppCompatActivity() {
         val logo_image: PosterImagemage,
         val subdomain: String
     )
-    class Сategories(val id: Int, val name: String)
+    class Categories(val id: Int, val name: String)
 }
