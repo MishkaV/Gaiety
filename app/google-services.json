@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "505323750360",
+    "firebase_url": "https://gaiety-37d8d.firebaseio.com",
+    "project_id": "gaiety-37d8d",
+    "storage_bucket": "gaiety-37d8d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:505323750360:android:2eef73cef9d19db61f28ad",
+        "android_client_info": {
+          "package_name": "com.example.gaiety"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "505323750360-p6iqm3bb85d7qavgplesd2e4b37srhma.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.gaiety",
+            "certificate_hash": "65bd09d561743950583c62c48b6c79f94567311e"
+          }
+        },
+        {
+          "client_id": "505323750360-nlb7dm9udq9l8md9s61vv1lblq62k698.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsMGJfobRyHBvXlalAngD3l7HjVoiVvPg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "505323750360-nlb7dm9udq9l8md9s61vv1lblq62k698.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

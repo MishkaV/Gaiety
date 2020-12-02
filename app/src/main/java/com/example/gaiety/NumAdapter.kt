@@ -1,5 +1,12 @@
 package com.example.gaiety
 
+
+import android.app.Activity
+import android.app.ActivityOptions
+import android.content.Intent
+import android.content.res.Resources
+import android.graphics.Bitmap
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,16 +17,17 @@ import com.example.gaiety.fragments.homeFragment
 import com.example.gaiety.fragments.myTicketsFragment
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.recyclerview_item.view.*
+import okhttp3.internal.addHeaderLenient
 
 class NumAdapter(val homeFeed: homeFragment.HomeFeed) : RecyclerView.Adapter<NumAdapter.NumHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NumHolder {
         val itemHolder = LayoutInflater.from(parent?.context).inflate(R.layout.recyclerview_item, parent, false)
-        return NumHolder(itemHolder)
+        return NumHolder(itemHolder, homeFeed)
     }
     override fun onBindViewHolder(holder: NumHolder, position: Int) {
-        holder.itemView.homeName.text = homeFeed.values.get(position).name
+        holder.itemView.homeName.text = Html.fromHtml(homeFeed.values.get(position).name)
         holder.itemView.homeCity.text = homeFeed.values.get(position).location.city
         holder.itemView.homeDate.text = homeFeed.values.get(position).starts_at
 
@@ -37,15 +45,18 @@ class NumAdapter(val homeFeed: homeFragment.HomeFeed) : RecyclerView.Adapter<Num
         return homeFeed.values.count()
     }
 
-    class NumHolder(view: View) : RecyclerView.ViewHolder(view) {
-        /*init {
+    class NumHolder(view: View, var homeFeed: homeFragment.HomeFeed) : RecyclerView.ViewHolder(view) {
+        init {
             view.setOnClickListener {
-                //val intent = Intent(view.context, Test::class.java)
+                //val itemNumber = adapterPosition
                 //val act = itemView.findViewById<View>(R.id.homeImageUrl)
                 //val options = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this, act, "kek")
-                //view.context.startActivity(intent)
-                val itemMore = ItemRecyclerMore()
+                //val itemMore = ItemRecyclerMore.newInstance(adapterPosition)
+
+                val intent = Intent(view.context, ItemMore::class.java)
+                intent.putExtra("eventId", homeFeed.values.get(adapterPosition).id)
+                view.context.startActivity(intent)
             }
-        }*/
+        }
     }
 }

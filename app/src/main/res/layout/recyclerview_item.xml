@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView
+    android:id="@+id/recyclerViewCard"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,7 +12,6 @@
     app:cardElevation="5dp"
     app:cardUseCompatPadding="true"
     style="@style/Widget.MaterialComponents.CardView"
-    android:onClick="onClickItemRecycler"
     >
 
     <LinearLayout
@@ -33,12 +33,11 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- Title, secondary and supporting text -->
         <TextView
             android:id="@+id/homeName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hello"
+            android:fontFamily="@font/comfortaa_bold"
             android:textAppearance="?attr/textAppearanceHeadline6"
             />
         <TextView
@@ -46,7 +45,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="World"
             android:textAppearance="?attr/textAppearanceBody2"
             android:textColor="?android:attr/textColorSecondary"
             />
@@ -55,7 +53,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Yes"
             android:textAppearance="?attr/textAppearanceBody2"
             android:textColor="?android:attr/textColorSecondary"
             />
