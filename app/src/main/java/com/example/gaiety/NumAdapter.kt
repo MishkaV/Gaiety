@@ -1,26 +1,16 @@
 package com.example.gaiety
 
-
-import android.app.Activity
-import android.app.ActivityOptions
 import android.content.Intent
-import android.content.res.Resources
-import android.graphics.Bitmap
 import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
-import com.example.gaiety.fragments.ItemRecyclerMore
 import com.example.gaiety.fragments.homeFragment
-import com.example.gaiety.fragments.myTicketsFragment
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.recyclerview_item.view.*
-import okhttp3.internal.addHeaderLenient
 
 class NumAdapter(val homeFeed: homeFragment.HomeFeed) : RecyclerView.Adapter<NumAdapter.NumHolder>() {
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NumHolder {
         val itemHolder = LayoutInflater.from(parent?.context).inflate(R.layout.recyclerview_item, parent, false)
@@ -31,14 +21,13 @@ class NumAdapter(val homeFeed: homeFragment.HomeFeed) : RecyclerView.Adapter<Num
         holder.itemView.homeCity.text = homeFeed.values.get(position).location.city
         holder.itemView.homeDate.text = homeFeed.values.get(position).starts_at
 
-        if (homeFeed?.values?.get(position)?.poster_image == null){
+        if (homeFeed?.values?.get(position)?.poster_image == null) {
             holder.itemView.homeImageUrl.setImageResource(R.drawable.logo)
         } else {
             Picasso.get()
                 .load(homeFeed?.values?.get(position)?.poster_image?.default_url)
                 .into(holder.itemView.homeImageUrl)
         }
-
     }
 
     override fun getItemCount(): Int {
@@ -48,11 +37,6 @@ class NumAdapter(val homeFeed: homeFragment.HomeFeed) : RecyclerView.Adapter<Num
     class NumHolder(view: View, var homeFeed: homeFragment.HomeFeed) : RecyclerView.ViewHolder(view) {
         init {
             view.setOnClickListener {
-                //val itemNumber = adapterPosition
-                //val act = itemView.findViewById<View>(R.id.homeImageUrl)
-                //val options = ActivityOptions.makeSceneTransitionAnimation(MainActivity.this, act, "kek")
-                //val itemMore = ItemRecyclerMore.newInstance(adapterPosition)
-
                 val intent = Intent(view.context, ItemMore::class.java)
                 intent.putExtra("eventId", homeFeed.values.get(adapterPosition).id)
                 view.context.startActivity(intent)

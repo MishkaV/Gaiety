@@ -2,15 +2,13 @@ package com.example.gaiety.fragments
 
 import android.content.res.Configuration
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.gaiety.NumAdapter
 import com.example.gaiety.NumAdapterFavorite
-
 import com.example.gaiety.R
 import com.google.gson.GsonBuilder
 import okhttp3.*
@@ -20,7 +18,8 @@ class favoriteFragment : Fragment() {
     lateinit var numList: RecyclerView
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
@@ -50,35 +49,41 @@ class favoriteFragment : Fragment() {
             .build()
 
         val client = OkHttpClient()
-        client.newCall(request).enqueue(object: Callback {
-            override fun onResponse(call: Call, response: Response) {
-                val body = response?.body?.string()
-                //println(body)
+        client.newCall(request).enqueue(
+            object : Callback {
+                override fun onResponse(call: Call, response: Response) {
+                    val body = response?.body?.string()
 
-                val gson = GsonBuilder().create()
+                    val gson = GsonBuilder().create()
 
-                val homeFeed = gson.fromJson(body, HomeFeed::class.java)
+                    val homeFeed = gson.fromJson(body, HomeFeed::class.java)
 
-                val adapter = NumAdapterFavorite(homeFeed)
+                    val adapter = NumAdapterFavorite(homeFeed)
 
-                activity?.runOnUiThread {
-                    numList.adapter = adapter
+                    activity?.runOnUiThread {
+                        numList.adapter = adapter
+                    }
+                }
+
+                override fun onFailure(call: Call, e: IOException) {
+                    println("Bad request")
                 }
             }
-
-            override fun onFailure(call: Call, e: IOException) {
-                println("Bad request")
-            }
-        })
-
+        )
     }
 
-    class HomeFeed (val total:Int, val values: List<Event>)
-    class Event(val id: Int, val starts_at: String, val name: String, val url: String,
-                val poster_image: PosterImagemage, val location: Location,
-                val categories: List<Сategories>, val moderation_status: String)
+    class HomeFeed(val total: Int, val values: List<Event>)
+    class Event(
+        val id: Int,
+        val starts_at: String,
+        val name: String,
+        val url: String,
+        val poster_image: PosterImagemage,
+        val location: Location,
+        val categories: List<Сategories>,
+        val moderation_status: String
+    )
     class PosterImagemage(val default_url: String, val uploadcare_url: String)
     class Location(val country: String, val city: String, val address: String)
-    class Сategories(val id : Int, val name: String)
-
+    class Сategories(val id: Int, val name: String)
 }

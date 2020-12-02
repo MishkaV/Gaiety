@@ -1,14 +1,11 @@
 package com.example.gaiety.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.gaiety.NumAdapter
-
+import androidx.fragment.app.Fragment
 import com.example.gaiety.R
-import com.google.gson.GsonBuilder
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import java.io.IOException
@@ -16,7 +13,8 @@ import java.io.IOException
 class meFragment : Fragment() {
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         fetchJson()
@@ -26,7 +24,8 @@ class meFragment : Fragment() {
 
     private fun fetchJson() {
         val url = "https://api.timepad.ru/v1/organizations"
-        val bodyItem ="""
+        val bodyItem =
+            """
             {
                 "name": "string",
                 "subdomain": "string",
@@ -43,17 +42,17 @@ class meFragment : Fragment() {
             .build()
 
         val client = OkHttpClient()
-        client.newCall(request).enqueue(object: Callback {
-            override fun onResponse(call: Call, response: Response) {
-                val body = response?.body?.string()
-                println(body)
+        client.newCall(request).enqueue(
+            object : Callback {
+                override fun onResponse(call: Call, response: Response) {
+                    val body = response?.body?.string()
+                    println(body)
+                }
 
+                override fun onFailure(call: Call, e: IOException) {
+                    println("Bad request")
+                }
             }
-
-            override fun onFailure(call: Call, e: IOException) {
-                println("Bad request")
-            }
-        })
-
+        )
     }
 }

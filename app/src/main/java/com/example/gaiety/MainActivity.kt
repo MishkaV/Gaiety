@@ -7,16 +7,10 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import com.example.gaiety.fragments.*
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.android.synthetic.main.fragment_register.*
-
-
-private var mAuth: FirebaseAuth? = null
 
 class MainActivity : AppCompatActivity() {
     lateinit var homeFrag: homeFragment
@@ -28,8 +22,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var startFrag: StartFragment
     lateinit var mainFrag: MainFragment
     lateinit var itemFrag: ItemRecyclerMore
-    lateinit var loginFrag : LoginFragment
-    lateinit var registerFrag : RegisterFragment
+    lateinit var loginFrag: LoginFragment
+    lateinit var registerFrag: RegisterFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,17 +40,17 @@ class MainActivity : AppCompatActivity() {
         registerFrag = RegisterFragment()
 
         makeCurrentFragment(startFrag, "startFrag")
-
     }
 
-    private fun makeCurrentFragment(fragment: Fragment, name : String) {
+    private fun makeCurrentFragment(fragment: Fragment, name: String) {
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.window_fragment, fragment)
             addToBackStack(name)
             commit()
         }
     }
-    private fun makeCurrentFragmentMain(fragment: Fragment, name : String) {
+
+    private fun makeCurrentFragmentMain(fragment: Fragment, name: String) {
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.main_fragment, fragment)
             addToBackStack(name)
@@ -64,22 +58,20 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
-    fun changeFragmentsInMain(item : MenuItem){
-            when (item.itemId) {
-                R.id.ic_home -> makeCurrentFragmentMain(homeFrag, "homeFrag")
-                R.id.ic_me -> makeCurrentFragmentMain(meFrag, "meFrag")
-            }
-            true
+    fun changeFragmentsInMain(item: MenuItem) {
+        when (item.itemId) {
+            R.id.ic_home -> makeCurrentFragmentMain(homeFrag, "homeFrag")
+            R.id.ic_me -> makeCurrentFragmentMain(meFrag, "meFrag")
+        }
+        true
     }
 
-    fun authorization (){
+    fun authorization() {
         val email = mailEditTextLog?.text.toString()
         val password = passwordEditTextLog?.text.toString()
 
         Log.d("MainActivity", email)
         Log.d("MainActivity", password)
-
 
         FirebaseAuth
             .getInstance()
@@ -95,13 +87,12 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
-    fun registration (){
+    fun registration() {
         val email = mailEditTextReg?.text.toString()
         val password = passwordEditTextReg?.text.toString()
 
         Log.d("MainActivity", email)
         Log.d("MainActivity", password)
-
 
         FirebaseAuth
             .getInstance()
@@ -117,31 +108,25 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
-    fun onClick(view: View){
-        when (view.id){
+    fun onClick(view: View) {
+        when (view.id) {
             R.id.loginButton -> makeCurrentFragment(loginFrag, "loginFrag")
             R.id.registrationButton -> makeCurrentFragment(registerFrag, "registerFrag")
             R.id.loginButtonFrag -> {
                 authorization()
             }
-            R.id.registrationButtonFrag-> {
+            R.id.registrationButtonFrag -> {
                 registration()
             }
-
             R.id.myTicketsMe -> makeCurrentFragmentMain(myTicketsFrag, "myTicketsFrag")
             R.id.favoriteEventsMe -> makeCurrentFragmentMain(favoriteFrag, "homeFrag")
             R.id.myOrganizationsMe -> makeCurrentFragmentMain(myOrganizationsFrag, "myOrganizationFrag")
             R.id.floating_action_button_myorganizations -> makeCurrentFragmentMain(addOrganizationFrag, "addOrganizationFrag")
             R.id.exitMe -> makeCurrentFragment(startFrag, "startFrag")
-        
             R.id.recyclerViewCard -> {
                 itemFrag = ItemRecyclerMore()
                 makeCurrentFragmentMain(itemFrag, "itemFrag")
             }
         }
-      
     }
-
 }
-
-

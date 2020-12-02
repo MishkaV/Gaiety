@@ -2,26 +2,24 @@ package com.example.gaiety.fragments
 
 import android.content.res.Configuration
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.gaiety.NumAdapter
-import com.example.gaiety.NumAdapterFavorite
 import com.example.gaiety.NumAdapterMyOrganizations
-
 import com.example.gaiety.R
 import com.google.gson.GsonBuilder
 import okhttp3.*
 import java.io.IOException
 
-class myOrganizationsFragment: Fragment() {
+class myOrganizationsFragment : Fragment() {
     lateinit var numList: RecyclerView
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
@@ -51,30 +49,29 @@ class myOrganizationsFragment: Fragment() {
             .build()
 
         val client = OkHttpClient()
-        client.newCall(request).enqueue(object: Callback {
-            override fun onResponse(call: Call, response: Response) {
-                val body = response?.body?.string()
-                //println(body)
+        client.newCall(request).enqueue(
+            object : Callback {
+                override fun onResponse(call: Call, response: Response) {
+                    val body = response?.body?.string()
 
-                val gson = GsonBuilder().create()
+                    val gson = GsonBuilder().create()
 
-                val homeFeed = gson.fromJson(body, HomeFeed::class.java)
+                    val homeFeed = gson.fromJson(body, HomeFeed::class.java)
 
-                val adapter = NumAdapterMyOrganizations(homeFeed)
+                    val adapter = NumAdapterMyOrganizations(homeFeed)
 
-                activity?.runOnUiThread {
-                    numList.adapter = adapter
+                    activity?.runOnUiThread {
+                        numList.adapter = adapter
+                    }
+                }
+
+                override fun onFailure(call: Call, e: IOException) {
+                    println("Bad request")
                 }
             }
-
-            override fun onFailure(call: Call, e: IOException) {
-                println("Bad request")
-            }
-        })
-
+        )
     }
 
-    class HomeFeed (val total:Int, val values: List<Organization>)
+    class HomeFeed(val total: Int, val values: List<Organization>)
     class Organization(val name: String)
-
 }
