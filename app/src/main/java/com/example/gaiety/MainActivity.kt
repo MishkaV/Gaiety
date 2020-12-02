@@ -67,45 +67,65 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun authorization() {
-        val email = mailEditTextLog?.text.toString()
-        val password = passwordEditTextLog?.text.toString()
+        mailEditLayoutLog.error = null
+        passwordEditLayoutLog.error = null
+        if (!(mailEditTextLog?.text.toString() == "" || passwordEditTextLog?.text.toString() == "")) {
+            val email = mailEditTextLog?.text.toString()
+            val password = passwordEditTextLog?.text.toString()
 
-        Log.d("MainActivity", email)
-        Log.d("MainActivity", password)
+            Log.d("MainActivity", email)
+            Log.d("MainActivity", password)
 
-        FirebaseAuth
-            .getInstance()
-            .signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener {
-                if (!it.isSuccessful) {
-                    Toast.makeText(this, "Sorry, but it's wrong email/passwor", Toast.LENGTH_SHORT).show()
-                    return@addOnCompleteListener
+            FirebaseAuth
+                .getInstance()
+                .signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener {
+                    if (!it.isSuccessful) {
+                        Toast.makeText(
+                            this,
+                            "Sorry, but it's wrong email/password",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        return@addOnCompleteListener
+                    }
+                    makeCurrentFragment(mainFrag, "mainFrag")
+                    makeCurrentFragmentMain(homeFrag, "homeFrag")
+                    Log.d("MainActivity", "Successfull!")
                 }
-                makeCurrentFragment(mainFrag, "mainFrag")
-                makeCurrentFragmentMain(homeFrag, "homeFrag")
-                Log.d("MainActivity", "Successfull!")
-            }
+        } else if (mailEditTextLog?.text.toString() == "") {
+            mailEditLayoutLog.error = "Введите почту"
+        } else passwordEditLayoutLog.error = "Введите пароль"
     }
 
     fun registration() {
-        val email = mailEditTextReg?.text.toString()
-        val password = passwordEditTextReg?.text.toString()
+        mailEditLayoutReg.error = null
+        passwordEditLayoutReg.error = null
+        if (!(mailEditTextReg?.text.toString() == "" || passwordEditTextReg?.text.toString() == "")) {
+            val email = mailEditTextReg?.text.toString()
+            val password = passwordEditTextReg?.text.toString()
 
-        Log.d("MainActivity", email)
-        Log.d("MainActivity", password)
+            Log.d("MainActivity", email)
+            Log.d("MainActivity", password)
 
-        FirebaseAuth
-            .getInstance()
-            .createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener {
-                if (!it.isSuccessful) {
-                    Toast.makeText(this, "Sorry, but this user is already exist", Toast.LENGTH_SHORT).show()
-                    return@addOnCompleteListener
+            FirebaseAuth
+                .getInstance()
+                .createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener {
+                    if (!it.isSuccessful) {
+                        Toast.makeText(
+                            this,
+                            "Sorry, but this user is already exist",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        return@addOnCompleteListener
+                    }
+                    makeCurrentFragment(mainFrag, "mainFrag")
+                    makeCurrentFragmentMain(homeFrag, "homeFrag")
+                    Log.d("MainActivity", "Successfull!")
                 }
-                makeCurrentFragment(mainFrag, "mainFrag")
-                makeCurrentFragmentMain(homeFrag, "homeFrag")
-                Log.d("MainActivity", "Successfull!")
-            }
+        } else if (mailEditTextReg?.text.toString() == "") {
+            mailEditLayoutReg.error = "Введите почту"
+        } else passwordEditLayoutReg.error = "Введите пароль"
     }
 
     fun onClick(view: View) {

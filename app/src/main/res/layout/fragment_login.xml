@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.LoginFragment">
 
     <TextView
@@ -28,6 +29,7 @@
         android:layout_marginRight="16dp"
         android:hint="Логин"
         android:layout_centerHorizontal="true"
+        app:errorEnabled="true"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -35,7 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
-            />
+            tools:ignore="OnClick" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -48,6 +50,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:hint="Пароль"
+        app:errorEnabled="true"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
         <com.google.android.material.textfield.TextInputEditText

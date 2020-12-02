@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.gaiety.R
+import com.google.android.material.textfield.TextInputLayout
+
 
 class LoginFragment : Fragment() {
 
