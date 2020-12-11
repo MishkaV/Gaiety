@@ -1,10 +1,12 @@
-package com.example.gaiety
+package View.Activities
 
 import android.os.Bundle
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import Presenter.HomeScreen.DetailsScreen.ItemMoreAdapter
+import com.example.gaiety.R
 import com.google.gson.GsonBuilder
 import com.squareup.picasso.Picasso
 import okhttp3.*
@@ -67,7 +69,8 @@ class ItemMore : AppCompatActivity() {
 
         itemRecycler = findViewById(R.id.recyclerViewItemMore)
         itemRecycler.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
-        itemRecycler.adapter = ItemMoreAdapter(event)
+        itemRecycler.adapter =
+            ItemMoreAdapter(event)
     }
 
     class Event(

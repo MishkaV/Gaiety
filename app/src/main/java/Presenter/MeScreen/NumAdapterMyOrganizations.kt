@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.gaiety.fragments.*
+import View.Fragments.MeScreen.MyOrganizationsScreen.MyOrganizationsFragment
 import kotlinx.android.synthetic.main.recyclerview_item_myorganizations.view.*
 
 class NumAdapterMyOrganizations(

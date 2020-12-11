@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.gaiety.fragments.MyTicketsFragment
+import View.Fragments.MeScreen.MyTicketsScreen.MyTicketsFragment
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.recyclerview_item_mytickets.view.*
 

@@ -1,5 +1,6 @@
-package com.example.gaiety.fragments
+package View.Fragments.MeScreen.MyOrganizationsScreen.AddOrganizationScreen
 
+import View.Fragments.RegisterScreen.RegisterFragment
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View

@@ -1,4 +1,4 @@
-package com.example.gaiety
+package View.Activities
 
 import android.content.Intent
 import android.net.Uri
@@ -9,7 +9,18 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.example.gaiety.fragments.*
+import View.Fragments.*
+import View.Fragments.HomeScreen.DetailsScreen.ItemRecyclerMore
+import View.Fragments.HomeScreen.HomeFragment
+import View.Fragments.LoginScreen.LoginFragment
+import View.Fragments.MeScreen.MyOrganizationsScreen.AddOrganizationScreen.AddOrganizationFragment
+import View.Fragments.MeScreen.FavoriteEventsScreen.FavoriteFragment
+import View.Fragments.MeScreen.MeFragment
+import View.Fragments.MeScreen.MyOrganizationsScreen.MyOrganizationsFragment
+import View.Fragments.MeScreen.MyTicketsScreen.MyTicketsFragment
+import View.Fragments.RegisterScreen.RegisterFragment
+import View.Fragments.StartScreen.StartFragment
+import com.example.gaiety.R
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.android.synthetic.main.fragment_register.*
@@ -31,10 +42,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         homeFrag = HomeFragment()
-        myTicketsFrag = MyTicketsFragment()
-        myOrganizationsFrag = MyOrganizationsFragment()
-        addOrganizationFrag = AddOrganizationFragment()
-        favoriteFrag = FavoriteFragment()
+        myTicketsFrag =
+            MyTicketsFragment()
+        myOrganizationsFrag =
+            MyOrganizationsFragment()
+        addOrganizationFrag =
+            AddOrganizationFragment()
+        favoriteFrag =
+            FavoriteFragment()
         meFrag = MeFragment()
         startFrag = StartFragment()
         mainFrag = MainFragment()
@@ -150,7 +165,8 @@ class MainActivity : AppCompatActivity() {
                 )
             R.id.exitMe -> makeCurrentFragment(startFrag, "startFrag")
             R.id.recyclerViewCard -> {
-                itemFrag = ItemRecyclerMore()
+                itemFrag =
+                    ItemRecyclerMore()
                 makeCurrentFragmentMain(itemFrag, "itemFrag")
             }
             R.id.floating_action_button -> {

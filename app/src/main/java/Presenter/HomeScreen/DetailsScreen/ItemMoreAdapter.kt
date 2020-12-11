@@ -1,18 +1,22 @@
-package com.example.gaiety
+package Presenter.HomeScreen.DetailsScreen
 
+import View.Activities.ItemMore
 import android.text.Html
 import android.text.method.ScrollingMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.gaiety.R
 import kotlinx.android.synthetic.main.recyclerview_item_more.view.*
 
 class ItemMoreAdapter(val event: ItemMore.Event) : RecyclerView.Adapter<ItemMoreAdapter.ItemHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemMoreAdapter.ItemHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         val itemHolder = LayoutInflater.from(parent?.context).inflate(R.layout.recyclerview_item_more, parent, false)
-        return ItemMoreAdapter.ItemHolder(itemHolder)
+        return ItemHolder(
+            itemHolder
+        )
     }
 
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {

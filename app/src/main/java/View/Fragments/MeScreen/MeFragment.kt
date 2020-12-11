@@ -1,4 +1,4 @@
-package com.example.gaiety.fragments
+package View.Fragments.MeScreen
 
 import android.os.Bundle
 import android.view.LayoutInflater

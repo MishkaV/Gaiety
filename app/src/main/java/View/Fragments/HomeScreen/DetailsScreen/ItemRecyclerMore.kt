@@ -1,4 +1,4 @@
-package com.example.gaiety.fragments
+package View.Fragments.HomeScreen.DetailsScreen
 
 import android.os.Bundle
 import android.view.LayoutInflater
