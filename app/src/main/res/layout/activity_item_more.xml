@@ -1,26 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="View.Activities.ItemMore">
+    tools:context="View.Activities.ItemMore"
+    android:orientation="vertical"
+    android:weightSum="100"
+    >
 
     <ImageView
         android:id="@+id/itemImageUrl"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_height="0dp"
         android:scaleType="centerCrop"
         android:adjustViewBounds="true"
-        android:src="@mipmap/logo_start"/>
+        android:layout_weight="25"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewItemMore"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/itemImageUrl"
+        android:layout_height="0dp"
         android:padding="12dp"
-        tools:listitem="@layout/recyclerview_item" />
+        tools:listitem="@layout/recyclerview_item"
+        android:layout_weight="75"
+        />
 
-</RelativeLayout>
+</LinearLayout>

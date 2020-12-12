@@ -155,10 +155,7 @@ class MainActivity : AppCompatActivity() {
             R.id.favoriteEventsMe -> makeCurrentFragmentMain(favoriteFrag, "homeFrag")
             R.id.myOrganizationsMe -> makeCurrentFragmentMain(myOrganizationsFrag, "myOrganizationFrag")
             R.id.floating_action_button_myorganizations ->
-                makeCurrentFragmentMain(
-                    addOrganizationFrag,
-                    "addOrganizationFrag"
-                )
+                makeCurrentFragmentMain(addOrganizationFrag, "addOrganizationFrag")
             R.id.exitMe -> makeCurrentFragment(startFrag, "startFrag")
             R.id.recyclerViewCard -> {
                 itemFrag =

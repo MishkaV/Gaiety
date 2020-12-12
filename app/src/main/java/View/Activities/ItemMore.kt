@@ -1,5 +1,6 @@
 package View.Activities
 
+import Model.NetworkRequests
 import android.os.Bundle
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
@@ -19,87 +20,13 @@ class ItemMore : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_item_more)
 
-        val eventId = intent.getIntExtra("eventId", 0)
-
-        if (eventId != 0) {
-            fetchJson(eventId)
-        }
-    }
-
-    private fun fetchJson(id: Int) {
-        val url = "https://api.timepad.ru/v1/events/" + id.toString()
-        val token = "993e92d9a94e12efb66ab5ee29b0fbdba217f725"
-
-        val request = Request.Builder()
-            .url(url)
-            .header("Authorization", "Bearer " + token)
-            .build()
-
-        val client = OkHttpClient()
-        client.newCall(request).enqueue(
-            object : Callback {
-                override fun onResponse(call: Call, response: Response) {
-                    val body = response?.body?.string()
-
-                    val gson = GsonBuilder().create()
-
-                    val event = gson.fromJson(body, Event::class.java)
-
-                    runOnUiThread {
-                        setData(event)
-                    }
-                }
-
-                override fun onFailure(call: Call, e: IOException) {
-                    println("Bad request")
-                }
-            }
-        )
-    }
-
-    private fun setData(event: Event) {
         val image = findViewById<ImageView>(R.id.itemImageUrl)
-        if (event.poster_image == null) {
-            image.setImageResource(R.drawable.logo)
-        } else {
-            Picasso.get()
-                .load(event.poster_image.default_url)
-                .into(image)
-        }
-
+        val eventId = intent.getIntExtra("eventId", 0)
         itemRecycler = findViewById(R.id.recyclerViewItemMore)
         itemRecycler.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
-        itemRecycler.adapter =
-            ItemMoreAdapter(event)
+
+        if (eventId != 0) {
+            NetworkRequests().eventDescriptionRequest(itemRecycler, image,eventId)
+        }
     }
-
-    class Event(
-        val id: Int,
-        val created_at: String,
-        val starts_at: String,
-        val ends_at: String,
-        val name: String,
-        val status: String,
-        val description_short: String,
-        val description_html: String,
-        val url: String,
-        val poster_image: PosterImagemage,
-        val ad_partner_percent: Int,
-        val locale: String,
-        val location: Location,
-        val organization: Organization,
-        val categories: List<Categories>
-    )
-
-    class PosterImagemage(val default_url: String, val uploadcare_url: String)
-    class Location(val country: String, val city: String, val address: String)
-    class Organization(
-        val id: Int,
-        val name: String,
-        val description_html: String,
-        val url: String,
-        val logo_image: PosterImagemage,
-        val subdomain: String
-    )
-    class Categories(val id: Int, val name: String)
 }
