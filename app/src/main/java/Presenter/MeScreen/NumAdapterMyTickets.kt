@@ -1,5 +1,6 @@
 package com.example.gaiety
 
+import Model.EventData.Event
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +10,7 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.recyclerview_item_mytickets.view.*
 
 class NumAdapterMyTickets(
-    val homeFeed: MyTicketsFragment.HomeFeed
+    val homeFeed: Event
 ) : RecyclerView.Adapter<NumAdapterMyTickets.NumHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NumHolder {

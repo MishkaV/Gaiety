@@ -42,14 +42,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         homeFrag = HomeFragment()
-        myTicketsFrag =
-            MyTicketsFragment()
-        myOrganizationsFrag =
-            MyOrganizationsFragment()
-        addOrganizationFrag =
-            AddOrganizationFragment()
-        favoriteFrag =
-            FavoriteFragment()
+        myTicketsFrag = MyTicketsFragment()
+        myOrganizationsFrag = MyOrganizationsFragment()
+        addOrganizationFrag = AddOrganizationFragment()
+        favoriteFrag = FavoriteFragment()
         meFrag = MeFragment()
         startFrag = StartFragment()
         mainFrag = MainFragment()

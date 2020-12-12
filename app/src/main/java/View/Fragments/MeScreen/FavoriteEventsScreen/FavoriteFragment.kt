@@ -1,5 +1,6 @@
 package View.Fragments.MeScreen.FavoriteEventsScreen
 
+import Model.NetworkRequests
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -36,55 +37,6 @@ class FavoriteFragment : Fragment() {
             numList.layoutManager =
                 GridLayoutManager(requireContext(), 2, RecyclerView.VERTICAL, false)
 
-        fetchJson()
+        NetworkRequests().eventRequest(numList)
     }
-
-    private fun fetchJson() {
-        var url = "https://api.timepad.ru/v1/"
-        url = url + "events.json?limit=40&skip=0&cities=Москва,Санкт-Петербург&fields=location&sort=+starts_at"
-        val token = "993e92d9a94e12efb66ab5ee29b0fbdba217f725"
-
-        val request = Request.Builder()
-            .url(url)
-            .header("Authorization", "Bearer " + token)
-            .build()
-
-        val client = OkHttpClient()
-        client.newCall(request).enqueue(
-            object : Callback {
-                override fun onResponse(call: Call, response: Response) {
-                    val body = response?.body?.string()
-
-                    val gson = GsonBuilder().create()
-
-                    val homeFeed = gson.fromJson(body, HomeFeed::class.java)
-
-                    val adapter = NumAdapterFavorite(homeFeed)
-
-                    activity?.runOnUiThread {
-                        numList.adapter = adapter
-                    }
-                }
-
-                override fun onFailure(call: Call, e: IOException) {
-                    println("Bad request")
-                }
-            }
-        )
-    }
-
-    data class HomeFeed(val total: Int, val values: List<Event>)
-    data class Event(
-        val id: Int,
-        val starts_at: String,
-        val name: String,
-        val url: String,
-        val poster_image: PosterImagemage,
-        val location: Location,
-        val categories: List<Categories>,
-        val moderation_status: String
-    )
-    data class PosterImagemage(val default_url: String, val uploadcare_url: String)
-    data class Location(val country: String, val city: String, val address: String)
-    data class Categories(val id: Int, val name: String)
 }
