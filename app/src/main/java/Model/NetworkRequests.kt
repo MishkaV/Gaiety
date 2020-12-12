@@ -42,10 +42,10 @@ class NetworkRequests () {
     }
 
 
-    fun eventRequest(numList: RecyclerView){
+    fun eventRequest(numList: RecyclerView, skip: Int){
         val api = createRetrofit(urlTimepad)
         val timepadApiRequests = api.create(TimepadApiRequests::class.java)
-        val call = timepadApiRequests.getEventData(10,0,"location","+starts_at")
+        val call = timepadApiRequests.getEventData(10,skip,"location","+starts_at")
 
         call.enqueue(
             object : Callback<Event> {

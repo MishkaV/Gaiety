@@ -14,7 +14,12 @@ import com.example.gaiety.R
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.recyclerview_item.view.*
 
-class NumAdapter(val homeFeed: Event) : RecyclerView.Adapter<NumAdapter.NumHolder>() {
+class NumAdapter(_homeFeed: Event) : RecyclerView.Adapter<NumAdapter.NumHolder>() {
+    private var homeFeed: Event
+
+    init {
+        this.homeFeed = _homeFeed
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NumHolder {
         val itemHolder = LayoutInflater.from(parent?.context).inflate(R.layout.recyclerview_item, parent, false)
@@ -36,6 +41,10 @@ class NumAdapter(val homeFeed: Event) : RecyclerView.Adapter<NumAdapter.NumHolde
 
     override fun getItemCount(): Int {
         return homeFeed.values.count()
+    }
+
+    fun addItem(items: List<Event>){
+        homeFeed.values.plus(items)
     }
 
     class NumHolder(view: View, var homeFeed: Event) : RecyclerView.ViewHolder(view) {

@@ -37,6 +37,6 @@ class MyTicketsFragment : Fragment() {
             numList.layoutManager =
                 GridLayoutManager(requireContext(), 2, RecyclerView.VERTICAL, false)
 
-        NetworkRequests().eventRequest(numList)
+        NetworkRequests().eventRequest(numList, 0)
     }
 }
