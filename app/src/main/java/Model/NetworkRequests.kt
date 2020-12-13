@@ -7,8 +7,6 @@ import Presenter.HomeScreen.NumAdapter
 import android.util.Log
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.gaiety.R
-import com.squareup.picasso.Picasso
 import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -42,7 +40,11 @@ class NetworkRequests () {
     }
 
 
-    fun eventRequest(numList: RecyclerView, skip: Int){
+    fun eventRequest(
+        numList: RecyclerView,
+        skip: Int,
+        numAdapter: NumAdapter
+    ){
         val api = createRetrofit(urlTimepad)
         val timepadApiRequests = api.create(TimepadApiRequests::class.java)
         val call = timepadApiRequests.getEventData(10,skip,"location","+starts_at")
@@ -50,7 +52,11 @@ class NetworkRequests () {
         call.enqueue(
             object : Callback<Event> {
                 override fun onResponse(call: Call<Event>, response: Response<Event>) {
-                    numList.adapter = NumAdapter(response.body()!!)
+                    for (item in response.body()!!.values)
+                        if (!(item in numAdapter.homeFeed.values)){
+                            numAdapter.addItem(item)
+                        }
+                    numAdapter.notifyDataSetChanged()
                     Log.d(TAG, "Success")
                 }
                 override fun onFailure(call: Call<Event>, t: Throwable) {

@@ -37,6 +37,6 @@ class FavoriteFragment : Fragment() {
             numList.layoutManager =
                 GridLayoutManager(requireContext(), 2, RecyclerView.VERTICAL, false)
 
-        NetworkRequests().eventRequest(numList, 0)
+        //NetworkRequests().eventRequest(numList, 0)
     }
 }

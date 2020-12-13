@@ -1,6 +1,7 @@
 package Presenter.HomeScreen
 
 import Model.EventData.Event
+import Model.EventData.Value
 import View.Activities.ItemMore
 import android.content.Intent
 import android.text.Html
@@ -14,12 +15,7 @@ import com.example.gaiety.R
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.recyclerview_item.view.*
 
-class NumAdapter(_homeFeed: Event) : RecyclerView.Adapter<NumAdapter.NumHolder>() {
-    private var homeFeed: Event
-
-    init {
-        this.homeFeed = _homeFeed
-    }
+class NumAdapter(var homeFeed: Event) : RecyclerView.Adapter<NumAdapter.NumHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NumHolder {
         val itemHolder = LayoutInflater.from(parent?.context).inflate(R.layout.recyclerview_item, parent, false)
@@ -43,9 +39,10 @@ class NumAdapter(_homeFeed: Event) : RecyclerView.Adapter<NumAdapter.NumHolder>(
         return homeFeed.values.count()
     }
 
-    fun addItem(items: List<Event>){
-        homeFeed.values.plus(items)
+    fun addItem(item: Value){
+        homeFeed.values  = homeFeed.values + item
     }
+
 
     class NumHolder(view: View, var homeFeed: Event) : RecyclerView.ViewHolder(view) {
         init {

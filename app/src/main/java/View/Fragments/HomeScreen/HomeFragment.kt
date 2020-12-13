@@ -1,6 +1,9 @@
 package View.Fragments.HomeScreen
 
+import Model.EventData.Event
+import Model.EventData.Value
 import Model.NetworkRequests
+import Presenter.HomeScreen.NumAdapter
 import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
@@ -15,6 +18,7 @@ import com.example.gaiety.R
 class HomeFragment : Fragment() {
     lateinit var numList: RecyclerView
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -28,14 +32,17 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         var orientation = RecyclerView.HORIZONTAL
         var spanCount = 2
-        var loading = true
         numList = view.findViewById(R.id.recyclerView)
         if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
             orientation = RecyclerView.VERTICAL
             spanCount = 1
         }
+
         val layoutManager = GridLayoutManager(requireContext(), spanCount, orientation, false)
+        val numAdapter = createNumAdapter()
         numList.layoutManager = layoutManager
+        numList.adapter = numAdapter
+
         numList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 if (dy > 0) //check for scroll down
@@ -43,18 +50,20 @@ class HomeFragment : Fragment() {
                     var visibleItemCount = layoutManager.getChildCount()
                     var totalItemCount = layoutManager.getItemCount()
                     var pastVisiblesItems = layoutManager.findFirstVisibleItemPosition()
-                    if (loading) {
-                        if (visibleItemCount + pastVisiblesItems >= totalItemCount) {
-                            loading = false
-                            Log.v("TAG", "Last Item Wow !")
-
-                            NetworkRequests().eventRequest(numList, totalItemCount)
-                        }
+                    if (visibleItemCount + pastVisiblesItems >= totalItemCount) {
+                        Log.v("TAG", "Last Item Wow !")
+                        NetworkRequests().eventRequest(numList, totalItemCount, numAdapter)
                     }
                 }
             }
         })
 
-        NetworkRequests().eventRequest(numList, 0)
+        NetworkRequests().eventRequest(numList, 0, numAdapter)
+    }
+
+    fun createNumAdapter(): NumAdapter {
+        val event = Event(0, listOf<Value>())
+        val numAdapter = NumAdapter(event)
+        return numAdapter
     }
 }
