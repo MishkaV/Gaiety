@@ -60,18 +60,18 @@ class MainActivity : AppCompatActivity() {
         makeCurrentFragment(startFrag, "startFrag")
     }
 
-    private fun makeCurrentFragment(fragment: Fragment, name: String) {
+    private fun <T> makeCurrentFragment(fragment: Fragment, name: T) {
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.window_fragment, fragment)
-            addToBackStack(name)
+            addToBackStack(name.toString())
             commit()
         }
     }
 
-    private fun makeCurrentFragmentMain(fragment: Fragment, name: String) {
+    private fun <T> makeCurrentFragmentMain(fragment: Fragment, name: T) {
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.main_fragment, fragment)
-            addToBackStack(name)
+            addToBackStack(name.toString())
             commit()
         }
     }
