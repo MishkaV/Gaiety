@@ -1,5 +1,6 @@
 package Model
 
+import Model.ClientData.Client
 import Model.EventData.Event
 import Model.EventDescriptionData.EventDescription
 import retrofit2.Call
@@ -8,7 +9,7 @@ import retrofit2.http.Headers
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-private const val token: String = "993e92d9a94e12efb66ab5ee29b0fbdba217f725"
+private const val token: String = "fb5b9e1ef57d53cf3371140fc1e00aabc32ec3fd"
 
 
 interface TimepadApiRequests {
@@ -20,6 +21,11 @@ interface TimepadApiRequests {
         @Query("fields") fields : String,
         @Query("sort") sort : String
     ): Call<Event>
+
+    @Headers("Authorization: Bearer ${token}")
+    @GET("/introspect")
+    fun getClientData(
+    ): Call<Client>
 
     @Headers("Authorization: Bearer ${token}")
     @GET("/v1/events/{eventName}")
