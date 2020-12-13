@@ -45,15 +45,24 @@ class ItemMoreAdapter(val event: EventDescription, val image: ImageView) : Recyc
             }
             1 -> {
                 val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ")
-                val dateBegin =  LocalDateTime.parse(event.starts_at, formatter)
-                val dateEnd = LocalDateTime.parse(event.ends_at, formatter)
+                var string: String = ""
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
-                var string: String = "Начало: " + dateBegin.dayOfMonth.toString() + ":" +
-                        dateBegin.monthValue + ":" + dateBegin.year +
-                        " - " + dateBegin.hour + ":%02d".format(dateBegin.minute.toInt())
-                string = string + "\nКонец: " + dateEnd.dayOfMonth.toString() + ":" +
-                        dateEnd.monthValue + ":" + dateEnd.year +
-                        " - " + dateEnd.hour + ":%02d".format(dateEnd.minute.toInt())
+                    val dateBegin = LocalDateTime.parse(event.starts_at, formatter)
+                    val dateEnd = LocalDateTime.parse(event.ends_at, formatter)
+
+                    string = "Начало: " + dateBegin.dayOfMonth.toString() + ":" +
+                            dateBegin.monthValue + ":" + dateBegin.year +
+                            " - " + dateBegin.hour + ":%02d".format(dateBegin.minute.toInt())
+                    string = string + "\nКонец: " + dateEnd.dayOfMonth.toString() + ":" +
+                            dateEnd.monthValue + ":" + dateEnd.year +
+                            " - " + dateEnd.hour + ":%02d".format(dateEnd.minute.toInt())
+                }
+                else {
+                    string = "Начало: " + event.starts_at
+                    string = string + "\nКонец: " + event.ends_at
+                }
+
                 holder.itemView.textOfHead.text = string
                 holder.itemView.textOfHead.movementMethod = ScrollingMovementMethod()
                 holder.itemView.head.text = "Когда"

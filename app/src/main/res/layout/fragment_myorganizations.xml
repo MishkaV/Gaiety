@@ -22,10 +22,14 @@
 
             <TextView
                 android:id="@+id/headMyOrganizations"
-                android:layout_width="323dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/comfortaa_bold"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="80dp"
                 android:gravity="center_vertical"
+                android:fontFamily="@font/comfortaa_bold"
                 android:text="@string/myOrganisation"
                 android:textSize="36sp" />
 

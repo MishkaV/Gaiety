@@ -35,12 +35,6 @@ class NumAdapterMyOrganizations(
     }
 
     class NumHolder(view: View, var homeFeed: Client) : RecyclerView.ViewHolder(view) {
-        init {
-            view.setOnClickListener {
-                val intent = Intent(view.context, ItemMore::class.java)
-                intent.putExtra("organizationId", homeFeed.organizations.get(adapterPosition).id)
-                view.context.startActivity(intent)
-            }
-        }
+        //NumHolder
     }
 }

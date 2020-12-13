@@ -12,10 +12,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import View.Fragments.MeScreen.MyTicketsScreen.MyTicketsFragment
 import android.content.Intent
+import android.os.Build
 import com.google.android.gms.common.api.Api
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.recyclerview_item.view.*
 import kotlinx.android.synthetic.main.recyclerview_item_mytickets.view.*
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class NumAdapterMyTickets(
     val homeFeed: Client
@@ -28,7 +31,16 @@ class NumAdapterMyTickets(
     override fun onBindViewHolder(holder: NumHolder, position: Int) {
         holder.itemView.myticketsName.text = homeFeed.orders.get(position).event.name
         holder.itemView.myticketsCity.text = homeFeed.orders.get(position).event.city
-        holder.itemView.myticketsDate.text = homeFeed.orders.get(position).event.starts_at
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ")
+            val date = LocalDateTime.parse(homeFeed.orders.get(position).event.starts_at, formatter)
+            holder.itemView.myticketsDate.text =
+                "Дата: " + date.dayOfMonth.toString() + ":" + date.monthValue + ":" + date.year +
+                        "\nВремя: " + date.hour + ":%02d".format(date.minute.toInt())
+        }
+        else
+            holder.itemView.myticketsDate.text = homeFeed.orders.get(position).event.starts_at
+
 
         if (homeFeed.orders.get(position).organization.logo_image == null) {
             holder.itemView.myticketsImageUrl.setImageResource(R.drawable.logo)
@@ -40,13 +52,7 @@ class NumAdapterMyTickets(
     }
 
     class NumHolder(view: View, var homeFeed: Client) : RecyclerView.ViewHolder(view) {
-        init {
-            view.setOnClickListener {
-                val intent = Intent(view.context, ItemMore::class.java)
-                intent.putExtra("orderId", homeFeed.orders.get(adapterPosition).id)
-                view.context.startActivity(intent)
-            }
-        }
+        //NumHolder
     }
 
     override fun getItemCount(): Int {
