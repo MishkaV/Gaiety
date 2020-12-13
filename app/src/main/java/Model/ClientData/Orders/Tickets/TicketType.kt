@@ -7,7 +7,7 @@ data class TicketType (
     val buy_amount_min: Int,
     val buy_amount_max: Int,
     val price: Int,
-    val is_promocode_locked: Int,
+    val is_promocode_locked: Boolean,
     val remaining: Int,
     val sale_ends_at: String,
     val sale_starts_at: String,

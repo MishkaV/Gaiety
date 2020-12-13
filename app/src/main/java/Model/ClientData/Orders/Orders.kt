@@ -11,7 +11,6 @@ data class Orders (
     val mail: String,
     val payment: Payment,
     val tickets: List<Tickets>,
-    val promocodes: List<String>,
     val event: Event,
     val organization: Organizations,
     val subscribed_to_newsletter: Boolean

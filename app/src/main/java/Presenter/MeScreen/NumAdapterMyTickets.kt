@@ -21,9 +21,9 @@ class NumAdapterMyTickets(
     val homeFeed: Client
 ) : RecyclerView.Adapter<NumAdapterMyTickets.NumHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NumAdapterMyTickets.NumHolder {
-        val itemHolder = LayoutInflater.from(parent?.context).inflate(R.layout.recyclerview_item, parent, false)
-        return NumAdapterMyTickets.NumHolder(itemHolder, homeFeed)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NumHolder {
+        val itemHolder = LayoutInflater.from(parent?.context).inflate(R.layout.recyclerview_item_mytickets, parent, false)
+        return NumHolder(itemHolder, homeFeed)
     }
     override fun onBindViewHolder(holder: NumHolder, position: Int) {
         holder.itemView.myticketsName.text = homeFeed.orders.get(position).event.name
@@ -31,11 +31,11 @@ class NumAdapterMyTickets(
         holder.itemView.myticketsDate.text = homeFeed.orders.get(position).event.starts_at
 
         if (homeFeed.orders.get(position).organization.logo_image == null) {
-            holder.itemView.homeImageUrl.setImageResource(R.drawable.logo)
+            holder.itemView.myticketsImageUrl.setImageResource(R.drawable.logo)
         } else {
             Picasso.get()
                 .load(homeFeed.orders.get(position).organization.logo_image.default_url)
-                .into(holder.itemView.homeImageUrl)
+                .into(holder.itemView.myticketsImageUrl)
         }
     }
 
@@ -43,7 +43,7 @@ class NumAdapterMyTickets(
         init {
             view.setOnClickListener {
                 val intent = Intent(view.context, ItemMore::class.java)
-                intent.putExtra("eventId", homeFeed.orders.get(adapterPosition).id)
+                intent.putExtra("orderId", homeFeed.orders.get(adapterPosition).id)
                 view.context.startActivity(intent)
             }
         }

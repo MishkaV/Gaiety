@@ -23,7 +23,7 @@ interface TimepadApiRequests {
     ): Call<Event>
 
     @Headers("Authorization: Bearer ${token}")
-    @GET("/introspect")
+    @GET("/introspect?token=${token}")
     fun getClientData(
     ): Call<Client>
 

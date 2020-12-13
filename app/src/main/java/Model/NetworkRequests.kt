@@ -104,6 +104,8 @@ class NetworkRequests () {
         call.enqueue(
             object : Callback<Client> {
                 override fun onResponse(call: Call<Client>, response: Response<Client>) {
+                    if (response.body()!!.orders.count() == 0)
+                        Log.d(TAG, "AAAAAAAAA FUCK")
                     for (item in response.body()!!.orders)
                         if (!(item in numAdapter.homeFeed.orders)){
                             numAdapter.addItem(item)
