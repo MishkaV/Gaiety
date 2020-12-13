@@ -9,7 +9,7 @@ import retrofit2.http.Headers
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-private const val token: String = "fb5b9e1ef57d53cf3371140fc1e00aabc32ec3fd"
+private const val token: String = "339db094139f6229bbb3a20009c28dd0da832523"
 
 
 interface TimepadApiRequests {

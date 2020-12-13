@@ -1,7 +1,12 @@
 package View.Fragments.MeScreen.MyOrganizationsScreen
 
+import Model.ClientData.Client
+import Model.ClientData.Orders.Orders
+import Model.ClientData.Organizations.Organizations
+import Model.NetworkRequests
 import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gaiety.NumAdapterMyOrganizations
+import com.example.gaiety.NumAdapterMyTickets
 import com.example.gaiety.R
 import com.google.gson.GsonBuilder
 import okhttp3.*
@@ -28,51 +34,41 @@ class MyOrganizationsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        var orientation = RecyclerView.HORIZONTAL
+        var spanCount = 2
         numList = view.findViewById(R.id.recyclerViewMyOrganizations)
-        if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT)
-            numList.layoutManager =
-                GridLayoutManager(requireContext(), 1, RecyclerView.VERTICAL, false)
-        else
-            numList.layoutManager =
-                GridLayoutManager(requireContext(), 2, RecyclerView.VERTICAL, false)
+        if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            orientation = RecyclerView.VERTICAL
+            spanCount = 1
+        }
 
-        fetchJson()
-    }
+        val layoutManager = GridLayoutManager(requireContext(), spanCount, orientation, false)
+        val numAdapter = createNumAdapter()
+        numList.layoutManager = layoutManager
+        numList.adapter = numAdapter
 
-    private fun fetchJson() {
-        var url = "https://api.timepad.ru/v1/events.json?limit=40&"
-        url = url + "skip=0&cities=Москва,Санкт-Петербург&fields=location&sort=+starts_at"
-        val token = "993e92d9a94e12efb66ab5ee29b0fbdba217f725"
-
-        val request = Request.Builder()
-            .url(url)
-            .header("Authorization", "Bearer " + token)
-            .build()
-
-        val client = OkHttpClient()
-        client.newCall(request).enqueue(
-            object : Callback {
-                override fun onResponse(call: Call, response: Response) {
-                    val body = response?.body?.string()
-
-                    val gson = GsonBuilder().create()
-
-                    val homeFeed = gson.fromJson(body, HomeFeed::class.java)
-
-                    val adapter = NumAdapterMyOrganizations(homeFeed)
-
-                    activity?.runOnUiThread {
-                        numList.adapter = adapter
+        numList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (dy > 0) //check for scroll down
+                {
+                    var visibleItemCount = layoutManager.getChildCount()
+                    var totalItemCount = layoutManager.getItemCount()
+                    var pastVisiblesItems = layoutManager.findFirstVisibleItemPosition()
+                    if (visibleItemCount + pastVisiblesItems >= totalItemCount) {
+                        Log.v("TAG", "Last Item Wow !")
+                        NetworkRequests().myOrganizationsRequest(numAdapter)
                     }
                 }
-
-                override fun onFailure(call: Call, e: IOException) {
-                    println("Bad request")
-                }
             }
-        )
+        })
+
+        NetworkRequests().myOrganizationsRequest(numAdapter)
     }
 
-    class HomeFeed(val total: Int, val values: List<Organization>)
-    class Organization(val name: String)
+    fun createNumAdapter(): NumAdapterMyOrganizations {
+        val client = Client(true, "","","", listOf<Organizations>(), listOf<Orders>())
+        val numAdapter = NumAdapterMyOrganizations(client)
+        return numAdapter
+    }
+
 }
