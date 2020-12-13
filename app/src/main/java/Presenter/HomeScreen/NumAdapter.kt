@@ -34,11 +34,15 @@ class NumAdapter(var homeFeed: Event) : RecyclerView.Adapter<NumAdapter.NumHolde
     override fun onBindViewHolder(holder: NumHolder, position: Int) {
         holder.itemView.homeName.text = Html.fromHtml(homeFeed.values.get(position).name)
         holder.itemView.homeCity.text = homeFeed.values.get(position).location.city
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ")
-        val date =  LocalDateTime.parse(homeFeed.values.get(position).starts_at, formatter)
-        holder.itemView.homeDate.text = "Дата: " + date.dayOfMonth.toString() + ":" + date.monthValue + ":" + date.year +
-                 "\nВремя: " + date.hour + ":%02d".format(date.minute.toInt())
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ")
+            val date = LocalDateTime.parse(homeFeed.values.get(position).starts_at, formatter)
+            holder.itemView.homeDate.text =
+                "Дата: " + date.dayOfMonth.toString() + ":" + date.monthValue + ":" + date.year +
+                        "\nВремя: " + date.hour + ":%02d".format(date.minute.toInt())
+        }
+        else
+            holder.itemView.homeDate.text = homeFeed.values.get(position).starts_at
         if (homeFeed?.values?.get(position)?.poster_image == null) {
             holder.itemView.homeImageUrl.setImageResource(R.drawable.logo)
         } else {
