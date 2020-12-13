@@ -206,7 +206,6 @@ class MainActivity : AppCompatActivity() {
                 makeCurrentFragment(resetPasswordFragment, "resetPasswordFragment")
             }
             R.id.resetButtonFrag -> resetPassword()
-
         }
     }
 }

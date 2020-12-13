@@ -24,7 +24,6 @@ class ItemMore : AppCompatActivity() {
         val eventId = intent.getIntExtra("eventId", 0)
         itemRecycler = findViewById(R.id.recyclerViewItemMore)
         itemRecycler.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
-
         if (eventId != 0) {
             NetworkRequests().eventDescriptionRequest(itemRecycler, image,eventId)
         }
