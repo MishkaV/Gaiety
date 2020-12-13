@@ -32,25 +32,17 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="12dp"
-            android:layout_weight="1"
+            android:layout_weight="0.5"
             android:onClick="onClick"
             android:text="@string/myTickets" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/favoriteEventsMe"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="12dp"
-            android:layout_weight="1"
-            android:onClick="onClick"
-            android:text="@string/favoriteEvents" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/myOrganizationsMe"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="12dp"
-            android:layout_weight="1"
+            android:layout_weight="0.5"
             android:onClick="onClick"
             android:text="@string/myOrganisation" />
 
@@ -59,7 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="12dp"
-            android:layout_weight="1"
+            android:layout_weight="0.5"
             android:onClick="onClick"
             android:text="@string/leave" />
     </LinearLayout>

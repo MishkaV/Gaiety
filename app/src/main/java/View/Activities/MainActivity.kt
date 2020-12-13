@@ -15,7 +15,6 @@ import View.Fragments.HomeScreen.HomeFragment
 import View.Fragments.LoginScreen.LoginFragment
 import View.Fragments.LoginScreen.resetPassword.ResetPasswordFragment
 import View.Fragments.MeScreen.MyOrganizationsScreen.AddOrganizationScreen.AddOrganizationFragment
-import View.Fragments.MeScreen.FavoriteEventsScreen.FavoriteFragment
 import View.Fragments.MeScreen.MeFragment
 import View.Fragments.MeScreen.MyOrganizationsScreen.MyOrganizationsFragment
 import View.Fragments.MeScreen.MyTicketsScreen.MyTicketsFragment
@@ -34,7 +33,6 @@ class MainActivity : AppCompatActivity() {
     lateinit var myTicketsFrag: MyTicketsFragment
     lateinit var myOrganizationsFrag: MyOrganizationsFragment
     lateinit var addOrganizationFrag: AddOrganizationFragment
-    lateinit var favoriteFrag: FavoriteFragment
     lateinit var meFrag: MeFragment
     lateinit var startFrag: StartFragment
     lateinit var mainFrag: MainFragment
@@ -51,7 +49,6 @@ class MainActivity : AppCompatActivity() {
         myTicketsFrag = MyTicketsFragment()
         myOrganizationsFrag = MyOrganizationsFragment()
         addOrganizationFrag = AddOrganizationFragment()
-        favoriteFrag = FavoriteFragment()
         meFrag = MeFragment()
         startFrag = StartFragment()
         mainFrag = MainFragment()
@@ -188,7 +185,6 @@ class MainActivity : AppCompatActivity() {
                 registration()
             }
             R.id.myTicketsMe -> makeCurrentFragmentMain(myTicketsFrag, "myTicketsFrag")
-            R.id.favoriteEventsMe -> makeCurrentFragmentMain(favoriteFrag, "homeFrag")
             R.id.myOrganizationsMe -> makeCurrentFragmentMain(myOrganizationsFrag, "myOrganizationFrag")
             R.id.floating_action_button_myorganizations ->
                 makeCurrentFragmentMain(addOrganizationFrag, "addOrganizationFrag")
