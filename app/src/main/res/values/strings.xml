@@ -29,4 +29,7 @@
     <string name="registrationUpper">ЗАРЕГИСТРИРОВАТЬСЯ</string>
     <string name="loginUpper">ВОЙТИ</string>
     <string name="registerUpperSimple">РЕГИСТАЦИЯ</string>
+    <string name="resetPasswordQuest">Забыли пароль?</string>
+    <string name="resetPasswordText">Сброс пароля</string>
+    <string name="reset">Сброс</string>
 </resources>

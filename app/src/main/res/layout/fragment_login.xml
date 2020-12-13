@@ -74,5 +74,18 @@
         android:layout_below="@+id/passwordEditLayoutLog"
         android:layout_centerHorizontal="true"
         />
-
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/resetButton"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:text="@string/resetPasswordQuest"
+        android:layout_below="@+id/loginButtonFrag"
+        android:layout_centerHorizontal="true"
+        android:background="@android:color/transparent"
+        android:textColor="@color/colorPrimary"
+        android:onClick="onClick"
+        />
 </RelativeLayout>

@@ -13,6 +13,7 @@ import View.Fragments.*
 import View.Fragments.HomeScreen.DetailsScreen.ItemRecyclerMore
 import View.Fragments.HomeScreen.HomeFragment
 import View.Fragments.LoginScreen.LoginFragment
+import View.Fragments.LoginScreen.resetPassword.ResetPasswordFragment
 import View.Fragments.MeScreen.MyOrganizationsScreen.AddOrganizationScreen.AddOrganizationFragment
 import View.Fragments.MeScreen.FavoriteEventsScreen.FavoriteFragment
 import View.Fragments.MeScreen.MeFragment
@@ -24,6 +25,9 @@ import com.example.gaiety.R
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.android.synthetic.main.fragment_register.*
+import kotlinx.android.synthetic.main.fragment_reset_password.*
+
+private const val TAG = "TAG"
 
 class MainActivity : AppCompatActivity() {
     lateinit var homeFrag: HomeFragment
@@ -37,6 +41,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var itemFrag: ItemRecyclerMore
     lateinit var loginFrag: LoginFragment
     lateinit var registerFrag: RegisterFragment
+    lateinit var resetPasswordFragment: ResetPasswordFragment
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +57,8 @@ class MainActivity : AppCompatActivity() {
         mainFrag = MainFragment()
         loginFrag = LoginFragment()
         registerFrag = RegisterFragment()
+        resetPasswordFragment = ResetPasswordFragment()
+
 
         makeCurrentFragment(startFrag, "startFrag")
     }
@@ -141,6 +149,34 @@ class MainActivity : AppCompatActivity() {
         } else passwordEditLayoutReg.error = "Введите пароль"
     }
 
+    fun resetPassword(){
+        mailResetLayout?.error = null
+        if (mailResetText?.text.toString() != "") {
+            val email = mailResetText?.text.toString()
+
+            FirebaseAuth.getInstance().sendPasswordResetEmail(email)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Log.d(TAG, "Email sent.")
+                        Toast.makeText(
+                            this,
+                            "Email sent.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                     else {
+                         Toast.makeText(
+                             this,
+                             "Sorry, but there is no such email",
+                             Toast.LENGTH_SHORT
+                         ).show()
+                         return@addOnCompleteListener
+                     }
+                }
+        } else
+            mailResetLayout?.error = "Введите почту"
+    }
+
     fun onClick(view: View) {
         when (view.id) {
             R.id.loginButton -> makeCurrentFragment(loginFrag, "loginFrag")
@@ -166,6 +202,11 @@ class MainActivity : AppCompatActivity() {
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://afisha.timepad.ru/"))
                 startActivity(intent)
             }
+            R.id.resetButton -> {
+                makeCurrentFragment(resetPasswordFragment, "resetPasswordFragment")
+            }
+            R.id.resetButtonFrag -> resetPassword()
+
         }
     }
 }
