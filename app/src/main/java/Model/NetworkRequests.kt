@@ -1,5 +1,7 @@
 package Model
 
+import Model.ClientData.Client
+import Model.ClientData.Orders.Orders
 import Model.EventData.Event
 import Model.EventDescriptionData.EventDescription
 import Presenter.HomeScreen.DetailsScreen.ItemMoreAdapter
@@ -7,6 +9,9 @@ import Presenter.HomeScreen.NumAdapter
 import android.util.Log
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.gaiety.NumAdapterMyOrganizations
+import com.example.gaiety.NumAdapterMyTickets
+import com.google.android.gms.common.api.Api
 import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -90,4 +95,51 @@ class NetworkRequests () {
             })
     }
 
+    fun myTicketsRequest(
+        numAdapter: NumAdapterMyTickets
+    ){
+        val api = createRetrofit(urlTimepad)
+        val timepadApiRequests = api.create(TimepadApiRequests::class.java)
+        val call = timepadApiRequests.getClientData()
+
+        call.enqueue(
+            object : Callback<Client> {
+                override fun onResponse(call: Call<Client>, response: Response<Client>) {
+                    for (item in response.body()!!.orders)
+                        if (!(item in numAdapter.homeFeed.orders)){
+                            numAdapter.addItem(item)
+                        }
+                    numAdapter.notifyDataSetChanged()
+                    Log.d(TAG, "Success")
+                }
+                override fun onFailure(call: Call<Client>, t: Throwable) {
+                    Log.d(TAG, t.localizedMessage)
+                }
+            })
+    }
+
+    fun myOrganizationsRequest(
+        numAdapter: NumAdapterMyOrganizations
+    ){
+        val api = createRetrofit(urlTimepad)
+        val timepadApiRequests = api.create(TimepadApiRequests::class.java)
+        val call = timepadApiRequests.getClientData()
+
+        call.enqueue(
+            object : Callback<Client> {
+                override fun onResponse(call: Call<Client>, response: Response<Client>) {
+                    for (item in response.body()!!.organizations)
+                        if (!(item in numAdapter.homeFeed.organizations)){
+                            numAdapter.addItem(item)
+                        }
+                    numAdapter.notifyDataSetChanged()
+                    Log.d(TAG, "Success")
+                }
+                override fun onFailure(call: Call<Client>, t: Throwable) {
+                    Log.d(TAG, t.localizedMessage)
+                }
+            })
+    }
+
 }
+
