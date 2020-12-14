@@ -39,7 +39,7 @@ class NumAdapter(var homeFeed: Event) : RecyclerView.Adapter<NumAdapter.NumHolde
             val date = LocalDateTime.parse(homeFeed.values.get(position).starts_at, formatter)
             holder.itemView.homeDate.text =
                 "Дата: " + date.dayOfMonth.toString() + ":" + date.monthValue + ":" + date.year +
-                        "\nВремя: " + date.hour + ":%02d".format(date.minute.toInt())
+                        "\nВремя: " + date.hour + ":" + date.minute.toInt().format(2)
         }
         else
             holder.itemView.homeDate.text = homeFeed.values.get(position).starts_at
@@ -51,6 +51,8 @@ class NumAdapter(var homeFeed: Event) : RecyclerView.Adapter<NumAdapter.NumHolde
                 .into(holder.itemView.homeImageUrl)
         }
     }
+
+    private fun Int.format(digits: Int) = "%0${digits}d".format(this)
 
     override fun getItemCount(): Int {
         return homeFeed.values.count()
