@@ -3,6 +3,7 @@ package Model
 import Model.ClientData.Client
 import Model.ClientData.Orders.Orders
 import Model.EventData.Event
+import Model.EventData.Value
 import Model.EventDescriptionData.EventDescription
 import Presenter.HomeScreen.DetailsScreen.ItemMoreAdapter
 import Presenter.HomeScreen.NumAdapter
@@ -25,7 +26,7 @@ private const val TAG  = "TAG"
 private const val TAG_EVEN_DESCRIPTION  = "TAG_EVEN_DESCRIPTION"
 
 
-class NetworkRequests () {
+class NetworkRequests <T> () {
     private val urlTimepad: String = "https://api.timepad.ru"
 
     private fun createRetrofit(url : String) : Retrofit {

@@ -1,5 +1,9 @@
 package Model.EventData
 
+import android.util.Log
+
 abstract class Meta(val meta : String) {
-    abstract fun LogMeta()
+    open fun LogMeta() {
+        Log.d("TAG", "Succuss EventData")
+    }
 }

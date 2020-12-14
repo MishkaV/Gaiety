@@ -56,13 +56,13 @@ class MyOrganizationsFragment : Fragment() {
                     var pastVisiblesItems = layoutManager.findFirstVisibleItemPosition()
                     if (visibleItemCount + pastVisiblesItems >= totalItemCount) {
                         Log.v("TAG", "Last Item Wow !")
-                        NetworkRequests().myOrganizationsRequest(numAdapter)
+                        NetworkRequests<String>().myOrganizationsRequest(numAdapter)
                     }
                 }
             }
         })
 
-        NetworkRequests().myOrganizationsRequest(numAdapter)
+        NetworkRequests<String>().myOrganizationsRequest(numAdapter)
     }
 
     fun createNumAdapter(): NumAdapterMyOrganizations {

@@ -63,13 +63,13 @@ class MyTicketsFragment : Fragment() {
                     var pastVisiblesItems = layoutManager.findFirstVisibleItemPosition()
                     if (visibleItemCount + pastVisiblesItems >= totalItemCount) {
                         Log.v("TAG", "Last Item Wow !")
-                        NetworkRequests().myTicketsRequest(numAdapter)
+                        NetworkRequests<String>().myTicketsRequest(numAdapter)
                     }
                 }
             }
         })
 
-        NetworkRequests().myTicketsRequest(numAdapter)
+        NetworkRequests<String>().myTicketsRequest(numAdapter)
     }
 
     fun createNumAdapter(): NumAdapterMyTickets {
