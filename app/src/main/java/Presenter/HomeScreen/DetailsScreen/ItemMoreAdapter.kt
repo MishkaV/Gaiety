@@ -53,10 +53,10 @@ class ItemMoreAdapter(val event: EventDescription, val image: ImageView) : Recyc
 
                     string = "Начало: " + dateBegin.dayOfMonth.toString() + ":" +
                             dateBegin.monthValue + ":" + dateBegin.year +
-                            " - " + dateBegin.hour + ":%02d".format(dateBegin.minute.toInt())
+                            " - " + dateBegin.hour + ":" + dateBegin.minute.toInt().format(2)
                     string = string + "\nКонец: " + dateEnd.dayOfMonth.toString() + ":" +
                             dateEnd.monthValue + ":" + dateEnd.year +
-                            " - " + dateEnd.hour + ":%02d".format(dateEnd.minute.toInt())
+                            " - " + dateEnd.hour + ":" + dateEnd.minute.toInt().format(2)
                 }
                 else {
                     string = "Начало: " + event.starts_at
@@ -80,6 +80,8 @@ class ItemMoreAdapter(val event: EventDescription, val image: ImageView) : Recyc
             }
         }
     }
+
+    fun Int.format(digits: Int) = "%0${digits}d".format(this)
 
     override fun getItemCount(): Int {
         return 3

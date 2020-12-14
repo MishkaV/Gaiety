@@ -1,4 +1,5 @@
 package Model.EventData
 
-class Meta(
-)
+abstract class Meta(val meta : String) {
+    abstract fun LogMeta()
+}

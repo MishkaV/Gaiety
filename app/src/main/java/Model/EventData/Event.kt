@@ -1,6 +1,6 @@
 package Model.EventData
 
-data class Event(
+class Event(
     val total: Int,
     var values: List<Value>
 ){
