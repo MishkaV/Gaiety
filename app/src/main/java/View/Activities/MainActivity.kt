@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity() {
         makeCurrentFragment(startFrag, "startFrag")
     }
 
-    private fun <T> makeCurrentFragment(fragment: Fragment, name: T) {
+    private fun makeCurrentFragment(fragment: Fragment, name: String) {
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.window_fragment, fragment)
             addToBackStack(name.toString())
@@ -68,7 +68,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun <T> makeCurrentFragmentMain(fragment: Fragment, name: T) {
+    private fun makeCurrentFragmentMain(fragment: Fragment, name: String) {
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.main_fragment, fragment)
             addToBackStack(name.toString())

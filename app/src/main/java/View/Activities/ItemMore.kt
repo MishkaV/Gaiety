@@ -25,7 +25,7 @@ class ItemMore : AppCompatActivity() {
         itemRecycler = findViewById(R.id.recyclerViewItemMore)
         itemRecycler.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
         if (eventId != 0) {
-            NetworkRequests<String>().eventDescriptionRequest(itemRecycler, image,eventId)
+            NetworkRequests().eventDescriptionRequest(itemRecycler, image,eventId)
         }
     }
 }

@@ -9,6 +9,7 @@ import Presenter.HomeScreen.DetailsScreen.ItemMoreAdapter
 import Presenter.HomeScreen.NumAdapter
 import android.util.Log
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gaiety.NumAdapterMyOrganizations
 import com.example.gaiety.NumAdapterMyTickets
@@ -26,7 +27,7 @@ private const val TAG  = "TAG"
 private const val TAG_EVEN_DESCRIPTION  = "TAG_EVEN_DESCRIPTION"
 
 
-class NetworkRequests <T> () {
+class NetworkRequests () {
     private val urlTimepad: String = "https://api.timepad.ru"
 
     private fun createRetrofit(url : String) : Retrofit {
@@ -55,20 +56,25 @@ class NetworkRequests <T> () {
         val timepadApiRequests = api.create(TimepadApiRequests::class.java)
         val call = timepadApiRequests.getEventData(10,skip,"location","+starts_at")
 
-        call.enqueue(
-            object : Callback<Event> {
-                override fun onResponse(call: Call<Event>, response: Response<Event>) {
-                    for (item in response.body()!!.values)
-                        if (!(item in numAdapter.homeFeed.values)){
-                            numAdapter.addItem(item)
-                        }
-                    numAdapter.notifyDataSetChanged()
-                    Log.d(TAG, "Success")
-                }
-                override fun onFailure(call: Call<Event>, t: Throwable) {
-                    Log.d(TAG, t.localizedMessage)
-                }
-            })
+        if (numAdapter.itemCount < 130) {
+            call.enqueue(
+                object : Callback<Event> {
+                    override fun onResponse(call: Call<Event>, response: Response<Event>) {
+                        for (item in response.body()!!.values)
+                            if (!(item in numAdapter.homeFeed.values)) {
+                                numAdapter.addItem(item)
+                            }
+                        numAdapter.notifyDataSetChanged()
+                        Log.d(TAG, "Success")
+                    }
+
+                    override fun onFailure(call: Call<Event>, t: Throwable) {
+                        Log.d(TAG, t.localizedMessage)
+                    }
+                })
+        }
+        else
+            Log.d(TAG, "Stop or will be overload")
     }
 
     fun eventDescriptionRequest(
@@ -122,27 +128,6 @@ class NetworkRequests <T> () {
     fun myOrganizationsRequest(
         numAdapter: NumAdapterMyOrganizations
     ){
-        val api = createRetrofit(urlTimepad)
-        val timepadApiRequests = api.create(TimepadApiRequests::class.java)
-        val call = timepadApiRequests.getClientData()
-
-        call.enqueue(
-            object : Callback<Client> {
-                override fun onResponse(call: Call<Client>, response: Response<Client>) {
-                    for (item in response.body()!!.organizations)
-                        if (!(item in numAdapter.homeFeed.organizations)){
-                            numAdapter.addItem(item)
-                        }
-                    numAdapter.notifyDataSetChanged()
-                    Log.d(TAG, "Success")
-                }
-                override fun onFailure(call: Call<Client>, t: Throwable) {
-                    Log.d(TAG, t.localizedMessage)
-                }
-            })
-    }
-
-    fun logRequest(item : T, numAdapter: NumAdapterMyOrganizations){
         val api = createRetrofit(urlTimepad)
         val timepadApiRequests = api.create(TimepadApiRequests::class.java)
         val call = timepadApiRequests.getClientData()

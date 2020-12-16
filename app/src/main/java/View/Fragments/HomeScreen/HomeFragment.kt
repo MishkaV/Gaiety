@@ -51,14 +51,13 @@ class HomeFragment : Fragment() {
                     var totalItemCount = layoutManager.getItemCount()
                     var pastVisiblesItems = layoutManager.findFirstVisibleItemPosition()
                     if (visibleItemCount + pastVisiblesItems >= totalItemCount) {
-                        Log.v("TAG", "Last Item Wow !")
-                        NetworkRequests<String>().eventRequest(numList, totalItemCount, numAdapter)
+                        NetworkRequests().eventRequest(numList, totalItemCount, numAdapter)
                     }
                 }
             }
         })
 
-        NetworkRequests<String>().eventRequest(numList, 0, numAdapter)
+        NetworkRequests().eventRequest(numList, 0, numAdapter)
     }
 
     fun createNumAdapter(): NumAdapter {

@@ -1,7 +1,5 @@
 package Model.EventDescriptionData
 
-import Model.EventData.Event
-
 data class EventDescription(
     val access_status: String,
     val ad_partner_percent: Int,
