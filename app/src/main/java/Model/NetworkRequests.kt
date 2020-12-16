@@ -142,5 +142,25 @@ class NetworkRequests <T> () {
             })
     }
 
+    fun logRequest(item : T, numAdapter: NumAdapterMyOrganizations){
+        val api = createRetrofit(urlTimepad)
+        val timepadApiRequests = api.create(TimepadApiRequests::class.java)
+        val call = timepadApiRequests.getClientData()
+
+        call.enqueue(
+            object : Callback<Client> {
+                override fun onResponse(call: Call<Client>, response: Response<Client>) {
+                    for (item in response.body()!!.organizations)
+                        if (!(item in numAdapter.homeFeed.organizations)){
+                            numAdapter.addItem(item)
+                        }
+                    numAdapter.notifyDataSetChanged()
+                    Log.d(TAG, "Success")
+                }
+                override fun onFailure(call: Call<Client>, t: Throwable) {
+                    Log.d(TAG, t.localizedMessage)
+                }
+            })
+    }
 }
 
