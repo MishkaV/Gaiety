@@ -5,6 +5,7 @@ import View.Activities.ItemMore
 import android.os.Build
 import android.text.Html
 import android.text.method.ScrollingMovementMethod
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,7 +37,6 @@ class ItemMoreAdapter(val event: EventDescription, val image: ImageView) : Recyc
                 .load(event.poster_image.default_url)
                 .into(image)
         }
-
         when (position) {
             0 -> {
                 holder.itemView.textOfHead.text = Html.fromHtml(event.description_html)

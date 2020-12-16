@@ -1,39 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="View.Activities.ItemMore"
     android:orientation="vertical"
-    android:weightSum="100"
-    >
+    tools:context="View.Activities.ItemMore">
 
-    <ImageView
-        android:id="@+id/itemImageUrl"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:scaleType="centerCrop"
-        android:adjustViewBounds="true"
-        android:layout_weight="25"/>
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:weightSum="100">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewItemMore"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:padding="12dp"
-        tools:listitem="@layout/recyclerview_item"
-        android:layout_weight="75"
-        />
+        <ImageView
+            android:id="@+id/itemImageUrl"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="25"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewItemMore"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="75"
+            android:padding="12dp"
+            tools:listitem="@layout/recyclerview_item" />
+    </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floating_button_like"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-        android:layout_marginEnd="24dp"
+        android:layout_gravity="bottom|center_horizontal"
         android:layout_marginBottom="24dp"
-        android:onClick="onClick"
-        app:srcCompat="@drawable/ic_add_black"
+        android:backgroundTint="@color/colorPrimary"
+        app:borderWidth="0dp"
+        app:srcCompat="@drawable/ic_favorite_white_24dp"
+        app:tint="@color/colorWhite"
         tools:ignore="RtlHardcoded" />
-</LinearLayout>
+</FrameLayout>
