@@ -56,7 +56,7 @@ class NetworkRequests () {
         val timepadApiRequests = api.create(TimepadApiRequests::class.java)
         val call = timepadApiRequests.getEventData(10,skip,"location","+starts_at")
 
-        if (numAdapter.itemCount < 130) {
+        if (numAdapter.itemCount < 100) {
             call.enqueue(
                 object : Callback<Event> {
                     override fun onResponse(call: Call<Event>, response: Response<Event>) {
