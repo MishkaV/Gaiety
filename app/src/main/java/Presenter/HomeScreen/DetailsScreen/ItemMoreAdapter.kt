@@ -13,11 +13,13 @@ import android.widget.ImageView
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gaiety.R
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.recyclerview_item.view.*
 import kotlinx.android.synthetic.main.recyclerview_item_more.view.*
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+
 
 class ItemMoreAdapter(val event: EventDescription, val image: ImageView) : RecyclerView.Adapter<ItemMoreAdapter.ItemHolder>() {
 
@@ -86,6 +88,7 @@ class ItemMoreAdapter(val event: EventDescription, val image: ImageView) : Recyc
     override fun getItemCount(): Int {
         return 3
     }
+
     class ItemHolder(view: View) : RecyclerView.ViewHolder(view) {
         // ItemHolder
     }

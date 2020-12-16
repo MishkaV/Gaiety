@@ -58,4 +58,6 @@ dependencies {
     //noinspection GradleCompatible
     implementation 'com.android.support:design:25.1.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
+    implementation 'com.jackandphantom.android:androidlikebutton:1.2.0'
+    implementation 'com.google.firebase:firebase-firestore:18.1.0'
 }

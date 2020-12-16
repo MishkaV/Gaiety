@@ -1,5 +1,6 @@
 package Model.EventData
 
+
 data class Location(
     val address: String,
     val city: String,

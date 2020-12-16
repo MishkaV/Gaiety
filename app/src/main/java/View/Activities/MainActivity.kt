@@ -25,7 +25,6 @@ import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.android.synthetic.main.fragment_register.*
 import kotlinx.android.synthetic.main.fragment_reset_password.*
-
 private const val TAG = "TAG"
 
 class MainActivity : AppCompatActivity() {
