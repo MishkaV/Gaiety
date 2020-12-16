@@ -5,15 +5,7 @@
     android:layout_height="match_parent"
     tools:context="View.Fragments.MeScreen.MeFragment">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/photo_select"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="12dp"
-        android:layout_weight="0.5"
-        android:background="@drawable/rounded_select_photo"
-        android:onClick="onClick"
-        android:text="@string/myOrganisation" />
+    
 
     <LinearLayout
         android:id="@+id/framePersonalButtons"
