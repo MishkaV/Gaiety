@@ -73,6 +73,32 @@ class NetworkRequests () {
             Log.d(TAG, "Stop or will be overload")
     }
 
+    fun eventRequestFilteredByCity(
+        numList: RecyclerView,
+        skip: Int,
+        numAdapter: NumAdapter,
+        cities: String
+    ){
+        val api = createRetrofit(urlTimepad)
+        val timepadApiRequests = api.create(TimepadApiRequests::class.java)
+        val call = timepadApiRequests.getEventDataFilteredByCity(10, skip, cities, "location", "+starts_at")
+
+        call.enqueue(
+            object : Callback<Event> {
+                override fun onResponse(call: Call<Event>, response: Response<Event>) {
+                    for (item in response.body()!!.values)
+                        if (item !in numAdapter.homeFeed.values){
+                            numAdapter.addItem(item)
+                        }
+                    numAdapter.notifyDataSetChanged()
+                    Log.d(TAG, "Success")
+                }
+                override fun onFailure(call: Call<Event>, t: Throwable) {
+                    Log.d(TAG, t.localizedMessage)
+                }
+            })
+    }
+
     fun eventDescriptionRequest(
         numList: RecyclerView,
         image: ImageView,

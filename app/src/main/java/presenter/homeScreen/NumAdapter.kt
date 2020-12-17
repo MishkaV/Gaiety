@@ -56,6 +56,9 @@ class NumAdapter(var homeFeed: Event) : RecyclerView.Adapter<NumAdapter.NumHolde
         homeFeed.values  = homeFeed.values + item
     }
 
+    fun removeAllItems() {
+        homeFeed.values = emptyList()
+    }
 
     class NumHolder(view: View, var homeFeed: Event) : RecyclerView.ViewHolder(view) {
         init {
