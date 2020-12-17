@@ -23,6 +23,16 @@ interface TimepadApiRequests {
     ): Call<Event>
 
     @Headers("Authorization: Bearer ${token}")
+    @GET("/v1/events.json")
+    fun getEventDataFilteredByCity(
+        @Query("limit") limit : Int,
+        @Query("skip") skip : Int,
+        @Query("cities") cities : String,
+        @Query("fields") fields : String,
+        @Query("sort") sort : String
+    ): Call<Event>
+
+    @Headers("Authorization: Bearer ${token}")
     @GET("/introspect?token=${token}")
     fun getClientData(
     ): Call<Client>
