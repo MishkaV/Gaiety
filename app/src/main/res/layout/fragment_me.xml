@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="View.Fragments.MeScreen.MeFragment">
+    tools:context="view.fragments.meScreen.MeFragment">
 
     
 
@@ -47,6 +47,16 @@
             android:layout_weight="0.5"
             android:onClick="onClick"
             android:text="@string/myOrganisation" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/aboutMe"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="12dp"
+            android:layout_weight="0.5"
+            android:onClick="onClick"
+            android:text="ИНФОРМАЦИЯ О СЕБЕ" />
+
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/exitMe"
