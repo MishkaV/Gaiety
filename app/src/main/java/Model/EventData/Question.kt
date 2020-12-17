@@ -6,7 +6,7 @@ data class Question(
     @SerializedName("comment")
     val comment: String,
     @SerializedName("field_id")
-    val field_id: Int,
+    val field_id: String,
     @SerializedName("is_for_every_visitor")
     val is_for_every_visitor: Boolean,
     @SerializedName("is_mandatory")

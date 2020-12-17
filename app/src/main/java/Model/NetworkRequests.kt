@@ -2,6 +2,7 @@ package Model
 
 import Model.ClientData.Client
 import Model.EventData.Event
+import Model.EventData.Value
 import Model.EventDescriptionData.EventDescription
 import Presenter.HomeScreen.DetailsScreen.ItemMoreAdapter
 import Presenter.HomeScreen.NumAdapter
@@ -74,34 +75,6 @@ class NetworkRequests () {
             Log.d(TAG, "Stop or will be overload")
     }
 
-    fun eventFavoriteRequest(
-        skip: Int,
-        numAdapter: NumAdapterMyFavoriteEvent
-    ){
-        val api = createRetrofit(urlTimepad)
-        val timepadApiRequests = api.create(TimepadApiRequests::class.java)
-        val call = timepadApiRequests.getEventData(10,skip,"location","+starts_at")
-        var arr = listOf<Long>()
-        if (numAdapter.itemCount < 100) {
-            call.enqueue(
-                object : Callback<Event> {
-                    override fun onResponse(call: Call<Event>, response: Response<Event>) {
-                        Log.d(TAG, arr.toString())
-                        for (item in response.body()!!.values)
-                                if (!(item in numAdapter.homeFeed.values))
-                                    firebaseRequests.getFavoriteEvents(numAdapter, item)
-                        Log.d(TAG, "Success")
-                    }
-
-                    override fun onFailure(call: Call<Event>, t: Throwable) {
-                        Log.d(TAG, t.localizedMessage)
-                    }
-                })
-        }
-        else
-            Log.d(TAG, "Stop or will be overload")
-    }
-
     fun eventDescriptionRequest(
         numList: RecyclerView,
         image: ImageView,
@@ -127,7 +100,30 @@ class NetworkRequests () {
             })
     }
 
+    fun eventFavRequest(
+        numAdapter: NumAdapterMyFavoriteEvent,
+        id: Long
+    ){
+        val api = createRetrofit(urlTimepad)
+        val timepadApiRequests = api.create(TimepadApiRequests::class.java)
+        val call = timepadApiRequests.getEventFavData(id.toString())
 
+        call.enqueue(
+            object :Callback<Value> {
+                override fun onFailure(call: Call<Value>, t: Throwable) {
+                    Log.d(TAG_EVEN_DESCRIPTION, t.localizedMessage)
+                }
+
+                override fun onResponse(
+                    call: Call<Value>,
+                    response: Response<Value>
+                ) {
+                    numAdapter.addItem(response.body()!!)
+                    numAdapter.notifyDataSetChanged()
+                    Log.d(TAG_EVEN_DESCRIPTION, "Success")
+                }
+            })
+    }
 
     fun myOrganizationsRequest(
         numAdapter: NumAdapterMyOrganizations

@@ -7,6 +7,7 @@ import Model.EventData.Event
 import Model.EventData.Value
 import Model.NetworkRequests
 import Presenter.HomeScreen.NumAdapter
+import View.Activities.firebaseRequests
 import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
@@ -55,13 +56,13 @@ class MyFavoriteEvents : Fragment() {
                     var pastVisiblesItems = layoutManager.findFirstVisibleItemPosition()
                     if (visibleItemCount + pastVisiblesItems >= totalItemCount) {
                         Log.v("TAG", "Last Item Wow !")
-                        NetworkRequests().eventFavoriteRequest(totalItemCount, numAdapter)
+                        firebaseRequests.getFavoriteEvents(numAdapter)
                     }
                 }
             }
         })
 
-        NetworkRequests().eventFavoriteRequest(0, numAdapter)
+        firebaseRequests.getFavoriteEvents(numAdapter)
     }
 
     fun createNumAdapter(): NumAdapterMyFavoriteEvent {

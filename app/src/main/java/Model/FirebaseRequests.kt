@@ -114,9 +114,9 @@ class FirebaseRequests {
     }
 
     fun getFavoriteEvents(
-        numAdapter: NumAdapterMyFavoriteEvent,
-        item: Value
+        numAdapter: NumAdapterMyFavoriteEvent
     ) {
+
         val storage = FirebaseFirestore
             .getInstance()
             .document("Users/${currentUserMail}")
@@ -127,10 +127,9 @@ class FirebaseRequests {
                         if (p0.exists()){
                             Log.d(LOG_POST_FIREBASE, "Success upload")
                             var arr = p0.get("favorite_events") as List<Long>
-                            if (arr.contains(item.id.toLong())){
-                                numAdapter.addItem(item)
-                                numAdapter.notifyDataSetChanged()
-                                Log.d(LOG_POST_FIREBASE, item.id.toString())
+                            for (r in arr) {
+                                NetworkRequests().eventFavRequest(numAdapter, r)
+                                Log.d(LOG_POST_FIREBASE, r.toString())
                             }
                             Log.d(LOG_POST_FIREBASE, arr.toString())
                         }
