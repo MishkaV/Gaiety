@@ -46,10 +46,10 @@ class ItemMoreAdapter(val event: EventDescription, val image: ImageView) : Recyc
                 holder.itemView.head.text = "Описание"
             }
             1 -> {
-                val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ")
                 var string: String = ""
                 if (event.starts_at != null && event.ends_at != null) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ")
 
                         val dateBegin = LocalDateTime.parse(event.starts_at, formatter)
                         val dateEnd = LocalDateTime.parse(event.ends_at, formatter)

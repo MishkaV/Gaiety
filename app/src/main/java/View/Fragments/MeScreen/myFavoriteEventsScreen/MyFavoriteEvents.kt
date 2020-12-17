@@ -3,7 +3,10 @@ package View.Fragments.MeScreen.myFavoriteEventsScreen
 import Model.ClientData.Client
 import Model.ClientData.Orders.Orders
 import Model.ClientData.Organizations.Organizations
+import Model.EventData.Event
+import Model.EventData.Value
 import Model.NetworkRequests
+import Presenter.HomeScreen.NumAdapter
 import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
@@ -52,18 +55,18 @@ class MyFavoriteEvents : Fragment() {
                     var pastVisiblesItems = layoutManager.findFirstVisibleItemPosition()
                     if (visibleItemCount + pastVisiblesItems >= totalItemCount) {
                         Log.v("TAG", "Last Item Wow !")
-                        NetworkRequests().myTicketsRequest(numAdapter)
+                        NetworkRequests().eventFavoriteRequest(totalItemCount, numAdapter)
                     }
                 }
             }
         })
 
-        NetworkRequests().myTicketsRequest(numAdapter)
+        NetworkRequests().eventFavoriteRequest(0, numAdapter)
     }
 
     fun createNumAdapter(): NumAdapterMyFavoriteEvent {
-        val client = Client(true, "","","", listOf<Organizations>(), listOf<Orders>())
-        val numAdapter = NumAdapterMyFavoriteEvent(client)
+        val event = Event(0, listOf<Value>())
+        val numAdapter = NumAdapterMyFavoriteEvent(event)
         return numAdapter
     }
 }

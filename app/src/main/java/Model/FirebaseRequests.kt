@@ -1,6 +1,11 @@
 package Model
 
+import Model.EventData.Event
+import Model.EventData.Value
+import Presenter.HomeScreen.NumAdapter
 import android.util.Log
+import androidx.recyclerview.widget.RecyclerView
+import com.example.gaiety.NumAdapterMyFavoriteEvent
 import com.google.android.gms.tasks.OnFailureListener
 import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.firestore.DocumentSnapshot
@@ -97,6 +102,37 @@ class FirebaseRequests {
                             Log.d(LOG_POST_FIREBASE, "Success upload")
                             val arr = p0.get("favorite_events") as List<Long>
                             likeButton.setCurrentlyLiked(arr.contains(event.toLong()))
+                        }
+                    }
+                }
+            })
+            .addOnFailureListener(object : OnFailureListener {
+                override fun onFailure(p0: Exception) {
+                    Log.d(LOG_POST_FIREBASE, p0.toString())
+                }
+            })
+    }
+
+    fun getFavoriteEvents(
+        numAdapter: NumAdapterMyFavoriteEvent,
+        item: Value
+    ) {
+        val storage = FirebaseFirestore
+            .getInstance()
+            .document("Users/${currentUserMail}")
+        storage.get()
+            .addOnSuccessListener(object : OnSuccessListener<DocumentSnapshot>{
+                override fun onSuccess(p0: DocumentSnapshot?){
+                    if (p0 != null) {
+                        if (p0.exists()){
+                            Log.d(LOG_POST_FIREBASE, "Success upload")
+                            var arr = p0.get("favorite_events") as List<Long>
+                            if (arr.contains(item.id.toLong())){
+                                numAdapter.addItem(item)
+                                numAdapter.notifyDataSetChanged()
+                                Log.d(LOG_POST_FIREBASE, item.id.toString())
+                            }
+                            Log.d(LOG_POST_FIREBASE, arr.toString())
                         }
                     }
                 }

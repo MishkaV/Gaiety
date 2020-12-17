@@ -5,6 +5,7 @@ import Model.EventData.Event
 import Model.EventDescriptionData.EventDescription
 import Presenter.HomeScreen.DetailsScreen.ItemMoreAdapter
 import Presenter.HomeScreen.NumAdapter
+import View.Activities.firebaseRequests
 import android.util.Log
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
@@ -73,6 +74,34 @@ class NetworkRequests () {
             Log.d(TAG, "Stop or will be overload")
     }
 
+    fun eventFavoriteRequest(
+        skip: Int,
+        numAdapter: NumAdapterMyFavoriteEvent
+    ){
+        val api = createRetrofit(urlTimepad)
+        val timepadApiRequests = api.create(TimepadApiRequests::class.java)
+        val call = timepadApiRequests.getEventData(10,skip,"location","+starts_at")
+        var arr = listOf<Long>()
+        if (numAdapter.itemCount < 100) {
+            call.enqueue(
+                object : Callback<Event> {
+                    override fun onResponse(call: Call<Event>, response: Response<Event>) {
+                        Log.d(TAG, arr.toString())
+                        for (item in response.body()!!.values)
+                                if (!(item in numAdapter.homeFeed.values))
+                                    firebaseRequests.getFavoriteEvents(numAdapter, item)
+                        Log.d(TAG, "Success")
+                    }
+
+                    override fun onFailure(call: Call<Event>, t: Throwable) {
+                        Log.d(TAG, t.localizedMessage)
+                    }
+                })
+        }
+        else
+            Log.d(TAG, "Stop or will be overload")
+    }
+
     fun eventDescriptionRequest(
         numList: RecyclerView,
         image: ImageView,
@@ -98,28 +127,7 @@ class NetworkRequests () {
             })
     }
 
-    fun myTicketsRequest(
-        numAdapter: NumAdapterMyFavoriteEvent
-    ){
-        val api = createRetrofit(urlTimepad)
-        val timepadApiRequests = api.create(TimepadApiRequests::class.java)
-        val call = timepadApiRequests.getClientData()
 
-        call.enqueue(
-            object : Callback<Client> {
-                override fun onResponse(call: Call<Client>, response: Response<Client>) {
-                    for (item in response.body()!!.orders)
-                        if (!(item in numAdapter.homeFeed.orders)){
-                            numAdapter.addItem(item)
-                        }
-                    numAdapter.notifyDataSetChanged()
-                    Log.d(TAG, "Success")
-                }
-                override fun onFailure(call: Call<Client>, t: Throwable) {
-                    Log.d(TAG, t.localizedMessage)
-                }
-            })
-    }
 
     fun myOrganizationsRequest(
         numAdapter: NumAdapterMyOrganizations
