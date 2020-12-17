@@ -56,13 +56,13 @@ class MyFavoriteEvents : Fragment() {
                     var pastVisiblesItems = layoutManager.findFirstVisibleItemPosition()
                     if (visibleItemCount + pastVisiblesItems >= totalItemCount) {
                         Log.v("TAG", "Last Item Wow !")
-                        firebaseRequests.getFavoriteEvents(numAdapter)
+                        firebaseRequests.getFavoriteEvents(numList)
                     }
                 }
             }
         })
 
-        firebaseRequests.getFavoriteEvents(numAdapter)
+        firebaseRequests.getFavoriteEvents(numList)
     }
 
     fun createNumAdapter(): NumAdapterMyFavoriteEvent {

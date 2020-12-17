@@ -114,7 +114,7 @@ class FirebaseRequests {
     }
 
     fun getFavoriteEvents(
-        numAdapter: NumAdapterMyFavoriteEvent
+        numList: RecyclerView
     ) {
 
         val storage = FirebaseFirestore
@@ -128,7 +128,7 @@ class FirebaseRequests {
                             Log.d(LOG_POST_FIREBASE, "Success upload")
                             var arr = p0.get("favorite_events") as List<Long>
                             for (r in arr) {
-                                NetworkRequests().eventFavRequest(numAdapter, r)
+                                NetworkRequests().eventFavRequest(numList.adapter as NumAdapterMyFavoriteEvent, r)
                                 Log.d(LOG_POST_FIREBASE, r.toString())
                             }
                             Log.d(LOG_POST_FIREBASE, arr.toString())

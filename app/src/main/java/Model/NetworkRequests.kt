@@ -110,9 +110,6 @@ class NetworkRequests () {
 
         call.enqueue(
             object :Callback<Value> {
-                override fun onFailure(call: Call<Value>, t: Throwable) {
-                    Log.d(TAG_EVEN_DESCRIPTION, t.localizedMessage)
-                }
 
                 override fun onResponse(
                     call: Call<Value>,
@@ -121,6 +118,10 @@ class NetworkRequests () {
                     numAdapter.addItem(response.body()!!)
                     numAdapter.notifyDataSetChanged()
                     Log.d(TAG_EVEN_DESCRIPTION, "Success")
+                }
+
+                override fun onFailure(call: Call<Value>, t: Throwable) {
+                    Log.d(TAG_EVEN_DESCRIPTION, t.localizedMessage)
                 }
             })
     }
