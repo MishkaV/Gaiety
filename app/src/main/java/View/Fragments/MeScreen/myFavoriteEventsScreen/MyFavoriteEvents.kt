@@ -1,17 +1,9 @@
-package View.Fragments.MeScreen.MyTicketsScreen
+package View.Fragments.MeScreen.myFavoriteEventsScreen
 
 import Model.ClientData.Client
-import Model.ClientData.Orders.Event.Location
 import Model.ClientData.Orders.Orders
-import Model.ClientData.Orders.Payment
-import Model.ClientData.Orders.Status
-import Model.ClientData.Orders.Tickets.Tickets
-import Model.ClientData.Organizations.LogoImage
 import Model.ClientData.Organizations.Organizations
-import Model.EventData.Event
-import Model.EventData.Value
 import Model.NetworkRequests
-import Presenter.HomeScreen.NumAdapter
 import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
@@ -21,13 +13,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.gaiety.NumAdapterMyTickets
+import com.example.gaiety.NumAdapterMyFavoriteEvent
 import com.example.gaiety.R
-import com.google.gson.GsonBuilder
-import okhttp3.*
-import java.io.IOException
 
-class MyTicketsFragment : Fragment() {
+class MyFavoriteEvents : Fragment() {
     lateinit var numList: RecyclerView
 
     override fun onCreateView(
@@ -72,9 +61,9 @@ class MyTicketsFragment : Fragment() {
         NetworkRequests().myTicketsRequest(numAdapter)
     }
 
-    fun createNumAdapter(): NumAdapterMyTickets {
+    fun createNumAdapter(): NumAdapterMyFavoriteEvent {
         val client = Client(true, "","","", listOf<Organizations>(), listOf<Orders>())
-        val numAdapter = NumAdapterMyTickets(client)
+        val numAdapter = NumAdapterMyFavoriteEvent(client)
         return numAdapter
     }
 }

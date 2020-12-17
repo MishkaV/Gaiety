@@ -1,19 +1,15 @@
 package Model
 
 import Model.ClientData.Client
-import Model.ClientData.Orders.Orders
 import Model.EventData.Event
-import Model.EventData.Value
 import Model.EventDescriptionData.EventDescription
 import Presenter.HomeScreen.DetailsScreen.ItemMoreAdapter
 import Presenter.HomeScreen.NumAdapter
 import android.util.Log
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gaiety.NumAdapterMyOrganizations
-import com.example.gaiety.NumAdapterMyTickets
-import com.google.android.gms.common.api.Api
+import com.example.gaiety.NumAdapterMyFavoriteEvent
 import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -103,7 +99,7 @@ class NetworkRequests () {
     }
 
     fun myTicketsRequest(
-        numAdapter: NumAdapterMyTickets
+        numAdapter: NumAdapterMyFavoriteEvent
     ){
         val api = createRetrofit(urlTimepad)
         val timepadApiRequests = api.create(TimepadApiRequests::class.java)

@@ -18,12 +18,11 @@ import View.Fragments.LoginScreen.resetPassword.ResetPasswordFragment
 import View.Fragments.MeScreen.MyOrganizationsScreen.AddOrganizationScreen.AddOrganizationFragment
 import View.Fragments.MeScreen.MeFragment
 import View.Fragments.MeScreen.MyOrganizationsScreen.MyOrganizationsFragment
-import View.Fragments.MeScreen.MyTicketsScreen.MyTicketsFragment
+import View.Fragments.MeScreen.myFavoriteEventsScreen.MyFavoriteEvents
 import View.Fragments.RegisterScreen.RegisterFragment
 import View.Fragments.StartScreen.StartFragment
 import com.example.gaiety.R
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.android.synthetic.main.fragment_register.*
 import kotlinx.android.synthetic.main.fragment_reset_password.*
@@ -33,7 +32,7 @@ val firebaseRequests = FirebaseRequests()
 
 class MainActivity : AppCompatActivity() {
     lateinit var homeFrag: HomeFragment
-    lateinit var myTicketsFrag: MyTicketsFragment
+    lateinit var myFavoriteEventsFrag: MyFavoriteEvents
     lateinit var myOrganizationsFrag: MyOrganizationsFragment
     lateinit var addOrganizationFrag: AddOrganizationFragment
     lateinit var meFrag: MeFragment
@@ -49,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         homeFrag = HomeFragment()
-        myTicketsFrag = MyTicketsFragment()
+        myFavoriteEventsFrag = MyFavoriteEvents()
         myOrganizationsFrag = MyOrganizationsFragment()
         addOrganizationFrag = AddOrganizationFragment()
         meFrag = MeFragment()
@@ -189,7 +188,7 @@ class MainActivity : AppCompatActivity() {
             R.id.registrationButtonFrag -> {
                 registration()
             }
-            R.id.myTicketsMe -> makeCurrentFragmentMain(myTicketsFrag, "myTicketsFrag")
+            R.id.myFavoriteEvent -> makeCurrentFragmentMain(myFavoriteEventsFrag, "myTicketsFrag")
             R.id.myOrganizationsMe -> makeCurrentFragmentMain(myOrganizationsFrag, "myOrganizationFrag")
             R.id.exitMe -> makeCurrentFragment(startFrag, "startFrag")
             R.id.recyclerViewCard -> {

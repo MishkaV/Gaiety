@@ -38,15 +38,6 @@
             android:onClick="onClick"
             android:text="@string/favoriteEvents" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/myTicketsMe"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="12dp"
-            android:layout_weight="0.5"
-            android:onClick="onClick"
-            android:text="@string/myTickets" />
-
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/myOrganizationsMe"

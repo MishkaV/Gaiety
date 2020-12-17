@@ -14,11 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gaiety.NumAdapterMyOrganizations
-import com.example.gaiety.NumAdapterMyTickets
 import com.example.gaiety.R
-import com.google.gson.GsonBuilder
-import okhttp3.*
-import java.io.IOException
 
 class MyOrganizationsFragment : Fragment() {
     lateinit var numList: RecyclerView
