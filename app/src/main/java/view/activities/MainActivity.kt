@@ -26,6 +26,8 @@ import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.android.synthetic.main.fragment_register.*
 import kotlinx.android.synthetic.main.fragment_reset_password.*
+import presenter.meScreen.BottomSheetFragment
+import view.fragments.meScreen.aboutMe.AboutMe
 
 private const val TAG = "TAG"
 val firebaseRequests = FirebaseRequests()
@@ -42,6 +44,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var loginFrag: LoginFragment
     lateinit var registerFrag: RegisterFragment
     lateinit var resetPasswordFragment: ResetPasswordFragment
+    lateinit var aboutMe: AboutMe
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,6 +60,7 @@ class MainActivity : AppCompatActivity() {
         loginFrag = LoginFragment()
         registerFrag = RegisterFragment()
         resetPasswordFragment = ResetPasswordFragment()
+        aboutMe = AboutMe()
 
 
         makeCurrentFragment(startFrag, "startFrag")
@@ -189,7 +193,7 @@ class MainActivity : AppCompatActivity() {
                 registration()
             }
             R.id.myFavoriteEvent -> makeCurrentFragmentMain(myFavoriteEventsFrag, "myTicketsFrag")
-            R.id.myOrganizationsMe -> makeCurrentFragmentMain(myOrganizationsFrag, "myOrganizationFrag")
+            //R.id.myOrganizationsMe -> makeCurrentFragmentMain(myOrganizationsFrag, "myOrganizationFrag")
             R.id.exitMe -> makeCurrentFragment(startFrag, "startFrag")
             R.id.recyclerViewCard -> {
                 itemFrag =
@@ -204,6 +208,10 @@ class MainActivity : AppCompatActivity() {
                 makeCurrentFragment(resetPasswordFragment, "resetPasswordFragment")
             }
             R.id.resetButtonFrag -> resetPassword()
+            R.id.aboutMe -> { //makeCurrentFragmentMain(aboutMe, "aboutMe")
+                val bottomSheetFragment = BottomSheetFragment()
+                bottomSheetFragment.show(supportFragmentManager, "BottomSheetDialog")
+            }
         }
     }
 }

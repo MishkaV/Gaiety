@@ -1,71 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="view.fragments.meScreen.MeFragment">
 
-    
 
-    <LinearLayout
-        android:id="@+id/framePersonalButtons"
+    <TextView
+        android:id="@+id/personalAreaMe"
         android:layout_width="match_parent"
-        android:layout_height="610dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="0dp"
-        android:layout_marginBottom="121dp"
-        android:background="@color/colorWhite"
-        android:orientation="vertical"
-        android:padding="24dp">
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="120dp"
+        android:fontFamily="@font/comfortaa_bold"
+        android:gravity="center_vertical"
+        android:text="@string/myProfile"
+        android:textSize="36sp"
+        android:layout_above="@+id/relativeLayoutMe"/>
 
-        <TextView
-            android:id="@+id/personalAreaMe"
-            android:layout_width="311dp"
-            android:layout_height="23dp"
-            android:layout_weight="1"
-            android:fontFamily="@font/comfortaa_bold"
-            android:gravity="center_vertical"
-            android:text="@string/myProfile"
-            android:textSize="36sp" />
+
+    <RelativeLayout
+        android:id="@+id/relativeLayoutMe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/myFavoriteEvent"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="12dp"
-            android:layout_weight="0.5"
+            android:layout_height="80dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="48dp"
+            android:layout_marginRight="16dp"
             android:onClick="onClick"
-            android:text="@string/favoriteEvents" />
+            android:text="@string/favoriteEvents"
+            app:cornerRadius="20dp" />
 
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/myOrganizationsMe"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="12dp"
-            android:layout_weight="0.5"
-            android:onClick="onClick"
-            android:text="@string/myOrganisation" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/aboutMe"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="12dp"
-            android:layout_weight="0.5"
+            android:layout_height="80dp"
+            android:layout_below="@+id/myFavoriteEvent"
+            android:layout_alignParentStart="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:onClick="onClick"
-            android:text="ИНФОРМАЦИЯ О СЕБЕ" />
+            android:text="ИНФОРМАЦИЯ О СЕБЕ"
+            app:cornerRadius="20dp" />
 
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/exitMe"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="12dp"
-            android:layout_weight="0.5"
+            android:layout_height="80dp"
+            android:layout_below="@+id/aboutMe"
+            android:layout_alignParentStart="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:onClick="onClick"
-            android:text="@string/leave" />
-    </LinearLayout>
-
+            android:text="@string/leave"
+            app:cornerRadius="20dp" />
+    </RelativeLayout>
 </RelativeLayout>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/ic_home_test"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="Home"
+        />
+    <item
+        android:id="@+id/ic_me_test"
+        android:icon="@drawable/ic_accessibility_black_24dp"
+        android:title="Me"/>
+
+
+</menu>

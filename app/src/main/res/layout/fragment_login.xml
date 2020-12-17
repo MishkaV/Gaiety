@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="View.Fragments.LoginScreen.LoginFragment">
+    tools:context="view.fragments.loginScreen.LoginFragment">
 
     <TextView
         android:id="@+id/loginText"
@@ -16,7 +16,7 @@
         android:layout_marginTop="80dp"
         android:gravity="center_vertical"
         android:fontFamily="@font/comfortaa_bold"
-        android:text="Войти"
+        android:text="@string/Entry"
         android:textSize="36sp" />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -70,7 +70,7 @@
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:text="Войти"
+        android:text="@string/Entry"
         android:layout_below="@+id/passwordEditLayoutLog"
         android:layout_centerHorizontal="true"
         />
