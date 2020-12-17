@@ -1,5 +1,6 @@
 package View.Activities
 
+import Model.FirebaseRequests
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -22,10 +23,13 @@ import View.Fragments.RegisterScreen.RegisterFragment
 import View.Fragments.StartScreen.StartFragment
 import com.example.gaiety.R
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.android.synthetic.main.fragment_register.*
 import kotlinx.android.synthetic.main.fragment_reset_password.*
+
 private const val TAG = "TAG"
+val firebaseRequests = FirebaseRequests()
 
 class MainActivity : AppCompatActivity() {
     lateinit var homeFrag: HomeFragment
@@ -107,6 +111,7 @@ class MainActivity : AppCompatActivity() {
                     }
                     makeCurrentFragment(mainFrag, "mainFrag")
                     makeCurrentFragmentMain(homeFrag, "homeFrag")
+                    firebaseRequests.setCurrentUser(email)
                     Log.d("MainActivity", "Successfull!")
                 }
         } else if (mailEditTextLog?.text.toString() == "") {
@@ -138,6 +143,7 @@ class MainActivity : AppCompatActivity() {
                     }
                     makeCurrentFragment(mainFrag, "mainFrag")
                     makeCurrentFragmentMain(homeFrag, "homeFrag")
+                    firebaseRequests.createNewUser(email)
                     Log.d("MainActivity", "Successfull!")
                 }
         } else if (mailEditTextReg?.text.toString() == "") {

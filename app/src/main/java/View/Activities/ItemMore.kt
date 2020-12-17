@@ -1,6 +1,5 @@
 package View.Activities
 
-import Model.FirebaseRequests
 import Model.NetworkRequests
 import android.os.Bundle
 import android.util.Log
@@ -29,6 +28,7 @@ class ItemMore : AppCompatActivity() {
             NetworkRequests().eventDescriptionRequest(itemRecycler, image,eventId)
         }
         createListnerLike(eventId)
+        stateOfLike(eventId)
     }
 
     private fun createListnerLike(eventId : Int){
@@ -36,13 +36,18 @@ class ItemMore : AppCompatActivity() {
         likeButton.setOnLikeEventListener(object : OnLikeEventListener {
 
             override fun onLikeClicked(androidLikeButton: AndroidLikeButton) {
-                val firebaseRequests = FirebaseRequests()
-                firebaseRequests.postFirestoreRequest("Favorite Event", eventId)
+                firebaseRequests.addFavoriteEvent(eventId)
                 Log.d(TAG_LIKE, "LIKE")
             }
             override fun onUnlikeClicked(androidLikeButton: AndroidLikeButton) {
+                firebaseRequests.deleteFavoriteEvent(eventId)
                 Log.d(TAG_LIKE, "DISLIKE")
             }
         })
+    }
+
+    private fun stateOfLike(eventId : Int){
+        val likeButton = findViewById<AndroidLikeButton>(R.id.likeButtonDescription)
+        firebaseRequests.inFavoriteEvents(eventId, likeButton)
     }
 }
