@@ -41,8 +41,6 @@ data class Value(
     val poster_image: PosterImage,
     @SerializedName("properties")
     val properties: List<String>,
-    @SerializedName("questions")
-    val questions: List<Question>,
     @SerializedName("registration_data")
     val registration_data: RegistrationData,
     @SerializedName("reservation_period")
@@ -56,7 +54,6 @@ data class Value(
     @SerializedName("tickets_limit")
     val tickets_limit: Int,
     @SerializedName("url")
-    val url: String,
-    @SerializedName("widgets")
-    val widgets: List<Widget>
+    val url: String
+
 )
