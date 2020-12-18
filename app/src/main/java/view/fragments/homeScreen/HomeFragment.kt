@@ -1,7 +1,7 @@
 package view.fragments.homeScreen
 
-import model.eventData.Event
-import model.eventData.Value
+import Model.EventData.Event
+import Model.EventData.Value
 import model.NetworkRequests
 import presenter.homeScreen.NumAdapter
 import android.content.res.Configuration
@@ -110,7 +110,7 @@ class HomeFragment : Fragment() {
                     if (visibleItemCount + pastVisiblesItems >= totalItemCount) {
                         if (list.isEmpty()) {
                             Log.v("TAG", "Last Item Wow !")
-                            NetworkRequests().eventRequest(
+                            NetworkRequests<String>().eventRequest(
                                 numList,
                                 totalItemCount,
                                 numAdapter
@@ -118,7 +118,7 @@ class HomeFragment : Fragment() {
                         } else {
                             //когда скроллим, если список с чипами не пустой, то вызываем метод с доступом к api с фильром по городам
                             Log.v("TAG", "Last Item Wow !")
-                            NetworkRequests().eventRequestFilteredByCity(
+                            NetworkRequests<String>().eventRequestFilteredByCity(
                                 numList,
                                 totalItemCount,
                                 numAdapter,
@@ -130,7 +130,7 @@ class HomeFragment : Fragment() {
             }
         })
 
-        NetworkRequests().eventRequest(numList, 0, numAdapter)
+        NetworkRequests<String>().eventRequest(numList, 0, numAdapter)
     }
 
     fun createNumAdapter(): NumAdapter {
@@ -155,9 +155,9 @@ class HomeFragment : Fragment() {
         numAdapter.removeAllItems()
         numAdapter.notifyDataSetChanged()
         if (list.isEmpty()) {
-            NetworkRequests().eventRequest(numList, 0, numAdapter)
+            NetworkRequests<String>().eventRequest(numList, 0, numAdapter)
         } else {
-            NetworkRequests().eventRequestFilteredByCity(numList, 0, numAdapter, list.joinToString(","))
+            NetworkRequests<String>().eventRequestFilteredByCity(numList, 0, numAdapter, list.joinToString(","))
         }
     }
 }

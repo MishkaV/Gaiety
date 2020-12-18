@@ -1,7 +1,7 @@
 package com.example.gaiety
 
-import model.clientData.Client
-import model.clientData.organizations.Organizations
+import Model.ClientData.Client
+import Model.ClientData.Organizations.Organizations
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

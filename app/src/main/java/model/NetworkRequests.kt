@@ -1,8 +1,8 @@
 package model
 
-import model.clientData.Client
-import model.eventData.Event
-import model.eventDescriptionData.EventDescription
+import Model.ClientData.Client
+import Model.EventData.Event
+import Model.EventDescriptionData.EventDescription
 import presenter.homeScreen.detailsScreen.ItemMoreAdapter
 import presenter.homeScreen.NumAdapter
 import android.util.Log
@@ -23,7 +23,7 @@ private const val TAG  = "TAG"
 private const val TAG_EVEN_DESCRIPTION  = "TAG_EVEN_DESCRIPTION"
 
 
-class NetworkRequests () {
+class NetworkRequests <T> () {
     private val urlTimepad: String = "https://api.timepad.ru"
 
     private fun createRetrofit(url : String) : Retrofit {

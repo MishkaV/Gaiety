@@ -1,8 +1,8 @@
 package view.fragments.meScreen.myOrganizationsScreen
 
-import model.clientData.Client
-import model.clientData.orders.Orders
-import model.clientData.organizations.Organizations
+import Model.ClientData.Client
+import Model.ClientData.Orders.Orders
+import Model.ClientData.Organizations.Organizations
 import model.NetworkRequests
 import android.content.res.Configuration
 import android.os.Bundle
@@ -52,13 +52,13 @@ class MyOrganizationsFragment : Fragment() {
                     var pastVisiblesItems = layoutManager.findFirstVisibleItemPosition()
                     if (visibleItemCount + pastVisiblesItems >= totalItemCount) {
                         Log.v("TAG", "Last Item Wow !")
-                        NetworkRequests().myOrganizationsRequest(numAdapter)
+                        NetworkRequests<String>().myOrganizationsRequest(numAdapter)
                     }
                 }
             }
         })
 
-        NetworkRequests().myOrganizationsRequest(numAdapter)
+        NetworkRequests<String>().myOrganizationsRequest(numAdapter)
     }
 
     fun createNumAdapter(): NumAdapterMyOrganizations {
