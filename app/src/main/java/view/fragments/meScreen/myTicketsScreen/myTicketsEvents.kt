@@ -1,4 +1,4 @@
-package view.fragments.meScreen.myFavoriteEventsScreen
+package view.fragments.meScreen.myTicketsScreen
 
 import model.clientData.Client
 import model.clientData.orders.Orders
@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.gaiety.NumAdapterMyFavoriteEvent
 import com.example.gaiety.R
 
-class MyFavoriteEvents : Fragment() {
+class myTicketsEvents : Fragment() {
     lateinit var numList: RecyclerView
 
     override fun onCreateView(

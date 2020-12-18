@@ -18,7 +18,7 @@ import view.fragments.loginScreen.resetPassword.ResetPasswordFragment
 import view.fragments.meScreen.myOrganizationsScreen.AddOrganizationScreen.AddOrganizationFragment
 import view.fragments.meScreen.MeFragment
 import view.fragments.meScreen.myOrganizationsScreen.MyOrganizationsFragment
-import view.fragments.meScreen.myFavoriteEventsScreen.MyFavoriteEvents
+import view.fragments.meScreen.myTicketsScreen.myTicketsEvents
 import view.fragments.registerScreen.RegisterFragment
 import view.fragments.startScreen.StartFragment
 import com.example.gaiety.R
@@ -34,7 +34,7 @@ val firebaseRequests = FirebaseRequests()
 
 class MainActivity : AppCompatActivity() {
     lateinit var homeFrag: HomeFragment
-    lateinit var myFavoriteEventsFrag: MyFavoriteEvents
+    lateinit var myTicketsEventsFrag: myTicketsEvents
     lateinit var myOrganizationsFrag: MyOrganizationsFragment
     lateinit var addOrganizationFrag: AddOrganizationFragment
     lateinit var meFrag: MeFragment
@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         homeFrag = HomeFragment()
-        myFavoriteEventsFrag = MyFavoriteEvents()
+        myTicketsEventsFrag = myTicketsEvents()
         myOrganizationsFrag = MyOrganizationsFragment()
         addOrganizationFrag = AddOrganizationFragment()
         meFrag = MeFragment()
@@ -192,7 +192,7 @@ class MainActivity : AppCompatActivity() {
             R.id.registrationButtonFrag -> {
                 registration()
             }
-            R.id.myFavoriteEvent -> makeCurrentFragmentMain(myFavoriteEventsFrag, "myTicketsFrag")
+            R.id.myTicketsMe -> makeCurrentFragmentMain(myTicketsEventsFrag, "myTicketsFrag")
             R.id.myOrganizationsMe -> makeCurrentFragmentMain(myOrganizationsFrag, "myOrganizationFrag")
             R.id.exitMe -> makeCurrentFragment(startFrag, "startFrag")
             R.id.recyclerViewCard -> {
@@ -212,6 +212,10 @@ class MainActivity : AppCompatActivity() {
                 val bottomSheetFragment = BottomSheetFragment()
                 bottomSheetFragment.show(supportFragmentManager, "BottomSheetDialog")
             }
+            /*R.id.nameText -> {
+                nameText?.visibility = View.INVISIBLE
+                nameEditLine?.visibility = View.VISIBLE
+            }*/
         }
     }
 }
