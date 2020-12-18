@@ -13,10 +13,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.gaiety.NumAdapterMyFavoriteEvent
+import com.example.gaiety.NumAdapterMyTickets
 import com.example.gaiety.R
 
-class myTicketsEvents : Fragment() {
+class myTickets : Fragment() {
     lateinit var numList: RecyclerView
 
     override fun onCreateView(
@@ -61,9 +61,9 @@ class myTicketsEvents : Fragment() {
         NetworkRequests<String>().myTicketsRequest(numAdapter)
     }
 
-    fun createNumAdapter(): NumAdapterMyFavoriteEvent {
+    fun createNumAdapter(): NumAdapterMyTickets {
         val client = Client(true, "","","", listOf<Organizations>(), listOf<Orders>())
-        val numAdapter = NumAdapterMyFavoriteEvent(client)
+        val numAdapter = NumAdapterMyTickets(client)
         return numAdapter
     }
 }

@@ -2,14 +2,16 @@ package model
 
 import Model.ClientData.Client
 import Model.EventData.Event
+import Model.EventData.Value
 import Model.EventDescriptionData.EventDescription
 import presenter.homeScreen.detailsScreen.ItemMoreAdapter
 import presenter.homeScreen.NumAdapter
 import android.util.Log
 import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.gaiety.NumAdapterMyOrganizations
 import com.example.gaiety.NumAdapterMyFavoriteEvent
+import com.example.gaiety.NumAdapterMyOrganizations
+import com.example.gaiety.NumAdapterMyTickets
 import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -125,7 +127,7 @@ class NetworkRequests <T> () {
     }
 
     fun myTicketsRequest(
-        numAdapter: NumAdapterMyFavoriteEvent
+        numAdapter: NumAdapterMyTickets
     ){
         val api = createRetrofit(urlTimepad)
         val timepadApiRequests = api.create(TimepadApiRequests::class.java)
@@ -143,6 +145,34 @@ class NetworkRequests <T> () {
                 }
                 override fun onFailure(call: Call<Client>, t: Throwable) {
                     Log.d(TAG, t.localizedMessage)
+                }
+            })
+    }
+
+    fun eventFavRequest(
+        numAdapter: NumAdapterMyFavoriteEvent,
+        id: Long
+    ) {
+        val api = createRetrofit(urlTimepad)
+        val timepadApiRequests = api.create(TimepadApiRequests::class.java)
+        val call = timepadApiRequests.getEventFavData(id.toString())
+
+        call.enqueue(
+            object :Callback<Value> {
+
+                override fun onResponse(
+                    call: Call<Value>,
+                    response: Response<Value>
+                ) {
+                    if (response.body()?.id.toString().isNotEmpty()) {
+                        numAdapter.addItem(response.body()!!)
+                        numAdapter.notifyDataSetChanged()
+                        Log.d(TAG_EVEN_DESCRIPTION, "Success")
+                    }
+                }
+
+                override fun onFailure(call: Call<Value>, t: Throwable) {
+                    Log.d(TAG_EVEN_DESCRIPTION, t.localizedMessage)
                 }
             })
     }

@@ -49,7 +49,7 @@
         android:layout_marginTop="20dp"
         android:layout_centerHorizontal="true"
         android:textSize="28sp"
-        android:text="Имя: Миша"
+        android:text="Имя: Асад"
         android:onClick="onClick"
         />
 
@@ -82,7 +82,7 @@
         android:layout_marginTop="20dp"
         android:layout_centerHorizontal="true"
         android:textSize="28sp"
-        android:text="Фамилия: Ворожцов"
+        android:text="Фамилия: Исмаилов"
         />
 
     
