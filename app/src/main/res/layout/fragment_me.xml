@@ -29,7 +29,7 @@
         android:layout_centerInParent="true">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/myFavoriteEvent"
+            android:id="@+id/myTicketsMe"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:layout_alignParentStart="true"
@@ -45,7 +45,7 @@
             android:id="@+id/myOrganizationsMe"
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:layout_below="@+id/myFavoriteEvent"
+            android:layout_below="@+id/myTicketsMe"
             android:layout_alignParentStart="true"
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="16dp"
