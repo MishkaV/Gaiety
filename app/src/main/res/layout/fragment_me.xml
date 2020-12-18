@@ -38,7 +38,7 @@
             android:layout_marginTop="48dp"
             android:layout_marginRight="16dp"
             android:onClick="onClick"
-            android:text="@string/favoriteEvents"
+            android:text="@string/myTickets"
             app:cornerRadius="20dp" />
 
 
