@@ -23,7 +23,7 @@ private const val LOG_POST_FIREBASE = "LOG_POST_FIREBASE"
 class FirebaseRequests {
     private var currentUserMail: String = ""
 
-    fun postFirestoreRequest (title: String, description: Any){
+    fun postFirestoreRequest(title: String, description: Any) {
         val storage = FirebaseFirestore.getInstance()
         val map = HashMap<String, Any>()
         map.put(KEY_TITLE, title)
@@ -37,7 +37,7 @@ class FirebaseRequests {
                     Log.d(LOG_POST_FIREBASE, "Success")
                 }
             })
-            .addOnFailureListener(object : OnFailureListener{
+            .addOnFailureListener(object : OnFailureListener {
                 override fun onFailure(p0: Exception) {
                     Log.d(LOG_POST_FIREBASE, p0.toString())
                 }
@@ -49,7 +49,7 @@ class FirebaseRequests {
             currentUserMail = mail
     }
 
-    fun createNewUser(user_mail: String){
+    fun createNewUser(user_mail: String) {
         val storage = FirebaseFirestore.getInstance()
         val map = HashMap<String, ArrayList<Int>>()
         map.put("favorite_events", arrayListOf())
@@ -61,7 +61,7 @@ class FirebaseRequests {
                     setCurrentUser(user_mail)
                 }
             })
-            .addOnFailureListener(object : OnFailureListener{
+            .addOnFailureListener(object : OnFailureListener {
                 override fun onFailure(p0: Exception) {
                     Log.d(LOG_POST_FIREBASE, p0.toString())
                 }
@@ -93,12 +93,12 @@ class FirebaseRequests {
         val storage = FirebaseFirestore
             .getInstance()
             .document("Users/${currentUserMail}")
-        var checkIn : Boolean = false
+        var checkIn: Boolean = false
         storage.get()
-            .addOnSuccessListener(object : OnSuccessListener<DocumentSnapshot>{
-                override fun onSuccess(p0: DocumentSnapshot?){
+            .addOnSuccessListener(object : OnSuccessListener<DocumentSnapshot> {
+                override fun onSuccess(p0: DocumentSnapshot?) {
                     if (p0 != null) {
-                        if (p0.exists()){
+                        if (p0.exists()) {
                             Log.d(LOG_POST_FIREBASE, "Success upload")
                             val arr = p0.get("favorite_events") as List<Long>
                             likeButton.setCurrentlyLiked(arr.contains(event.toLong()))
@@ -121,10 +121,10 @@ class FirebaseRequests {
             .getInstance()
             .document("Users/${currentUserMail}")
         storage.get()
-            .addOnSuccessListener(object : OnSuccessListener<DocumentSnapshot>{
-                override fun onSuccess(p0: DocumentSnapshot?){
+            .addOnSuccessListener(object : OnSuccessListener<DocumentSnapshot> {
+                override fun onSuccess(p0: DocumentSnapshot?) {
                     if (p0 != null) {
-                        if (p0.exists()){
+                        if (p0.exists()) {
                             Log.d(LOG_POST_FIREBASE, "Success upload")
                             var arr = p0.get("favorite_events") as List<Long>
                             for (r in arr) {

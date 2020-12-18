@@ -30,6 +30,15 @@
             android:textSize="36sp" />
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/myTickets"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="12dp"
+            android:layout_weight="0.5"
+            android:onClick="onClick"
+            android:text="@string/myTicketsText" />
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/myFavoriteEvent"
             android:layout_width="match_parent"
             android:layout_height="0dp"

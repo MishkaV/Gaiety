@@ -12,6 +12,7 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gaiety.NumAdapterMyOrganizations
 import com.example.gaiety.NumAdapterMyFavoriteEvent
+import com.example.gaiety.NumAdapterMyTickets
 import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -44,6 +45,28 @@ class NetworkRequests () {
         return api
     }
 
+    fun myTicketsRequest(
+        numAdapter: NumAdapterMyTickets
+    ){
+        val api = createRetrofit(urlTimepad)
+        val timepadApiRequests = api.create(TimepadApiRequests::class.java)
+        val call = timepadApiRequests.getClientData()
+
+        call.enqueue(
+            object : Callback<Client> {
+                override fun onResponse(call: Call<Client>, response: Response<Client>) {
+                    for (item in response.body()!!.orders)
+                        if (!(item in numAdapter.homeFeed.orders)){
+                            numAdapter.addItem(item)
+                        }
+                    numAdapter.notifyDataSetChanged()
+                    Log.d(TAG, "Success")
+                }
+                override fun onFailure(call: Call<Client>, t: Throwable) {
+                    Log.d(TAG, t.localizedMessage)
+                }
+            })
+    }
 
     fun eventRequest(
         numList: RecyclerView,
@@ -103,7 +126,7 @@ class NetworkRequests () {
     fun eventFavRequest(
         numAdapter: NumAdapterMyFavoriteEvent,
         id: Long
-    ){
+    ) {
         val api = createRetrofit(urlTimepad)
         val timepadApiRequests = api.create(TimepadApiRequests::class.java)
         val call = timepadApiRequests.getEventFavData(id.toString())
@@ -115,9 +138,11 @@ class NetworkRequests () {
                     call: Call<Value>,
                     response: Response<Value>
                 ) {
-                    numAdapter.addItem(response.body()!!)
-                    numAdapter.notifyDataSetChanged()
-                    Log.d(TAG_EVEN_DESCRIPTION, "Success")
+                    if (response.body()?.id.toString().isNotEmpty()) {
+                        numAdapter.addItem(response.body()!!)
+                        numAdapter.notifyDataSetChanged()
+                        Log.d(TAG_EVEN_DESCRIPTION, "Success")
+                    }
                 }
 
                 override fun onFailure(call: Call<Value>, t: Throwable) {
@@ -125,6 +150,7 @@ class NetworkRequests () {
                 }
             })
     }
+
 
     fun myOrganizationsRequest(
         numAdapter: NumAdapterMyOrganizations

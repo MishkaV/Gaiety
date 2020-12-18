@@ -32,4 +32,6 @@
     <string name="reset">Сброс</string>
     <string name="myTickets">Мои билеты</string>
     <string name="favoriteEvents">ИЗБРАННЫЕ МЕРОПРИЯТИЯ</string>
+    <string name="myTicketsText">МОИ БИЛЕТЫ</string>
+    <string name="favEvents">Избранные мероприятия</string>
 </resources>

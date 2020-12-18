@@ -12,9 +12,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import android.os.Build
 import android.text.Html
+import android.util.Log
 import androidx.annotation.RequiresApi
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.recyclerview_item.view.*
+import kotlinx.android.synthetic.main.recyclerview_item_favorite.view.*
 import kotlinx.android.synthetic.main.recyclerview_item_mytickets.view.*
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -30,23 +32,23 @@ class NumAdapterMyFavoriteEvent(
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: NumHolder, position: Int) {
-        holder.itemView.homeName.text = Html.fromHtml(homeFeed.values.get(position).name)
-        holder.itemView.homeCity.text = homeFeed.values.get(position).location.city
+        holder.itemView.favoriteName.text = Html.fromHtml(homeFeed.values.get(position).name)
+        holder.itemView.favoriteCity.text = homeFeed.values.get(position).location.city
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ")
             val date = LocalDateTime.parse(homeFeed.values.get(position).starts_at, formatter)
-            holder.itemView.homeDate.text =
+            holder.itemView.favoriteDate.text =
                 "Дата: " + date.dayOfMonth.toString() + ":" + date.monthValue + ":" + date.year +
                         "\nВремя: " + date.hour + ":" + date.minute.toInt().format(2)
         }
         else
-            holder.itemView.homeDate.text = homeFeed.values.get(position).starts_at
+            holder.itemView.favoriteDate.text = homeFeed.values.get(position).starts_at
         if (homeFeed?.values?.get(position)?.poster_image == null) {
-            holder.itemView.homeImageUrl.setImageResource(R.drawable.logo)
+            holder.itemView.favoriteImageUrl.setImageResource(R.drawable.logo)
         } else {
             Picasso.get()
                 .load(homeFeed?.values?.get(position)?.poster_image?.default_url)
-                .into(holder.itemView.homeImageUrl)
+                .into(holder.itemView.favoriteImageUrl)
         }
     }
 
