@@ -20,8 +20,14 @@ class ItemMore : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_item_more)
+        val checkFavorite = intent.getIntExtra("favCheck", 0)
         val image = findViewById<ImageView>(R.id.itemImageUrl)
-        val eventId = intent.getIntExtra("eventId", 0)
+        var eventId = 0
+        if (checkFavorite == 0) {
+            eventId = intent.getIntExtra("eventId", 0)
+        } else {
+            eventId = intent.getIntExtra("favId", 0)
+        }
         itemRecycler = findViewById(R.id.recyclerViewItemMore)
         itemRecycler.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
         if (eventId != 0) {
