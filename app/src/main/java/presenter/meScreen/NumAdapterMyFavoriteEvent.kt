@@ -63,6 +63,7 @@ class NumAdapterMyFavoriteEvent(
             view.setOnClickListener {
                 val intent = Intent(view.context, ItemMore::class.java)
                 intent.putExtra("favId", homeFeed.values.get(adapterPosition).id)
+                intent.putExtra("favCheck", 1)
                 view.context.startActivity(intent)
             }
         }
