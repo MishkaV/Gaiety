@@ -1,6 +1,6 @@
 package presenter.homeScreen.detailsScreen
 
-import Model.EventDescriptionData.EventDescription
+import model.EventDescriptionData.EventDescription
 import android.os.Build
 import android.text.Html
 import android.text.method.ScrollingMovementMethod

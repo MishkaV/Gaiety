@@ -1,7 +1,7 @@
-package Model.ClientData
+package model.ClientData
 
-import Model.ClientData.Orders.Orders
-import Model.ClientData.Organizations.Organizations
+import model.ClientData.orders.Orders
+import model.ClientData.organizations.Organizations
 import com.google.gson.annotations.SerializedName
 
 data class Client (

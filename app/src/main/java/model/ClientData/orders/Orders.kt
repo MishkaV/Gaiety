@@ -1,8 +1,8 @@
-package Model.ClientData.Orders
+package model.ClientData.orders
 
-import Model.ClientData.Orders.Event.Event
-import Model.ClientData.Organizations.Organizations
-import Model.ClientData.Orders.Tickets.Tickets
+import model.ClientData.orders.Event.Event
+import model.ClientData.organizations.Organizations
+import model.ClientData.orders.Tickets.Tickets
 import com.google.gson.annotations.SerializedName
 
 data class Orders (

@@ -1,4 +1,4 @@
-package Model.EventDescriptionData
+package model.EventDescriptionData
 
 import com.google.gson.annotations.SerializedName
 

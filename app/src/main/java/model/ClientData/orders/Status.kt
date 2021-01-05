@@ -1,4 +1,4 @@
-package Model.ClientData.Orders
+package model.ClientData.orders
 
 import com.google.gson.annotations.SerializedName
 

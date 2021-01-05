@@ -1,9 +1,9 @@
 <component name="libraryTable">
   <library name="Gradle: com.github.Semper-Viventem:BackdropView:0.1.7@aar">
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/22a3047474b83469d867276722e4eab3/jetified-BackdropView-0.1.7/AndroidManifest.xml" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/22a3047474b83469d867276722e4eab3/jetified-BackdropView-0.1.7/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/22a3047474b83469d867276722e4eab3/jetified-BackdropView-0.1.7/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/7863d5e25833b4e2709dc89f12e48c05/jetified-BackdropView-0.1.7/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/7863d5e25833b4e2709dc89f12e48c05/jetified-BackdropView-0.1.7/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/7863d5e25833b4e2709dc89f12e48c05/jetified-BackdropView-0.1.7/res" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.Semper-Viventem/BackdropView/0.1.7/4d04417fdc595330f36c0e64131157f0f4cb9086/BackdropView-0.1.7-javadoc.jar!/" />

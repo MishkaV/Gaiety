@@ -1,4 +1,4 @@
-package Model.ClientData.Orders.Tickets
+package model.ClientData.orders.Tickets
 
 import com.google.gson.annotations.SerializedName
 

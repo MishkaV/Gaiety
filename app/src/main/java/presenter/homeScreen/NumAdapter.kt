@@ -1,7 +1,7 @@
 package presenter.homeScreen
 
-import Model.EventData.Event
-import Model.EventData.Value
+import model.EventData.Event
+import model.EventData.Value
 import view.activities.ItemMore
 import android.content.Intent
 import android.text.Html

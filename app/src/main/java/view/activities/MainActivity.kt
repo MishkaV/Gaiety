@@ -1,7 +1,7 @@
 package view.activities
 
-import View.Fragments.MeScreen.myFavoriteEventsScreen.MyFavoriteEvents
 import model.FirebaseRequests
+import view.Fragments.MeScreen.myFavoriteEventsScreen.MyFavoriteEvents
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -43,7 +43,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var startFrag: StartFragment
     lateinit var mainFrag: MainFragment
     lateinit var itemFrag: ItemRecyclerMore
-    lateinit var loginFrag: LoginFragment
+    private lateinit var loginFrag: LoginFragment
     lateinit var registerFrag: RegisterFragment
     lateinit var resetPasswordFragment: ResetPasswordFragment
     lateinit var aboutMe: AboutMe
@@ -126,12 +126,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun registration() {
+        nameEditLayoutReg.error = null
+        surnameEditLayoutReg.error = null
         mailEditLayoutReg.error = null
         passwordEditLayoutReg.error = null
-        if (!(mailEditTextReg?.text.toString() == "" || passwordEditTextReg?.text.toString() == "")) {
+        if (!(nameEditTextReg?.text.toString() == "" || surnameEditTextReg?.text.toString() == "" ||
+                    mailEditTextReg?.text.toString() == "" || passwordEditTextReg?.text.toString() == "")) {
+            val name = nameEditTextReg?.text.toString()
+            val surname = surnameEditTextReg?.text.toString()
             val email = mailEditTextReg?.text.toString()
             val password = passwordEditTextReg?.text.toString()
 
+            Log.d("MainActivity", name)
+            Log.d("MainActivity", surname)
             Log.d("MainActivity", email)
             Log.d("MainActivity", password)
 
@@ -149,9 +156,13 @@ class MainActivity : AppCompatActivity() {
                     }
                     makeCurrentFragment(mainFrag, "mainFrag")
                     makeCurrentFragmentMain(homeFrag, "homeFrag")
-                    firebaseRequests.createNewUser(email)
+                    firebaseRequests.createNewUser(email, name, surname)
                     Log.d("MainActivity", "Successfull!")
                 }
+        } else if (nameEditTextReg?.text.toString() == "") {
+            nameEditLayoutReg.error = "Введите имя"
+        } else if (surnameEditTextReg?.text.toString() == "") {
+            surnameEditLayoutReg.error = "Введите фамилию"
         } else if (mailEditTextReg?.text.toString() == "") {
             mailEditLayoutReg.error = "Введите почту"
         } else passwordEditLayoutReg.error = "Введите пароль"

@@ -34,4 +34,6 @@
     <string name="favoriteEvents">ИЗБРАННЫЕ МЕРОПРИЯТИЯ</string>
     <string name="Entry">Войти</string>
     <string name="favEvents">Избранные мероприятия</string>
+    <string name="user_name">Имя</string>
+    <string name="user_surname">Фамилия</string>
 </resources>

@@ -1,9 +1,7 @@
 package com.example.gaiety
 
-import Model.ClientData.Client
-import Model.ClientData.Orders.Orders
-import Model.EventData.Event
-import Model.EventData.Value
+import model.EventData.Event
+import model.EventData.Value
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
@@ -11,12 +9,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import android.os.Build
 import android.text.Html
-import android.util.Log
 import androidx.annotation.RequiresApi
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.recyclerview_item.view.*
 import kotlinx.android.synthetic.main.recyclerview_item_favorite.view.*
-import kotlinx.android.synthetic.main.recyclerview_item_mytickets.view.*
 import view.activities.ItemMore
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter

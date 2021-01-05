@@ -1,6 +1,5 @@
-package Model.ClientData.Organizations
+package model.ClientData.organizations
 
-import Model.ClientData.Organizations.LogoImage
 import com.google.gson.annotations.SerializedName
 
 data class Organizations (

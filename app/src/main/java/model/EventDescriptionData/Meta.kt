@@ -1,10 +1,5 @@
-package Model.EventDescriptionData
+package model.EventDescriptionData
 
-import Model.EventData.Meta
-import android.util.Log
+import model.EventData.Meta
 
-class Meta(meta : String) : Meta(meta) {
-    override fun LogMeta() {
-        Log.d("TAG", "Success")
-    }
-}
+class Meta(meta : String) : Meta(meta)

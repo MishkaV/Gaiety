@@ -1,9 +1,9 @@
 package model
 
-import Model.ClientData.Client
-import Model.EventData.Event
-import Model.EventData.Value
-import Model.EventDescriptionData.EventDescription
+import model.ClientData.Client
+import model.EventData.Event
+import model.EventData.Value
+import model.EventDescriptionData.EventDescription
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Headers

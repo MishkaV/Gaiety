@@ -1,8 +1,8 @@
 package view.fragments.meScreen.myTicketsScreen
 
-import Model.ClientData.Client
-import Model.ClientData.Orders.Orders
-import Model.ClientData.Organizations.Organizations
+import model.ClientData.Client
+import model.ClientData.orders.Orders
+import model.ClientData.organizations.Organizations
 import model.NetworkRequests
 import android.content.res.Configuration
 import android.os.Bundle
@@ -52,13 +52,13 @@ class myTickets : Fragment() {
                     var pastVisiblesItems = layoutManager.findFirstVisibleItemPosition()
                     if (visibleItemCount + pastVisiblesItems >= totalItemCount) {
                         Log.v("TAG", "Last Item Wow !")
-                        NetworkRequests<String>().myTicketsRequest(numAdapter)
+                        NetworkRequests().myTicketsRequest(numAdapter)
                     }
                 }
             }
         })
 
-        NetworkRequests<String>().myTicketsRequest(numAdapter)
+        NetworkRequests().myTicketsRequest(numAdapter)
     }
 
     fun createNumAdapter(): NumAdapterMyTickets {

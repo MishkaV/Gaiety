@@ -1,13 +1,9 @@
-package View.Fragments.MeScreen.myFavoriteEventsScreen
+package view.Fragments.MeScreen.myFavoriteEventsScreen
 
-import Model.ClientData.Client
-import Model.ClientData.Orders.Orders
-import Model.ClientData.Organizations.Organizations
-import Model.EventData.Event
-import Model.EventData.Value
+import model.EventData.Event
+import model.EventData.Value
 import android.content.res.Configuration
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
