@@ -1,4 +1,4 @@
-package view.Fragments.MeScreen.myFavoriteEventsScreen
+package view.fragments.meScreen.myFavoriteEventsScreen
 
 import model.EventData.Event
 import model.EventData.Value

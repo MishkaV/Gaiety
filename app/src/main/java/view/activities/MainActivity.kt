@@ -1,7 +1,6 @@
 package view.activities
 
 import model.FirebaseRequests
-import view.Fragments.MeScreen.myFavoriteEventsScreen.MyFavoriteEvents
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -24,11 +23,14 @@ import view.fragments.registerScreen.RegisterFragment
 import view.fragments.startScreen.StartFragment
 import com.example.gaiety.R
 import com.google.firebase.auth.FirebaseAuth
+import github.com.st235.lib_expandablebottombar.ExpandableBottomBar
 import kotlinx.android.synthetic.main.fragment_login.*
+import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.fragment_register.*
 import kotlinx.android.synthetic.main.fragment_reset_password.*
 import presenter.meScreen.BottomSheetFragment
 import view.fragments.meScreen.aboutMe.AboutMe
+import view.fragments.meScreen.myFavoriteEventsScreen.MyFavoriteEvents
 
 private const val TAG = "TAG"
 val firebaseRequests = FirebaseRequests()
@@ -83,14 +85,6 @@ class MainActivity : AppCompatActivity() {
             addToBackStack(name.toString())
             commit()
         }
-    }
-
-    fun changeFragmentsInMain(item: MenuItem) {
-        when (item.itemId) {
-            R.id.ic_home -> makeCurrentFragmentMain(homeFrag, "homeFrag")
-            R.id.ic_me -> makeCurrentFragmentMain(meFrag, "meFrag")
-        }
-        true
     }
 
     fun authorization() {
@@ -227,10 +221,6 @@ class MainActivity : AppCompatActivity() {
                 val bottomSheetFragment = BottomSheetFragment()
                 bottomSheetFragment.show(supportFragmentManager, "BottomSheetDialog")
             }
-            /*R.id.nameText -> {
-                nameText?.visibility = View.INVISIBLE
-                nameEditLine?.visibility = View.VISIBLE
-            }*/
         }
     }
 }
