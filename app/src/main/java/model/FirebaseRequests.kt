@@ -68,6 +68,16 @@ class FirebaseRequests {
             })
     }
 
+    fun changeUser (user_name: String, user_surname: String){
+        val storage = FirebaseFirestore.getInstance()
+        val map = HashMap<String, Any>()
+        map["favorite_events"] = arrayListOf<Int>()
+        map["name"] = user_name
+        map["surname"] = user_surname
+        storage.collection("Users").document(currentUserMail)
+            .set(map)
+    }
+
     fun addFavoriteEvent(event: Int) {
         val storage = FirebaseFirestore
             .getInstance()

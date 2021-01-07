@@ -47,5 +47,20 @@
         android:textSize="28sp"
         />
 
-    
+    <Button
+        android:id="@+id/changeAboutMe"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_below="@+id/surnameText"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_centerHorizontal="true"
+        android:background="@android:color/transparent"
+        android:textColor="@color/colorPrimary"
+        android:onClick="onClick"
+        android:text="Редактировать"
+        />
+
+
 </RelativeLayout>

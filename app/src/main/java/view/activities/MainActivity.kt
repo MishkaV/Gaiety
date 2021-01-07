@@ -24,12 +24,14 @@ import view.fragments.startScreen.StartFragment
 import com.example.gaiety.R
 import com.google.firebase.auth.FirebaseAuth
 import github.com.st235.lib_expandablebottombar.ExpandableBottomBar
+import kotlinx.android.synthetic.main.change_about_me.*
 import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.fragment_register.*
 import kotlinx.android.synthetic.main.fragment_reset_password.*
 import presenter.meScreen.BottomSheetFragment
 import view.fragments.meScreen.aboutMe.AboutMe
+import view.fragments.meScreen.aboutMe.ChangeAboutMe
 import view.fragments.meScreen.myFavoriteEventsScreen.MyFavoriteEvents
 
 private const val TAG = "TAG"
@@ -49,6 +51,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var registerFrag: RegisterFragment
     lateinit var resetPasswordFragment: ResetPasswordFragment
     lateinit var aboutMe: AboutMe
+    lateinit var changeAboutMe: ChangeAboutMe
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,7 +69,7 @@ class MainActivity : AppCompatActivity() {
         registerFrag = RegisterFragment()
         resetPasswordFragment = ResetPasswordFragment()
         aboutMe = AboutMe()
-
+        changeAboutMe = ChangeAboutMe()
 
         makeCurrentFragment(startFrag, "startFrag")
     }
@@ -190,7 +193,30 @@ class MainActivity : AppCompatActivity() {
             mailResetLayout?.error = "Введите почту"
     }
 
+    fun change(
+        bottomSheetFragment: BottomSheetFragment) {
+        nameEditLayoutChange.error = null
+        surnameEditLayoutChange.error = null
+        if (!(nameEditTextChange?.text.toString() == "" || surnameEditTextChange?.text.toString() == "")) {
+            val name = nameEditTextChange?.text.toString()
+            val surname = surnameEditTextChange?.text.toString()
+
+            Log.d("MainActivity", name)
+            Log.d("MainActivity", surname)
+
+            firebaseRequests.changeUser(name, surname)
+            makeCurrentFragment(mainFrag, "mainFrag")
+            makeCurrentFragmentMain(meFrag, "meFrag")
+            bottomSheetFragment.show(supportFragmentManager, "BottomSheetDialog")
+            Log.d("Change", "Successfull!")
+
+        } else if (nameEditTextChange?.text.toString() == "") {
+            nameEditLayoutChange.error = "Введите имя"
+        } else surnameEditLayoutChange.error = "Введите фамилию"
+    }
+
     fun onClick(view: View) {
+        val bottomSheetFragment = BottomSheetFragment()
         when (view.id) {
             R.id.loginButton -> makeCurrentFragment(loginFrag, "loginFrag")
             R.id.registrationButton -> makeCurrentFragment(registerFrag, "registerFrag")
@@ -218,8 +244,15 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.resetButtonFrag -> resetPassword()
             R.id.aboutMe -> { //makeCurrentFragmentMain(aboutMe, "aboutMe")
-                val bottomSheetFragment = BottomSheetFragment()
                 bottomSheetFragment.show(supportFragmentManager, "BottomSheetDialog")
+            }
+            R.id.changeAboutMe -> {
+                makeCurrentFragment(changeAboutMe, "changeAboutMe")
+
+            }
+
+            R.id.changeButtonFrag -> {
+                change(bottomSheetFragment)
             }
         }
     }
