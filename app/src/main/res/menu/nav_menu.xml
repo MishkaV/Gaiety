@@ -7,6 +7,14 @@
         android:title="Мероприятия"
         app:exb_color="#FF8888"
         />
+
+    <item
+        android:id="@+id/ic_map"
+        android:icon="@drawable/ic_map_black"
+        android:title="Карта"
+        app:exb_color="#77dd77"
+        />
+
     <item
         android:id="@+id/ic_me"
         android:icon="@drawable/ic_accessibility_black_24dp"

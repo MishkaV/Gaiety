@@ -11,6 +11,7 @@ import github.com.st235.lib_expandablebottombar.ExpandableBottomBar
 import kotlinx.android.synthetic.main.fragment_main.*
 import view.activities.MainActivity
 import view.fragments.homeScreen.HomeFragment
+import view.fragments.mapScreen.MapFragment
 import view.fragments.meScreen.MeFragment
 
 class MainFragment : Fragment() {
@@ -34,9 +35,11 @@ class MainFragment : Fragment() {
         if (bottom_navigation != null) {
             val homeFrag = HomeFragment()
             val meFrag = MeFragment()
+            val mapFragment =  MapFragment()
             bottomBar.onItemSelectedListener = { view, menuItem ->
                 when (menuItem.itemId) {
                     R.id.ic_home -> makeCurrentFragmentMain(homeFrag, "homeFrag")
+                    R.id.ic_map -> makeCurrentFragmentMain(mapFragment, "mapFrag")
                     R.id.ic_me -> makeCurrentFragmentMain(meFrag, "meFrag")
                 }
                 true

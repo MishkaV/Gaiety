@@ -32,6 +32,12 @@ android {
 
 }
 
+repositories {
+    maven {
+        url "http://maven.google.com/"
+    }
+}
+
 dependencies {
     implementation "com.mikepenz:materialdrawer:8.1.8"
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -66,4 +72,5 @@ dependencies {
     implementation 'com.maxkeppeler.bottomsheets:core:1.1.2'
     implementation 'com.maxkeppeler.bottomsheets:input:1.1.2'
     implementation 'com.maxkeppeler.bottomsheets:calendar:1.1.2'
+    implementation 'com.yandex.android:maps.mobile:4.0.0-lite'
 }
