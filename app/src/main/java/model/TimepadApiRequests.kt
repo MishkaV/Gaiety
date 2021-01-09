@@ -34,6 +34,21 @@ interface TimepadApiRequests {
     ): Call<Event>
 
     @Headers("Authorization: Bearer ${token}")
+    @GET("/v1/events.json")
+    fun getEventDataFiltered(
+        @Query("limit") limit : Int,
+        @Query("skip") skip : Int,
+        @Query("cities") cities : String? = null,
+        @Query("keywords") keywords : String? = null,
+        @Query("price_min") price_min : String? = null,
+        @Query("price_max") price_max : String? = null,
+        @Query("starts_at_min") starts_at_min : String? = null,
+        @Query("starts_at_max") starts_at_max : String? = null,
+        @Query("fields") fields : String,
+        @Query("sort") sort : String
+    ): Call<Event>
+
+    @Headers("Authorization: Bearer ${token}")
     @GET("/introspect?token=${token}")
     fun getClientData(
     ): Call<Client>
