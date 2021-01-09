@@ -26,7 +26,7 @@
     <string name="registration">Регистрация</string>
     <string name="registrationUpper">ЗАРЕГИСТРИРОВАТЬСЯ</string>
     <string name="loginUpper">ВОЙТИ</string>
-    <string name="registerUpperSimple">РЕГИСТАЦИЯ</string>
+    <string name="registerUpperSimple">РЕГИСТРАЦИЯ</string>
     <string name="resetPasswordQuest">Забыли пароль?</string>
     <string name="resetPasswordText">Сброс пароля</string>
     <string name="reset">Сброс</string>
@@ -36,4 +36,13 @@
     <string name="favEvents">Избранные мероприятия</string>
     <string name="user_name">Имя</string>
     <string name="user_surname">Фамилия</string>
+    <string name="str_cities">По городам</string>
+    <string name="str_filter">Фильтр событий</string>
+    <string name="str_filter_help">Здесь Вы можете отвильтровать события по городам, ключевым словам, цене и дате.</string>
+    <string name="str_keywords">По ключевым словам</string>
+    <string name="str_price_min">По цене от</string>
+    <string name="str_price_max">По цене до</string>
+    <string name="str_starts_at_min">Период проведения</string>
+    <string name="str_сalendar_description">Начало до</string>
+    <string name="price_error_message">Некорректный формат ввода стоимости. Повторите попытку</string>
 </resources>

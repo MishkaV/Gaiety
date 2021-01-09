@@ -20,7 +20,7 @@ import java.time.format.DateTimeFormatter
 class NumAdapter(var homeFeed: Event) : RecyclerView.Adapter<NumAdapter.NumHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NumHolder {
-        val itemHolder = LayoutInflater.from(parent?.context).inflate(R.layout.recyclerview_item, parent, false)
+        val itemHolder = LayoutInflater.from(parent.context).inflate(R.layout.recyclerview_item, parent, false)
         return NumHolder(itemHolder, homeFeed)
     }
 
@@ -69,4 +69,5 @@ class NumAdapter(var homeFeed: Event) : RecyclerView.Adapter<NumAdapter.NumHolde
             }
         }
     }
+
 }

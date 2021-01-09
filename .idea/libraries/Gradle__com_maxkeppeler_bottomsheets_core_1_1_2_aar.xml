@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: com.maxkeppeler.bottomsheets:core:1.1.2@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/c830633d298c630fb131caf3f88ec391/jetified-core-1.1.2/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/c830633d298c630fb131caf3f88ec391/jetified-core-1.1.2/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/c830633d298c630fb131caf3f88ec391/jetified-core-1.1.2/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.maxkeppeler.bottomsheets/core/1.1.2/1ef26a34ef6a11c2a5dfa0ccd14c9d29e3797a5c/core-1.1.2-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.maxkeppeler.bottomsheets/core/1.1.2/60451377b14a48504ccfa42ffed4693b90c2c12c/core-1.1.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
