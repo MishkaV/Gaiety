@@ -19,7 +19,9 @@ import com.mapbox.mapboxsdk.annotations.MarkerOptions
 import com.mapbox.mapboxsdk.camera.CameraPosition
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory
 import com.mapbox.mapboxsdk.geometry.LatLng
+import com.mapbox.mapboxsdk.maps.MapboxMap
 import com.mapbox.mapboxsdk.maps.Style
+import com.mapbox.mapboxsdk.style.layers.PropertyFactory.textField
 import com.maxkeppeler.bottomsheets.calendar.CalendarMode
 import com.maxkeppeler.bottomsheets.calendar.CalendarSheet
 import com.maxkeppeler.bottomsheets.calendar.SelectionMode
@@ -35,6 +37,7 @@ class MapFragment : Fragment() {
     private val accessToken = "pk.eyJ1IjoibWVkdmVkaWF1cmFsYSIsImEiOiJja2pxeTVjc2YyM20wMnNtanFmaG5qaTgyIn0.v8tE-XOqrKjIYy6-qooV8g"
     lateinit var mapView :com.mapbox.mapboxsdk.maps.MapView
     private val networkRequests  = NetworkRequests()
+    lateinit var map : MapboxMap
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,8 +56,10 @@ class MapFragment : Fragment() {
         mapView = view.findViewById(R.id.mapView)
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync { mapboxMap ->
-           mapboxMap.setStyle(Style.MAPBOX_STREETS) {
-           }
+            map = mapboxMap
+            mapboxMap.setStyle(Style.MAPBOX_STREETS) {
+                val mapText = it.getLayer("country-label")?.setProperties(textField("{name_ru}"))
+            }
             networkRequests.eventRequestMap(mapboxMap, "Москва")
         }
 
@@ -117,11 +122,12 @@ class MapFragment : Fragment() {
                         val position = CameraPosition.Builder()
                             .target(LatLng(	55.751417, 37.618107))
                             .zoom(9.0)
+                            .tilt(30.0)
                             .build()
                         mapView.getMapAsync { mapboxMap ->
                             mapboxMap.setStyle(Style.MAPBOX_STREETS) {
                             }
-                            mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position))
+                            mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position), 4000)
                             networkRequests.eventRequestMap(mapboxMap, "Москва")
                         }
                     }
@@ -129,11 +135,12 @@ class MapFragment : Fragment() {
                         val position = CameraPosition.Builder()
                             .target(LatLng(	59.9386, 30.3141))
                             .zoom(9.0)
+                            .tilt(30.0)
                             .build()
                         mapView.getMapAsync { mapboxMap ->
                             mapboxMap.setStyle(Style.MAPBOX_STREETS) {
                             }
-                            mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position))
+                            mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position), 4000)
                             networkRequests.eventRequestMap(mapboxMap, "Санкт-Петербург")
                         }
                     }
@@ -141,11 +148,12 @@ class MapFragment : Fragment() {
                         val position = CameraPosition.Builder()
                             .target(LatLng(	56.3287, 44.002))
                             .zoom(9.0)
+                            .tilt(30.0)
                             .build()
                         mapView.getMapAsync { mapboxMap ->
                             mapboxMap.setStyle(Style.MAPBOX_STREETS) {
                             }
-                            mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position))
+                            mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position), 4000)
                             networkRequests.eventRequestMap(mapboxMap, "Нижний Новгород")
                         }
                     }
@@ -153,11 +161,12 @@ class MapFragment : Fragment() {
                         val position = CameraPosition.Builder()
                             .target(LatLng(	56.8519, 60.6122))
                             .zoom(9.0)
+                            .tilt(30.0)
                             .build()
                         mapView.getMapAsync { mapboxMap ->
                             mapboxMap.setStyle(Style.MAPBOX_STREETS) {
                             }
-                            mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position))
+                            mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position), 4000)
                             networkRequests.eventRequestMap(mapboxMap, "Екатеринбург")
                         }
                     }
@@ -165,11 +174,12 @@ class MapFragment : Fragment() {
                         val position = CameraPosition.Builder()
                             .target(LatLng(	45.0448, 38.976))
                             .zoom(9.0)
+                            .tilt(30.0)
                             .build()
                         mapView.getMapAsync { mapboxMap ->
                             mapboxMap.setStyle(Style.MAPBOX_STREETS) {
                             }
-                            mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position))
+                            mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position), 4000)
                             networkRequests.eventRequestMap(mapboxMap, "Краснодар")
                         }
                     }
