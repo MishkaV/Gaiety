@@ -5,8 +5,10 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -22,6 +24,7 @@ import view.fragments.meScreen.myTicketsScreen.myTickets
 import view.fragments.registerScreen.RegisterFragment
 import view.fragments.startScreen.StartFragment
 import com.example.gaiety.R
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
 import github.com.st235.lib_expandablebottombar.ExpandableBottomBar
 import kotlinx.android.synthetic.main.change_about_me.*
@@ -217,6 +220,7 @@ class MainActivity : AppCompatActivity() {
 
     fun onClick(view: View) {
         val bottomSheetFragment = BottomSheetFragment()
+        val bottomSheetDialog = BottomSheetDialog(this)
         when (view.id) {
             R.id.loginButton -> makeCurrentFragment(loginFrag, "loginFrag")
             R.id.registrationButton -> makeCurrentFragment(registerFrag, "registerFrag")
@@ -244,11 +248,22 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.resetButtonFrag -> resetPassword()
             R.id.aboutMe -> { //makeCurrentFragmentMain(aboutMe, "aboutMe")
-                bottomSheetFragment.show(supportFragmentManager, "BottomSheetDialog")
-            }
-            R.id.changeAboutMe -> {
-                makeCurrentFragment(changeAboutMe, "changeAboutMe")
-
+                //bottomSheetFragment.show(supportFragmentManager, "BottomSheetDialog")
+                val bottomSheetView = LayoutInflater.from(this)
+                    .inflate(
+                        R.layout.fragment_about_me,
+                        findViewById(R.id.aboutMeFrag)
+                    )
+                val buttonChange = bottomSheetView.findViewById<Button>(R.id.changeAboutMe)
+                buttonChange.setOnClickListener(object : View.OnClickListener{
+                    override fun onClick(p0: View?) {
+                        bottomSheetDialog.dismiss()
+                        makeCurrentFragment(changeAboutMe, "changeAboutMe")
+                    }
+                })
+                firebaseRequests.getAboutMe(bottomSheetView)
+                bottomSheetDialog?.setContentView(bottomSheetView)
+                bottomSheetDialog?.show()
             }
 
             R.id.changeButtonFrag -> {

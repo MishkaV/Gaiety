@@ -26,7 +26,7 @@ class NumAdapter(var homeFeed: Event) : RecyclerView.Adapter<NumAdapter.NumHolde
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: NumHolder, position: Int) {
-        holder.itemView.homeName.text = Html.fromHtml(homeFeed.values.get(position).name)
+        holder.itemView.homeName.text = Html.fromHtml(homeFeed.values.get(position).name).toString()
         holder.itemView.homeCity.text = homeFeed.values.get(position).location.city
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ")

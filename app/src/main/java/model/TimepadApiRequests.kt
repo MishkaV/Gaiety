@@ -65,4 +65,12 @@ interface TimepadApiRequests {
         @Path("eventName") eventName: String
     ): Call<Value>
 
+    @Headers("Authorization: Bearer ${token}")
+    @GET("/v1/events.json")
+    fun getEventDataMap(
+        @Query("limit") limit : Int,
+        @Query("cities") cities : String,
+        @Query("fields") fields : String,
+        @Query("sort") sort : String
+    ): Call<Event>
 }

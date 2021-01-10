@@ -1,67 +1,184 @@
 package view.fragments.mapScreen
 
+import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import android.view.inputmethod.InputMethodManager
+import android.widget.RadioButton
+import android.widget.RadioGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import com.example.gaiety.R
-import com.yandex.mapkit.Animation
-import com.yandex.mapkit.MapKitFactory
-import com.yandex.mapkit.geometry.Point
-import com.yandex.mapkit.map.CameraPosition
-import com.yandex.mapkit.mapview.MapView
-import com.yandex.runtime.ui_view.ViewProvider
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.mapbox.mapboxsdk.Mapbox
+import com.mapbox.mapboxsdk.annotations.MarkerOptions
+import com.mapbox.mapboxsdk.camera.CameraPosition
+import com.mapbox.mapboxsdk.camera.CameraUpdateFactory
+import com.mapbox.mapboxsdk.geometry.LatLng
+import com.mapbox.mapboxsdk.maps.Style
+import com.maxkeppeler.bottomsheets.calendar.CalendarMode
+import com.maxkeppeler.bottomsheets.calendar.CalendarSheet
+import com.maxkeppeler.bottomsheets.calendar.SelectionMode
+import com.maxkeppeler.bottomsheets.core.BottomSheet
+import com.maxkeppeler.bottomsheets.input.InputSheet
+import com.maxkeppeler.bottomsheets.input.type.InputEditText
+import com.maxkeppeler.bottomsheets.input.type.InputRadioButtons
+import model.NetworkRequests
+import java.util.*
+
 
 class MapFragment : Fragment() {
-
-    lateinit var mapView: MapView
+    private val accessToken = "pk.eyJ1IjoibWVkdmVkaWF1cmFsYSIsImEiOiJja2pxeTVjc2YyM20wMnNtanFmaG5qaTgyIn0.v8tE-XOqrKjIYy6-qooV8g"
+    lateinit var mapView :com.mapbox.mapboxsdk.maps.MapView
+    private val networkRequests  = NetworkRequests()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        context?.let { Mapbox.getInstance(it, accessToken) }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        MapKitFactory.setApiKey("64b8abe2-3f12-4cf8-a55f-bdfc46f2be6d")
-        MapKitFactory.initialize(context)
         return inflater.inflate(R.layout.fragment_map, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        mapView = view.findViewById(R.id.mapview) as MapView
-        mapView.getMap().move(
-            CameraPosition(Point(55.751574, 37.573856), 11.0f, 0.0f, 0.0f),
-            Animation(Animation.Type.SMOOTH, 0F),
-            null
-        )
-        //Вид метки
-        val view = View(requireContext()).apply {
-            background = requireContext().getDrawable(R.drawable.ic_location)
+        mapView = view.findViewById(R.id.mapView)
+        mapView.onCreate(savedInstanceState)
+        mapView.getMapAsync { mapboxMap ->
+           mapboxMap.setStyle(Style.MAPBOX_STREETS) {
+           }
+            networkRequests.eventRequestMap(mapboxMap, "Москва")
         }
-        //Ставим метку
-        mapView.map.mapObjects.addPlacemark(Point(55.751574, 37.57385), ViewProvider(view))
 
-
+        val floatButton = view.findViewById<FloatingActionButton>(R.id.floatingActioButtonMap)
+        floatButton.setOnClickListener() {
+            onClickFloatingButton()
+        }
     }
 
-    override fun onStop() {
-        // Вызов onStop нужно передавать инстансам MapView и MapKit.
-        mapView.onStop()
-        MapKitFactory.getInstance().onStop()
-        super.onStop()
+    public override fun onResume() {
+        super.onResume()
+        mapView?.onResume()
     }
 
     override fun onStart() {
-        // Вызов onStart нужно передавать инстансам MapView и MapKit.
         super.onStart()
-        MapKitFactory.getInstance().onStart()
-        mapView.onStart()
+        mapView?.onStart()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mapView?.onStop()
+    }
+
+    public override fun onPause() {
+        super.onPause()
+        mapView?.onPause()
+    }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        mapView?.onLowMemory()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mapView?.onDestroy()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapView?.onSaveInstanceState(outState)
+    }
+
+
+    private fun onClickFloatingButton() {
+        val bottomSheetDialog = context?.let { BottomSheetDialog(it) }
+        val bottomSheetView = LayoutInflater.from(context)
+            .inflate(
+                R.layout.cities_map_radiobuttons,
+                view?.findViewById(R.id.bottomSheetCityMapContainer)
+            )
+
+        val radioGroup = bottomSheetView?.findViewById<RadioGroup>(R.id.radioGroupMap)
+        radioGroup?.setOnCheckedChangeListener(object : RadioGroup.OnCheckedChangeListener {
+            override fun onCheckedChanged(p0: RadioGroup?, p1: Int) {
+
+                when(p1){
+                    R.id.radio_button_msc -> {
+                        val position = CameraPosition.Builder()
+                            .target(LatLng(	55.751417, 37.618107))
+                            .zoom(9.0)
+                            .build()
+                        mapView.getMapAsync { mapboxMap ->
+                            mapboxMap.setStyle(Style.MAPBOX_STREETS) {
+                            }
+                            mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position))
+                            networkRequests.eventRequestMap(mapboxMap, "Москва")
+                        }
+                    }
+                    R.id.radio_button_sbp -> {
+                        val position = CameraPosition.Builder()
+                            .target(LatLng(	59.9386, 30.3141))
+                            .zoom(9.0)
+                            .build()
+                        mapView.getMapAsync { mapboxMap ->
+                            mapboxMap.setStyle(Style.MAPBOX_STREETS) {
+                            }
+                            mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position))
+                            networkRequests.eventRequestMap(mapboxMap, "Санкт-Петербург")
+                        }
+                    }
+                    R.id.radio_button_nnd -> {
+                        val position = CameraPosition.Builder()
+                            .target(LatLng(	56.3287, 44.002))
+                            .zoom(9.0)
+                            .build()
+                        mapView.getMapAsync { mapboxMap ->
+                            mapboxMap.setStyle(Style.MAPBOX_STREETS) {
+                            }
+                            mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position))
+                            networkRequests.eventRequestMap(mapboxMap, "Нижний Новгород")
+                        }
+                    }
+                    R.id.radio_button_ekb -> {
+                        val position = CameraPosition.Builder()
+                            .target(LatLng(	56.8519, 60.6122))
+                            .zoom(9.0)
+                            .build()
+                        mapView.getMapAsync { mapboxMap ->
+                            mapboxMap.setStyle(Style.MAPBOX_STREETS) {
+                            }
+                            mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position))
+                            networkRequests.eventRequestMap(mapboxMap, "Екатеринбург")
+                        }
+                    }
+                    R.id.radio_button_knr -> {
+                        val position = CameraPosition.Builder()
+                            .target(LatLng(	45.0448, 38.976))
+                            .zoom(9.0)
+                            .build()
+                        mapView.getMapAsync { mapboxMap ->
+                            mapboxMap.setStyle(Style.MAPBOX_STREETS) {
+                            }
+                            mapboxMap.animateCamera(CameraUpdateFactory.newCameraPosition(position))
+                            networkRequests.eventRequestMap(mapboxMap, "Краснодар")
+                        }
+                    }
+                }
+                bottomSheetDialog?.dismiss()
+            }
+        })
+
+        bottomSheetDialog?.setContentView(bottomSheetView)
+        bottomSheetDialog?.show()
     }
 }

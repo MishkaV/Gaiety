@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/bottomSheetCityMapContainer"
+    android:background="@drawable/layout_me_backgroud">
+
+    <TextView
+        android:id="@+id/filterCities"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/comfortaa_bold"
+        android:gravity="center_vertical"
+        android:text="Фильтр городов"
+        android:textSize="36sp" />
+
+    <RadioGroup
+        android:id="@+id/radioGroupMap"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/filterCities"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:checkedButton="@+id/radio_button_1">
+
+        <RadioButton
+            android:id="@+id/radio_button_msc"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Москва" />
+
+        <RadioButton
+            android:id="@+id/radio_button_sbp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Санкт-Петербург" />
+
+        <RadioButton
+            android:id="@+id/radio_button_nnd"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Нижний Новгород" />
+
+        <RadioButton
+            android:id="@+id/radio_button_ekb"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Екатеринбург" />
+
+        <RadioButton
+            android:id="@+id/radio_button_knr"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Краснодар" />
+    </RadioGroup>
+</RelativeLayout>

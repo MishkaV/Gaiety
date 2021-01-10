@@ -5,6 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="view.fragments.meScreen.aboutMe.AboutMe"
     android:orientation="vertical"
+    android:id="@+id/aboutMeFrag"
     android:background="@drawable/layout_me_backgroud">
 
     <TextView

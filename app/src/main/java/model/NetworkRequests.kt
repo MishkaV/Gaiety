@@ -1,6 +1,6 @@
 package model
 
-import android.content.Context
+import android.text.Html
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
@@ -10,6 +10,9 @@ import com.example.gaiety.NumAdapterMyFavoriteEvent
 import com.example.gaiety.NumAdapterMyOrganizations
 import com.example.gaiety.NumAdapterMyTickets
 import com.example.gaiety.R
+import com.mapbox.mapboxsdk.annotations.MarkerOptions
+import com.mapbox.mapboxsdk.geometry.LatLng
+import com.mapbox.mapboxsdk.maps.MapboxMap
 import model.ClientData.Client
 import model.EventData.Event
 import model.EventData.Value
@@ -25,14 +28,14 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 
-private const val TAG  = "TAG"
-private const val TAG_EVEN_DESCRIPTION  = "TAG_EVEN_DESCRIPTION"
+private const val TAG = "TAG_EVENT_REQUEST"
+private const val TAG_EVEN_DESCRIPTION = "TAG_EVEN_DESCRIPTION"
 
 
 class NetworkRequests {
     private val urlTimepad: String = "https://api.timepad.ru"
 
-    private fun createRetrofit(url: String) : Retrofit {
+    private fun createRetrofit(url: String): Retrofit {
         //Можно interceptor убрать(вместе с client в api), для логов
         val interceptor = HttpLoggingInterceptor()
         interceptor.level = HttpLoggingInterceptor.Level.BODY
@@ -48,11 +51,11 @@ class NetworkRequests {
         return api
     }
 
-        fun eventRequest(
-            numList: RecyclerView,
-            skip: Int,
-            numAdapter: NumAdapter
-        ) {
+    fun eventRequest(
+        numList: RecyclerView,
+        skip: Int,
+        numAdapter: NumAdapter
+    ) {
         val api = createRetrofit(urlTimepad)
         val timepadApiRequests = api.create(TimepadApiRequests::class.java)
         val call = timepadApiRequests.getEventData(10, skip, "location", "+starts_at")
@@ -70,11 +73,11 @@ class NetworkRequests {
                     }
 
                     override fun onFailure(call: Call<Event>, t: Throwable) {
+                        Log.d(TAG, "Someting wrong...")
                         Log.d(TAG, t.localizedMessage)
                     }
                 })
-        }
-        else
+        } else
             Log.d(TAG, "Stop or will be overload")
     }
 
@@ -132,7 +135,7 @@ class NetworkRequests {
         numList: RecyclerView,
         image: ImageView,
         id: Int
-    ){
+    ) {
         val api = createRetrofit(urlTimepad)
         val timepadApiRequests = api.create(TimepadApiRequests::class.java)
         val call = timepadApiRequests.getEventDecriptionData(id.toString())
@@ -155,7 +158,7 @@ class NetworkRequests {
 
     fun myTicketsRequest(
         numAdapter: NumAdapterMyTickets
-    ){
+    ) {
         val api = createRetrofit(urlTimepad)
         val timepadApiRequests = api.create(TimepadApiRequests::class.java)
         val call = timepadApiRequests.getClientData()
@@ -207,7 +210,7 @@ class NetworkRequests {
 
     fun myOrganizationsRequest(
         numAdapter: NumAdapterMyOrganizations
-    ){
+    ) {
         val api = createRetrofit(urlTimepad)
         val timepadApiRequests = api.create(TimepadApiRequests::class.java)
         val call = timepadApiRequests.getClientData()
@@ -229,5 +232,38 @@ class NetworkRequests {
             })
     }
 
+
+    fun eventRequestMap(mapboxMap: MapboxMap, city: String) {
+        val api = createRetrofit(urlTimepad)
+        val timepadApiRequests = api.create(TimepadApiRequests::class.java)
+        val call = timepadApiRequests.getEventDataMap(100, city, "location","+starts_at")
+        call.enqueue(
+            object : Callback<Event> {
+                override fun onResponse(call: Call<Event>, response: Response<Event>) {
+                    for (item in response.body()!!.values) {
+                        if (item.location != null) {
+                            if (item.location.coordinates != null) {
+                                mapboxMap?.addMarker(
+                                    MarkerOptions()
+                                        .position(
+                                            LatLng(
+                                                item.location.coordinates[0].toDouble(),
+                                                item.location.coordinates[1].toDouble()
+                                            )
+                                        )
+                                        .title(Html.fromHtml(item.name).toString())
+                                )
+                            }
+                        }
+                    }
+                    Log.d(TAG, "Success")
+                }
+
+                override fun onFailure(call: Call<Event>, t: Throwable) {
+                    Log.d(TAG, "Someting wrong...")
+                    Log.d(TAG, t.localizedMessage)
+                }
+            })
+    }
 }
 

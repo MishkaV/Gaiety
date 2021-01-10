@@ -72,5 +72,7 @@ dependencies {
     implementation 'com.maxkeppeler.bottomsheets:core:1.1.2'
     implementation 'com.maxkeppeler.bottomsheets:input:1.1.2'
     implementation 'com.maxkeppeler.bottomsheets:calendar:1.1.2'
+
     implementation 'com.yandex.android:maps.mobile:4.0.0-lite'
+    implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:9.5.0'
 }
