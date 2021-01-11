@@ -140,7 +140,7 @@ class HomeFragment : Fragment() {
     private fun callFilterBottomSheet() {
         val sheet = context?.let {
             InputSheet().build(it) {
-                onNegative(R.string.refuse_sheet_button)
+                onNegative("Hello world")
                 title(R.string.str_filter)
                 content(R.string.str_filter_help)
 
@@ -224,7 +224,7 @@ class HomeFragment : Fragment() {
                                 selectionMode(SelectionMode.RANGE)
                                 calendarMode(CalendarMode.MONTH)
                                 maxRange(30)
-                                onNegative(R.string.refuse_sheet_button)
+                                onNegative("Hello world")
                                 onPositive { dateStart, dateEnd ->
                                     starts_at_min =
                                         StringBuilder().append(dateStart.get(Calendar.DAY_OF_MONTH))
