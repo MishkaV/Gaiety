@@ -298,6 +298,7 @@ class MainActivity : AppCompatActivity() {
         } else tokenEditLayoutLog.error = "Введите токен"
     }
     fun onClick(view: View) {
+        val bottomSheetFragment = BottomSheetFragment()
         val bottomSheetDialog = BottomSheetDialog(this)
         when (view.id) {
             R.id.loginButton -> {
@@ -314,17 +315,9 @@ class MainActivity : AppCompatActivity() {
             R.id.registrationButtonFrag -> {
                 registration()
             }
-            R.id.myTicketsMe -> {
-                makeCurrentFragmentMain(myTicketsEventsFrag, "myTicketsFrag")
-                currentFragMain = "myTicketsFrag"
-            }
             R.id.myFavoriteEvent -> {
                 makeCurrentFragmentMain(myFavoriteEventsFrag, "myTicketsFrag")
                 currentFragMain = "myTicketsFrag"
-            }
-            R.id.myOrganizationsMe -> {
-                makeCurrentFragmentMain(myOrganizationsFrag, "myOrganizationFrag")
-                currentFragMain = "myOrganizationFrag"
             }
             R.id.exitMe -> {
                 makeCurrentFragment(startFrag, "startFrag")
@@ -367,7 +360,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             R.id.changeButtonFrag -> {
-                change(bottomSheetDialog)
+                change(bottomSheetFragment)
             }
 
             R.id.myTickets -> {
@@ -376,7 +369,7 @@ class MainActivity : AppCompatActivity() {
 
             R.id.myOrganizations -> makeCurrentFragmentMain(myOrganizationsFrag, "myOrganizationFrag")
 
-            R.id.token -> makeCurrentFragment(tokenFrag, "tokenFrag")
+            R.id.token -> makeCurrentFragmentMain(tokenFrag, "tokenFrag")
             R.id.getToken -> {
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://dev.timepad.ru/api/oauth/"))
                 startActivity(intent)

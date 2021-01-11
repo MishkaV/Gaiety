@@ -62,4 +62,8 @@
     <string name="telephone_number">Номер телефона</string>
     <string name="create_organisation_button">Создать организацию</string>
     <string name="info_about_me">ИНФОРМАЦИЯ О СЕБЕ</string>
+    <string name="work_with_token">Работа с токеном</string>
+    <string name="description_text">Для работы с ПК необходимо:\n 1. Перейти по ссылке Получить токен\n 2. Если вы не зарегистрированы в TimePAD, зарегистрироваться\n 3. Разрешить все пункты, скопировать токен\n 4. Вернуться в приложение и вставить токен в поле ввода\n</string>
+    <string name="get_token">Получить токен</string>
+    <string name="send">ОТПРАВИТЬ</string>
 </resources>
