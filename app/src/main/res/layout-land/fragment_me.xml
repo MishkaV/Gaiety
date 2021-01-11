@@ -75,7 +75,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:onClick="onClick"
-            android:text="ИНФОРМАЦИЯ О СЕБЕ"
+            android:text="@string/info_about_me"
             app:cornerRadius="20dp" />
 
 

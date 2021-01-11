@@ -57,12 +57,13 @@ class MainFragment : Fragment() {
         }
     }
 
-    private fun makeCurrentFragmentMain(fragment: Fragment, name: String) {
+    fun makeCurrentFragmentMain(fragment: Fragment, name: String) {
         fragmentManager?.beginTransaction()?.apply {
             replace(R.id.main_fragment, fragment)
             addToBackStack(name.toString())
             commit()
         }
     }
+
 
 }

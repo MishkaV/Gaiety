@@ -5,6 +5,8 @@ import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gaiety.NumAdapterMyFavoriteEvent
 import com.example.gaiety.NumAdapterMyOrganizations
@@ -26,6 +28,8 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import view.activities.MainActivity
+import view.fragments.MainFragment
 
 
 private const val TAG = "TAG_EVENT_REQUEST"

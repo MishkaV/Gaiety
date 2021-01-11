@@ -42,6 +42,7 @@ tools:context="view.fragments.homeScreen.HomeFragment">
         android:layout_gravity="right"
         android:layout_marginEnd="24dp"
         android:layout_marginTop="24dp"
-        app:srcCompat="@drawable/ic_filter_icon" />
+        app:srcCompat="@drawable/ic_filter_icon"
+        tools:ignore="RtlHardcoded" />
 
 </FrameLayout>
