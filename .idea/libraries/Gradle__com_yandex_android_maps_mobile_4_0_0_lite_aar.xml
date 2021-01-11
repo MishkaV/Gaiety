@@ -3,6 +3,7 @@
     <CLASSES>
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/80653b6952429dcc352af350270866eb/jetified-maps.mobile-4.0.0-lite/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/80653b6952429dcc352af350270866eb/jetified-maps.mobile-4.0.0-lite/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/80653b6952429dcc352af350270866eb/jetified-maps.mobile-4.0.0-lite/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

@@ -24,15 +24,7 @@ import com.mapbox.mapboxsdk.geometry.LatLng
 import com.mapbox.mapboxsdk.maps.MapboxMap
 import com.mapbox.mapboxsdk.maps.Style
 import com.mapbox.mapboxsdk.style.layers.PropertyFactory.textField
-import com.maxkeppeler.bottomsheets.calendar.CalendarMode
-import com.maxkeppeler.bottomsheets.calendar.CalendarSheet
-import com.maxkeppeler.bottomsheets.calendar.SelectionMode
-import com.maxkeppeler.bottomsheets.core.BottomSheet
-import com.maxkeppeler.bottomsheets.input.InputSheet
-import com.maxkeppeler.bottomsheets.input.type.InputEditText
-import com.maxkeppeler.bottomsheets.input.type.InputRadioButtons
 import model.NetworkRequests
-import java.util.*
 
 
 class MapFragment : Fragment() {

@@ -6,6 +6,7 @@
     <CLASSES>
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/bafa5f6a1ddf90c93b8531e3d5afd498/jetified-mapbox-android-sdk-9.5.0/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/bafa5f6a1ddf90c93b8531e3d5afd498/jetified-mapbox-android-sdk-9.5.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/bafa5f6a1ddf90c93b8531e3d5afd498/jetified-mapbox-android-sdk-9.5.0/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.mapbox.mapboxsdk/mapbox-android-sdk/9.5.0/d046d78d0d1f42b42760f128fd7cf0a034282251/mapbox-android-sdk-9.5.0-javadoc.jar!/" />

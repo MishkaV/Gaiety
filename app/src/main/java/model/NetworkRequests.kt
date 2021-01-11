@@ -65,11 +65,13 @@ class NetworkRequests {
                 object : Callback<Event> {
                     override fun onResponse(call: Call<Event>, response: Response<Event>) {
                         if (response.body() != null) {
+                            //numAdapter.showProgress()
                             for (item in response.body()!!.values)
                                 if (!(item in numAdapter.homeFeed.values)) {
                                     numAdapter.addItem(item)
                                 }
                             numAdapter.notifyDataSetChanged()
+                            //numAdapter.hideProgress()
                         }
                         Log.d(TAG, "Success")
                     }
@@ -115,11 +117,13 @@ class NetworkRequests {
             object : Callback<Event> {
                 override fun onResponse(call: Call<Event>, response: Response<Event>) {
                     if (response.body() != null) {
+                        //numAdapter.showProgress()
                         for (item in response.body()!!.values)
                             if (item !in numAdapter.homeFeed.values) {
                                 numAdapter.addItem(item)
                             }
                         numAdapter.notifyDataSetChanged()
+                        //numAdapter.hideProgress()
                         val progressBar = view?.findViewById<ProgressBar>(R.id.progressBar)
                         if (progressBar != null) {
                             progressBar.visibility = View.INVISIBLE
