@@ -6,7 +6,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.Toast
@@ -26,25 +25,26 @@ import view.fragments.startScreen.StartFragment
 import com.example.gaiety.R
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
-import github.com.st235.lib_expandablebottombar.ExpandableBottomBar
 import kotlinx.android.synthetic.main.change_about_me.*
 import kotlinx.android.synthetic.main.fragment_login.*
-import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.fragment_register.*
 import kotlinx.android.synthetic.main.fragment_reset_password.*
+import kotlinx.android.synthetic.main.fragment_token.*
 import presenter.meScreen.BottomSheetFragment
 import view.fragments.meScreen.aboutMe.AboutMe
 import view.fragments.meScreen.aboutMe.ChangeAboutMe
 import view.fragments.meScreen.myFavoriteEventsScreen.MyFavoriteEvents
+import view.fragments.pkScreen.PkFragment
+import view.fragments.pkScreen.tokenScreen.TokenFragment
 
 private const val TAG = "TAG"
 val firebaseRequests = FirebaseRequests()
-
 class MainActivity : AppCompatActivity() {
     lateinit var homeFrag: HomeFragment
     lateinit var myTicketsEventsFrag: myTickets
     lateinit var myFavoriteEventsFrag: MyFavoriteEvents
     lateinit var myOrganizationsFrag: MyOrganizationsFragment
+    lateinit var tokenFrag: TokenFragment
     lateinit var addOrganizationFrag: AddOrganizationFragment
     lateinit var meFrag: MeFragment
     lateinit var startFrag: StartFragment
@@ -55,6 +55,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var resetPasswordFragment: ResetPasswordFragment
     lateinit var aboutMe: AboutMe
     lateinit var changeAboutMe: ChangeAboutMe
+    lateinit var pkFrag: PkFragment
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,6 +65,7 @@ class MainActivity : AppCompatActivity() {
         myTicketsEventsFrag = myTickets()
         myFavoriteEventsFrag = MyFavoriteEvents()
         myOrganizationsFrag = MyOrganizationsFragment()
+        tokenFrag = TokenFragment()
         addOrganizationFrag = AddOrganizationFragment()
         meFrag = MeFragment()
         startFrag = StartFragment()
@@ -73,6 +75,7 @@ class MainActivity : AppCompatActivity() {
         resetPasswordFragment = ResetPasswordFragment()
         aboutMe = AboutMe()
         changeAboutMe = ChangeAboutMe()
+        pkFrag = PkFragment()
 
         makeCurrentFragment(startFrag, "startFrag")
     }
@@ -197,7 +200,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun change(
-        bottomSheetFragment: BottomSheetFragment) {
+        bottomSheetFragment: BottomSheetDialog) {
         nameEditLayoutChange.error = null
         surnameEditLayoutChange.error = null
         if (!(nameEditTextChange?.text.toString() == "" || surnameEditTextChange?.text.toString() == "")) {
@@ -210,7 +213,6 @@ class MainActivity : AppCompatActivity() {
             firebaseRequests.changeUser(name, surname)
             makeCurrentFragment(mainFrag, "mainFrag")
             makeCurrentFragmentMain(meFrag, "meFrag")
-            bottomSheetFragment.show(supportFragmentManager, "BottomSheetDialog")
             Log.d("Change", "Successfull!")
 
         } else if (nameEditTextChange?.text.toString() == "") {
@@ -218,8 +220,21 @@ class MainActivity : AppCompatActivity() {
         } else surnameEditLayoutChange.error = "Введите фамилию"
     }
 
+    fun putToken() {
+        tokenEditLayoutLog.error = null
+        if (tokenEditTextLog?.text.toString() != "") {
+            val token = tokenEditTextLog?.text.toString()
+
+            Log.d("MainActivity", token)
+
+            firebaseRequests.changeToken(token)
+            makeCurrentFragment(mainFrag, "mainFrag")
+            makeCurrentFragmentMain(pkFrag, "pkFrag")
+            Log.d("Change", "Successfull!")
+
+        } else tokenEditLayoutLog.error = "Введите токен"
+    }
     fun onClick(view: View) {
-        val bottomSheetFragment = BottomSheetFragment()
         val bottomSheetDialog = BottomSheetDialog(this)
         when (view.id) {
             R.id.loginButton -> makeCurrentFragment(loginFrag, "loginFrag")
@@ -230,9 +245,7 @@ class MainActivity : AppCompatActivity() {
             R.id.registrationButtonFrag -> {
                 registration()
             }
-            R.id.myTicketsMe -> makeCurrentFragmentMain(myTicketsEventsFrag, "myTicketsFrag")
             R.id.myFavoriteEvent -> makeCurrentFragmentMain(myFavoriteEventsFrag, "myTicketsFrag")
-            R.id.myOrganizationsMe -> makeCurrentFragmentMain(myOrganizationsFrag, "myOrganizationFrag")
             R.id.exitMe -> makeCurrentFragment(startFrag, "startFrag")
             R.id.recyclerViewCard -> {
                 itemFrag =
@@ -243,6 +256,7 @@ class MainActivity : AppCompatActivity() {
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://afisha.timepad.ru/"))
                 startActivity(intent)
             }
+
             R.id.resetButton -> {
                 makeCurrentFragment(resetPasswordFragment, "resetPasswordFragment")
             }
@@ -258,7 +272,7 @@ class MainActivity : AppCompatActivity() {
                 buttonChange.setOnClickListener(object : View.OnClickListener{
                     override fun onClick(p0: View?) {
                         bottomSheetDialog.dismiss()
-                        makeCurrentFragment(changeAboutMe, "changeAboutMe")
+                        makeCurrentFragmentMain(changeAboutMe, "changeAboutMe")
                     }
                 })
                 firebaseRequests.getAboutMe(bottomSheetView)
@@ -267,8 +281,21 @@ class MainActivity : AppCompatActivity() {
             }
 
             R.id.changeButtonFrag -> {
-                change(bottomSheetFragment)
+                change(bottomSheetDialog)
             }
+
+            R.id.myTickets -> {
+                makeCurrentFragmentMain(myTicketsEventsFrag, "myTicketsFrag")
+            }
+
+            R.id.myOrganizations -> makeCurrentFragmentMain(myOrganizationsFrag, "myOrganizationFrag")
+
+            R.id.token -> makeCurrentFragment(tokenFrag, "tokenFrag")
+            R.id.getToken -> {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse("http://dev.timepad.ru/api/oauth/"))
+                startActivity(intent)
+            }
+            R.id.tokenButtonFrag -> putToken()
         }
     }
 }
