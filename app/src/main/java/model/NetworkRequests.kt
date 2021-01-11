@@ -250,7 +250,7 @@ class NetworkRequests {
                         for (item in response.body()!!.values) {
                             if (item.location != null) {
                                 if (item.location.coordinates != null) {
-                                    mapboxMap?.addMarker(
+                                    val marker = mapboxMap?.addMarker(
                                         MarkerOptions()
                                             .position(
                                                 LatLng(

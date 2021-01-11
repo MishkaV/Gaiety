@@ -1,6 +1,8 @@
 package view.fragments.mapScreen
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -62,15 +64,24 @@ class MapFragment : Fragment() {
                 val mapText = it.getLayer("country-label")?.setProperties(textField("{name_ru}"))
             }
             networkRequests.eventRequestMap(mapboxMap, "Москва")
-            mapboxMap.onInfoWindowClickListener = MapboxMap.OnInfoWindowClickListener {
+            /*mapboxMap.onInfoWindowClickListener = MapboxMap.OnInfoWindowClickListener {
                 Log.d("CHECKER", "CLICK ON INFO")
                 true
             }
+
+             */
         }
-        val floatButton = view.findViewById<FloatingActionButton>(R.id.floatingActioButtonMap)
+        val floatButton = view.findViewById<com.getbase.floatingactionbutton.FloatingActionButton>(R.id.floatingActioButtonMap)
+        val floatButtonLink = view.findViewById<com.getbase.floatingactionbutton.FloatingActionButton>(R.id.floatingActioButtonLink)
         floatButton.setOnClickListener() {
             onClickFloatingButton()
         }
+        floatButtonLink.setOnClickListener() {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://afisha.timepad.ru/"))
+            startActivity(intent)
+        }
+
+
     }
 
 
