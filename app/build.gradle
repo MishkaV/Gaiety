@@ -75,4 +75,7 @@ dependencies {
 
     implementation 'com.yandex.android:maps.mobile:4.0.0-lite'
     implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:9.5.0'
+
+    implementation 'com.github.jorgecastilloprz:fillableloaders:1.03@aar'
+    implementation 'com.getbase:floatingactionbutton:1.10.1'
 }

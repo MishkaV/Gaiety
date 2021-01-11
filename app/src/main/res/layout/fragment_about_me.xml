@@ -18,7 +18,7 @@
         android:layout_marginTop="30dp"
         android:gravity="center_vertical"
         android:fontFamily="@font/comfortaa_bold"
-        android:text="О себе"
+        android:text="@string/about_me"
         android:textSize="36sp" />
 
     <TextView
@@ -48,12 +48,12 @@
         android:textSize="28sp"
         />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/changeAboutMe"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_below="@+id/surnameText"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_centerHorizontal="true"

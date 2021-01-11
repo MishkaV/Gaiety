@@ -5,3 +5,4 @@
 
 - [Михаил Ворожцов](https://github.com/MishkaV)
 - [Асад Исмаилов](https://github.com/aaismailov)
+- [Артур Авакумов](https://github.com/yusaristark)

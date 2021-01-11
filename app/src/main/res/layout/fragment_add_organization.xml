@@ -9,13 +9,13 @@
         android:id="@+id/textAddOrganization"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="80dp"
         android:gravity="center_vertical"
         android:fontFamily="@font/comfortaa_bold"
-        android:text="Создание организации"
+        android:text="@string/create_oraganisation"
         android:textSize="36sp" />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -23,10 +23,10 @@
         android:layout_below="@+id/textAddOrganization"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:hint="Название организации"
+        android:hint="@string/name_organisation"
         android:layout_centerHorizontal="true"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <com.google.android.material.textfield.TextInputEditText
@@ -39,10 +39,10 @@
         android:layout_below="@+id/nameAddOrganization"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:hint="Адрес на Timepad"
+        android:hint="@string/adress_on_timepad"
         android:layout_centerHorizontal="true"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
@@ -58,10 +58,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/addressAddOrganization"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:hint="Номер телефона"
+        android:hint="@string/telephone_number"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -76,11 +76,11 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_below="@+id/numberAddOrganization"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginLeft="14dp"
+        android:layout_marginStart="14dp"
         android:layout_marginTop="0dp"
-        android:layout_marginRight="16dp"
-        android:text="Создать организацию" />
+        android:layout_marginEnd="16dp"
+        android:text="@string/create_organisation_button" />
 
 </RelativeLayout>

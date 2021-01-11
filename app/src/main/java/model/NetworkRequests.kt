@@ -11,6 +11,7 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.core.content.ContextCompat.startActivity
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gaiety.NumAdapterMyFavoriteEvent
 import com.example.gaiety.NumAdapterMyOrganizations
@@ -34,8 +35,9 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import view.activities.ItemMore
-import view.activities.MainActivity
 import view.activities.firebaseRequests
+import view.activities.MainActivity
+import view.fragments.MainFragment
 
 
 private const val TAG = "TAG_EVENT_REQUEST"
@@ -126,14 +128,16 @@ class NetworkRequests {
         call.enqueue(
             object : Callback<Event> {
                 override fun onResponse(call: Call<Event>, response: Response<Event>) {
-                    for (item in response.body()!!.values)
-                        if (item !in numAdapter.homeFeed.values) {
-                            numAdapter.addItem(item)
+                    if (response.body() != null) {
+                        for (item in response.body()!!.values)
+                            if (item !in numAdapter.homeFeed.values) {
+                                numAdapter.addItem(item)
+                            }
+                        numAdapter.notifyDataSetChanged()
+                        val progressBar = view?.findViewById<ProgressBar>(R.id.progressBar)
+                        if (progressBar != null) {
+                            progressBar.visibility = View.INVISIBLE
                         }
-                    numAdapter.notifyDataSetChanged()
-                    val progressBar = view?.findViewById<ProgressBar>(R.id.progressBar)
-                    if (progressBar != null) {
-                        progressBar.visibility = View.INVISIBLE
                     }
                     Log.d(TAG, "Success")
                 }
@@ -291,19 +295,21 @@ class NetworkRequests {
         call.enqueue(
             object : Callback<Event> {
                 override fun onResponse(call: Call<Event>, response: Response<Event>) {
-                    for (item in response.body()!!.values) {
-                        if (item.location != null) {
-                            if (item.location.coordinates != null) {
-                                mapboxMap?.addMarker(
-                                    MarkerOptions()
-                                        .position(
-                                            LatLng(
-                                                item.location.coordinates[0].toDouble(),
-                                                item.location.coordinates[1].toDouble()
+                    if (response.body() != null) {
+                        for (item in response.body()!!.values) {
+                            if (item.location != null) {
+                                if (item.location.coordinates != null) {
+                                    val marker = mapboxMap?.addMarker(
+                                        MarkerOptions()
+                                            .position(
+                                                LatLng(
+                                                    item.location.coordinates[0].toDouble(),
+                                                    item.location.coordinates[1].toDouble()
+                                                )
                                             )
-                                        )
-                                        .title(Html.fromHtml(item.name).toString())
-                                )
+                                            .title(Html.fromHtml(item.name).toString())
+                                    )
+                                }
                             }
                         }
                     }
