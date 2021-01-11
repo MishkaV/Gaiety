@@ -10,6 +10,7 @@ import com.example.gaiety.R
 import github.com.st235.lib_expandablebottombar.ExpandableBottomBar
 import kotlinx.android.synthetic.main.fragment_main.*
 import view.activities.MainActivity
+import view.activities.currentFragMain
 import view.fragments.homeScreen.HomeFragment
 import view.fragments.mapScreen.MapFragment
 import view.fragments.meScreen.MeFragment
@@ -35,17 +36,27 @@ class MainFragment : Fragment() {
         if (bottom_navigation != null) {
             val homeFrag = HomeFragment()
             val meFrag = MeFragment()
-            val mapFragment =  MapFragment()
+            val mapFragment = MapFragment()
             bottomBar.onItemSelectedListener = { view, menuItem ->
                 when (menuItem.itemId) {
-                    R.id.ic_home -> makeCurrentFragmentMain(homeFrag, "homeFrag")
-                    R.id.ic_map -> makeCurrentFragmentMain(mapFragment, "mapFrag")
-                    R.id.ic_me -> makeCurrentFragmentMain(meFrag, "meFrag")
+                    R.id.ic_home -> {
+                        makeCurrentFragmentMain(homeFrag, "homeFrag")
+                        currentFragMain = "homeFrag"
+                    }
+                    R.id.ic_map -> {
+                        makeCurrentFragmentMain(mapFragment, "mapFrag")
+                        currentFragMain = "mapFrag"
+                    }
+                    R.id.ic_me -> {
+                        makeCurrentFragmentMain(meFrag, "meFrag")
+                        currentFragMain = "meFrag"
+                    }
                 }
                 true
             }
         }
     }
+
     private fun makeCurrentFragmentMain(fragment: Fragment, name: String) {
         fragmentManager?.beginTransaction()?.apply {
             replace(R.id.main_fragment, fragment)

@@ -37,6 +37,10 @@ class myTickets : Fragment() {
             orientation = RecyclerView.VERTICAL
             spanCount = 1
         }
+        else {
+            orientation = RecyclerView.VERTICAL
+            spanCount = 1
+        }
 
         val layoutManager = GridLayoutManager(requireContext(), spanCount, orientation, false)
         val numAdapter = createNumAdapter()

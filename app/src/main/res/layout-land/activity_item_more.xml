@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/description_layout"
+    android:weightSum="100"
+    tools:context="view.activities.ItemMore">
+
+        <ImageView
+            android:id="@+id/itemImageUrl"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="15"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="75">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewItemMore"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="12dp"
+            tools:listitem="@layout/recyclerview_item" />
+
+
+    <com.jackandphantom.androidlikebutton.AndroidLikeButton
+        android:id="@+id/likeButtonDescription"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_gravity="bottom|center_horizontal"
+        app:like_icon="@drawable/like"
+        app:unlike_icon="@drawable/unlike"
+        app:circle_startColor="#fcd229"
+        app:circle_endColor="#f4ac1b"
+        app:dot_color_1="#f5ce31"
+        app:dot_color_2="#ed8128"
+        />
+    </FrameLayout>
+</LinearLayout>

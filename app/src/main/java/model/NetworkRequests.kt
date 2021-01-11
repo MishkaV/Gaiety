@@ -64,11 +64,13 @@ class NetworkRequests {
             call.enqueue(
                 object : Callback<Event> {
                     override fun onResponse(call: Call<Event>, response: Response<Event>) {
-                        for (item in response.body()!!.values)
-                            if (!(item in numAdapter.homeFeed.values)) {
-                                numAdapter.addItem(item)
-                            }
-                        numAdapter.notifyDataSetChanged()
+                        if (response.body() != null) {
+                            for (item in response.body()!!.values)
+                                if (!(item in numAdapter.homeFeed.values)) {
+                                    numAdapter.addItem(item)
+                                }
+                            numAdapter.notifyDataSetChanged()
+                        }
                         Log.d(TAG, "Success")
                     }
 
@@ -112,14 +114,16 @@ class NetworkRequests {
         call.enqueue(
             object : Callback<Event> {
                 override fun onResponse(call: Call<Event>, response: Response<Event>) {
-                    for (item in response.body()!!.values)
-                        if (item !in numAdapter.homeFeed.values) {
-                            numAdapter.addItem(item)
+                    if (response.body() != null) {
+                        for (item in response.body()!!.values)
+                            if (item !in numAdapter.homeFeed.values) {
+                                numAdapter.addItem(item)
+                            }
+                        numAdapter.notifyDataSetChanged()
+                        val progressBar = view?.findViewById<ProgressBar>(R.id.progressBar)
+                        if (progressBar != null) {
+                            progressBar.visibility = View.INVISIBLE
                         }
-                    numAdapter.notifyDataSetChanged()
-                    val progressBar = view?.findViewById<ProgressBar>(R.id.progressBar)
-                    if (progressBar != null) {
-                        progressBar.visibility = View.INVISIBLE
                     }
                     Log.d(TAG, "Success")
                 }
@@ -150,8 +154,10 @@ class NetworkRequests {
                     call: Call<EventDescription>,
                     response: Response<EventDescription>
                 ) {
-                    numList.adapter = ItemMoreAdapter(response.body()!!, image)
-                    Log.d(TAG_EVEN_DESCRIPTION, "Success")
+                    if (response.body() != null) {
+                        numList.adapter = ItemMoreAdapter(response.body()!!, image)
+                        Log.d(TAG_EVEN_DESCRIPTION, "Success")
+                    }
                 }
             })
     }
@@ -240,19 +246,21 @@ class NetworkRequests {
         call.enqueue(
             object : Callback<Event> {
                 override fun onResponse(call: Call<Event>, response: Response<Event>) {
-                    for (item in response.body()!!.values) {
-                        if (item.location != null) {
-                            if (item.location.coordinates != null) {
-                                mapboxMap?.addMarker(
-                                    MarkerOptions()
-                                        .position(
-                                            LatLng(
-                                                item.location.coordinates[0].toDouble(),
-                                                item.location.coordinates[1].toDouble()
+                    if (response.body() != null) {
+                        for (item in response.body()!!.values) {
+                            if (item.location != null) {
+                                if (item.location.coordinates != null) {
+                                    mapboxMap?.addMarker(
+                                        MarkerOptions()
+                                            .position(
+                                                LatLng(
+                                                    item.location.coordinates[0].toDouble(),
+                                                    item.location.coordinates[1].toDouble()
+                                                )
                                             )
-                                        )
-                                        .title(Html.fromHtml(item.name).toString())
-                                )
+                                            .title(Html.fromHtml(item.name).toString())
+                                    )
+                                }
                             }
                         }
                     }

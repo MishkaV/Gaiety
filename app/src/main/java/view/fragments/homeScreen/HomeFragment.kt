@@ -60,6 +60,10 @@ class HomeFragment : Fragment() {
             orientation = RecyclerView.VERTICAL
             spanCount = 1
         }
+        else {
+            orientation = RecyclerView.VERTICAL
+            spanCount = 2
+        }
 
         layoutManager = GridLayoutManager(requireContext(), spanCount, orientation, false)
         numAdapter = createNumAdapter()
@@ -79,32 +83,6 @@ class HomeFragment : Fragment() {
         progressBar = view.findViewById(R.id.progressBar)
         numList.addOnScrollListener(scrollListener)
         NetworkRequests().eventRequest(numList, 0, numAdapter)
-        /*numList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                if (dy > 0) //check for scroll down
-                {
-                    val visibleItemCount = layoutManager.childCount
-                    val totalItemCount = layoutManager.itemCount
-                    val pastVisiblesItems = layoutManager.findFirstVisibleItemPosition()
-
-                    if (visibleItemCount + pastVisiblesItems >= totalItemCount) {
-
-                        NetworkRequests().eventRequestDataFiltered(
-                            numList,
-                            totalItemCount,
-                            numAdapter,
-                            cities,
-                            keywords,
-                            price_min,
-                            price_max,
-                            starts_at_min,
-                            starts_at_max
-                        )
-                    }
-                }
-            }
-        })*/
-
     }
 
     private fun createNumAdapter(): NumAdapter {
