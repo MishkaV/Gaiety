@@ -17,26 +17,45 @@
             android:adjustViewBounds="true"
             android:scaleType="centerCrop" />
 
-        <androidx.recyclerview.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewItemMore"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="75"
             android:padding="12dp"
-            tools:listitem="@layout/recyclerview_item" />
+            tools:listitem="@layout/recyclerview_item" >
+
+        </androidx.recyclerview.widget.RecyclerView>
 
 
-    <com.jackandphantom.androidlikebutton.AndroidLikeButton
-        android:id="@+id/likeButtonDescription"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_gravity="bottom|center_horizontal"
-        app:like_icon="@drawable/like"
-        app:unlike_icon="@drawable/unlike"
-        app:circle_startColor="#fcd229"
-        app:circle_endColor="#f4ac1b"
-        app:dot_color_1="#f5ce31"
-        app:dot_color_2="#ed8128"
-        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.jackandphantom.androidlikebutton.AndroidLikeButton
+            android:id="@+id/likeButtonDescription"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginStart="120dp"
+            app:circle_endColor="#f4ac1b"
+            app:circle_startColor="#fcd229"
+            app:dot_color_1="#f5ce31"
+            app:dot_color_2="#ed8128"
+            app:like_icon="@drawable/like"
+            app:unlike_icon="@drawable/unlike">
+
+        </com.jackandphantom.androidlikebutton.AndroidLikeButton>
+
+        <Button
+            android:id="@+id/browserOpen"
+            android:layout_width="60sp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="45dp"
+            android:layout_marginTop="45dp"
+            android:background="@android:color/transparent"
+            android:drawableLeft="@drawable/ic_browser_40" />
+    </LinearLayout>
 
 </LinearLayout>

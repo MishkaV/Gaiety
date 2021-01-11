@@ -1,15 +1,20 @@
 package view.activities
 
+import android.content.Intent
+import android.net.Uri
 import model.NetworkRequests
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gaiety.R
 import com.jackandphantom.androidlikebutton.AndroidLikeButton
 import com.jackandphantom.androidlikebutton.AndroidLikeButton.OnLikeEventListener
+import com.mapbox.mapboxsdk.Mapbox
 
 
 private const val TAG_LIKE = "TAG_LIKE"
@@ -23,15 +28,15 @@ class ItemMore : AppCompatActivity() {
         val checkFavorite = intent.getIntExtra("favCheck", 0)
         val image = findViewById<ImageView>(R.id.itemImageUrl)
         var eventId = 0
-        if (checkFavorite == 0) {
-            eventId = intent.getIntExtra("eventId", 0)
+        eventId = if (checkFavorite == 0) {
+            intent.getIntExtra("eventId", 0)
         } else {
-            eventId = intent.getIntExtra("favId", 0)
+            intent.getIntExtra("favId", 0)
         }
         itemRecycler = findViewById(R.id.recyclerViewItemMore)
         itemRecycler.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
         if (eventId != 0) {
-            NetworkRequests().eventDescriptionRequest(itemRecycler, image,eventId)
+            NetworkRequests().eventDescriptionRequest(itemRecycler, image, eventId)
         }
         createListnerLike(eventId)
         stateOfLike(eventId)

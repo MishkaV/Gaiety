@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:layout_margin="20dp"
+        android:layout_margin="10dp"
         app:exb_backgroundCornerRadius="25dp"
         app:exb_itemInactiveColor="#000"
         app:exb_items="@menu/nav_menu"

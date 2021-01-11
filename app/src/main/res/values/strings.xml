@@ -45,6 +45,8 @@
     <string name="str_starts_at_min">Период проведения</string>
     <string name="str_сalendar_description">Начало до</string>
     <string name="price_error_message">Некорректный формат ввода стоимости. Повторите попытку</string>
+    <string name="pkText">Работа с ПК</string>
+    <string name="token">ТОКЕН</string>
     <string name="edit_info">Редактировать информацию</string>
     <string name="edit">Редактировать</string>
     <string name="filter_of_cities">Фильтр городов</string>

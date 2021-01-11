@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="view.fragments.pkScreen.PkFragment">
+
+
+    <TextView
+        android:id="@+id/pkHeader"
+        android:layout_width="400dp"
+        android:layout_height="58dp"
+        android:layout_above="@+id/relativeLayoutMe"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="89dp"
+        android:layout_marginBottom="-5dp"
+        android:fontFamily="@font/comfortaa_bold"
+        android:gravity="center_vertical"
+        android:text="@string/pkText"
+        android:textSize="36sp" />
+
+    <RelativeLayout
+        android:id="@+id/relativeLayoutMe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/myTickets"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="48dp"
+            android:layout_marginRight="16dp"
+            android:onClick="onClick"
+            android:text="@string/myTickets"
+            app:cornerRadius="20dp" />
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/myOrganizations"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_below="@+id/myTickets"
+            android:layout_alignParentStart="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:onClick="onClick"
+            android:text="@string/myOrganisation"
+            app:cornerRadius="20dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/token"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_below="@+id/myOrganizations"
+            android:layout_alignParentStart="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:onClick="onClick"
+            android:text="@string/token"
+            app:cornerRadius="20dp" />
+    </RelativeLayout>
+</RelativeLayout>

@@ -14,6 +14,7 @@ import view.activities.currentFragMain
 import view.fragments.homeScreen.HomeFragment
 import view.fragments.mapScreen.MapFragment
 import view.fragments.meScreen.MeFragment
+import view.fragments.pkScreen.PkFragment
 
 class MainFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,7 +37,9 @@ class MainFragment : Fragment() {
         if (bottom_navigation != null) {
             val homeFrag = HomeFragment()
             val meFrag = MeFragment()
+            
             val mapFragment = MapFragment()
+            val pkFrag = PkFragment()
             bottomBar.onItemSelectedListener = { view, menuItem ->
                 when (menuItem.itemId) {
                     R.id.ic_home -> {
@@ -50,6 +53,10 @@ class MainFragment : Fragment() {
                     R.id.ic_me -> {
                         makeCurrentFragmentMain(meFrag, "meFrag")
                         currentFragMain = "meFrag"
+                    }
+                    R.id.ic_PK_icon -> {
+                        makeCurrentFragmentMain(pkFrag, "pkFrag")
+                        currentFragMain = "pkFrag"
                     }
                 }
                 true
