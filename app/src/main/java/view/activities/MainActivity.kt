@@ -328,7 +328,6 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.resetButtonFrag -> resetPassword()
             R.id.aboutMe -> { //makeCurrentFragmentMain(aboutMe, "aboutMe")
-                //bottomSheetFragment.show(supportFragmentManager, "BottomSheetDialog")
                 val bottomSheetView = LayoutInflater.from(this)
                     .inflate(
                         R.layout.fragment_about_me,
@@ -338,12 +337,14 @@ class MainActivity : AppCompatActivity() {
                 buttonChange.setOnClickListener(object : View.OnClickListener {
                     override fun onClick(p0: View?) {
                         bottomSheetDialog.dismiss()
-                        makeCurrentFragment(changeAboutMe, "changeAboutMe")
+                        makeCurrentFragmentMain(changeAboutMe, "changeAboutMe")
                     }
                 })
                 firebaseRequests.getAboutMe(bottomSheetView)
                 bottomSheetDialog?.setContentView(bottomSheetView)
                 bottomSheetDialog?.show()
+
+
             }
 
             R.id.changeButtonFrag -> {

@@ -48,7 +48,7 @@
         android:textSize="28sp"
         />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/changeAboutMe"
         android:layout_width="match_parent"
         android:layout_height="60dp"
