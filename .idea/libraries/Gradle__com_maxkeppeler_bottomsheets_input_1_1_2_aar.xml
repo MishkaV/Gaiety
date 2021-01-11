@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: com.maxkeppeler.bottomsheets:input:1.1.2@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/ab421f064fe57fe031cae659e1c27f9a/jetified-input-1.1.2/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/ab421f064fe57fe031cae659e1c27f9a/jetified-input-1.1.2/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/ab421f064fe57fe031cae659e1c27f9a/jetified-input-1.1.2/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.maxkeppeler.bottomsheets/input/1.1.2/9eb974103c72dec4e2063eeeb66faa0dee633de5/input-1.1.2-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.maxkeppeler.bottomsheets/input/1.1.2/613b992d2e930840762b9ceaf7f7682841c65ec7/input-1.1.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -4,9 +4,12 @@ import model.FirebaseRequests
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -18,22 +21,33 @@ import view.fragments.loginScreen.resetPassword.ResetPasswordFragment
 import view.fragments.meScreen.myOrganizationsScreen.AddOrganizationScreen.AddOrganizationFragment
 import view.fragments.meScreen.MeFragment
 import view.fragments.meScreen.myOrganizationsScreen.MyOrganizationsFragment
-import view.fragments.meScreen.myFavoriteEventsScreen.MyFavoriteEvents
+import view.fragments.meScreen.myTicketsScreen.myTickets
 import view.fragments.registerScreen.RegisterFragment
 import view.fragments.startScreen.StartFragment
 import com.example.gaiety.R
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
+import com.mapbox.mapboxsdk.maps.MapFragment
+import github.com.st235.lib_expandablebottombar.ExpandableBottomBar
+import kotlinx.android.synthetic.main.change_about_me.*
 import kotlinx.android.synthetic.main.fragment_login.*
+import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.fragment_register.*
 import kotlinx.android.synthetic.main.fragment_reset_password.*
 import presenter.meScreen.BottomSheetFragment
 import view.fragments.meScreen.aboutMe.AboutMe
+import view.fragments.meScreen.aboutMe.ChangeAboutMe
+import view.fragments.meScreen.myFavoriteEventsScreen.MyFavoriteEvents
 
 private const val TAG = "TAG"
 val firebaseRequests = FirebaseRequests()
+var currentFragMain: String? = null
+var currentFrag: String? = null
+
 
 class MainActivity : AppCompatActivity() {
     lateinit var homeFrag: HomeFragment
+    lateinit var myTicketsEventsFrag: myTickets
     lateinit var myFavoriteEventsFrag: MyFavoriteEvents
     lateinit var myOrganizationsFrag: MyOrganizationsFragment
     lateinit var addOrganizationFrag: AddOrganizationFragment
@@ -41,16 +55,19 @@ class MainActivity : AppCompatActivity() {
     lateinit var startFrag: StartFragment
     lateinit var mainFrag: MainFragment
     lateinit var itemFrag: ItemRecyclerMore
-    lateinit var loginFrag: LoginFragment
+    private lateinit var loginFrag: LoginFragment
     lateinit var registerFrag: RegisterFragment
     lateinit var resetPasswordFragment: ResetPasswordFragment
     lateinit var aboutMe: AboutMe
+    lateinit var changeAboutMe: ChangeAboutMe
+    lateinit var mapFragment: view.fragments.mapScreen.MapFragment
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         homeFrag = HomeFragment()
+        myTicketsEventsFrag = myTickets()
         myFavoriteEventsFrag = MyFavoriteEvents()
         myOrganizationsFrag = MyOrganizationsFragment()
         addOrganizationFrag = AddOrganizationFragment()
@@ -61,9 +78,56 @@ class MainActivity : AppCompatActivity() {
         registerFrag = RegisterFragment()
         resetPasswordFragment = ResetPasswordFragment()
         aboutMe = AboutMe()
+        changeAboutMe = ChangeAboutMe()
+        mapFragment = view.fragments.mapScreen.MapFragment()
 
-
-        makeCurrentFragment(startFrag, "startFrag")
+        if (savedInstanceState != null) {
+            currentFrag = savedInstanceState.getString("currentFrag")
+            currentFragMain = savedInstanceState.getString("currentFragMain")
+            if (currentFrag != null)
+                when (currentFrag) {
+                    "loginFrag" -> makeCurrentFragment(loginFrag, "loginFrag")
+                    "registerFrag" -> makeCurrentFragment(registerFrag, "registerFrag")
+                    "startFrag" -> makeCurrentFragment(startFrag, "startFrag")
+                    "resetPasswordFragment" -> makeCurrentFragment(
+                        resetPasswordFragment,
+                        "resetPasswordFragment"
+                    )
+                    "mainFrag" -> {
+                        if (currentFragMain != null)
+                            when (currentFragMain) {
+                                "homeFrag" -> {
+                                    makeCurrentFragment(mainFrag, "mainFrag")
+                                    makeCurrentFragmentMain(homeFrag, "homeFrag")
+                                }
+                                "mapFrag" -> {
+                                    makeCurrentFragment(mainFrag, "mainFrag")
+                                    makeCurrentFragmentMain(mapFragment, "mapFrag")
+                                }
+                                "meFrag" -> {
+                                    makeCurrentFragment(mainFrag, "mainFrag")
+                                    makeCurrentFragmentMain(meFrag, "meFrag")
+                                }
+                                "myTicketsFrag" -> {
+                                    makeCurrentFragment(mainFrag, "mainFrag")
+                                    makeCurrentFragmentMain(myTicketsEventsFrag, "myTicketsFrag")
+                                }
+                                "myOrganizationFrag" -> {
+                                    makeCurrentFragment(mainFrag, "mainFrag")
+                                    makeCurrentFragmentMain(
+                                        myOrganizationsFrag,
+                                        "myOrganizationFrag"
+                                    )
+                                }
+                                "itemFrag" -> {
+                                    makeCurrentFragment(mainFrag, "mainFrag")
+                                    makeCurrentFragmentMain(itemFrag, "itemFrag")
+                                }
+                            }
+                    }
+                }
+        } else
+            makeCurrentFragment(startFrag, "startFrag")
     }
 
     private fun makeCurrentFragment(fragment: Fragment, name: String) {
@@ -80,14 +144,6 @@ class MainActivity : AppCompatActivity() {
             addToBackStack(name.toString())
             commit()
         }
-    }
-
-    fun changeFragmentsInMain(item: MenuItem) {
-        when (item.itemId) {
-            R.id.ic_home -> makeCurrentFragmentMain(homeFrag, "homeFrag")
-            R.id.ic_me -> makeCurrentFragmentMain(meFrag, "meFrag")
-        }
-        true
     }
 
     fun authorization() {
@@ -114,6 +170,8 @@ class MainActivity : AppCompatActivity() {
                     }
                     makeCurrentFragment(mainFrag, "mainFrag")
                     makeCurrentFragmentMain(homeFrag, "homeFrag")
+                    currentFrag = "mainFrag"
+                    currentFragMain = "homeFrag"
                     firebaseRequests.setCurrentUser(email)
                     Log.d("MainActivity", "Successfull!")
                 }
@@ -123,12 +181,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun registration() {
+        nameEditLayoutReg.error = null
+        surnameEditLayoutReg.error = null
         mailEditLayoutReg.error = null
         passwordEditLayoutReg.error = null
-        if (!(mailEditTextReg?.text.toString() == "" || passwordEditTextReg?.text.toString() == "")) {
+        if (!(nameEditTextReg?.text.toString() == "" || surnameEditTextReg?.text.toString() == "" ||
+                    mailEditTextReg?.text.toString() == "" || passwordEditTextReg?.text.toString() == "")
+        ) {
+            val name = nameEditTextReg?.text.toString()
+            val surname = surnameEditTextReg?.text.toString()
             val email = mailEditTextReg?.text.toString()
             val password = passwordEditTextReg?.text.toString()
 
+            Log.d("MainActivity", name)
+            Log.d("MainActivity", surname)
             Log.d("MainActivity", email)
             Log.d("MainActivity", password)
 
@@ -146,15 +212,21 @@ class MainActivity : AppCompatActivity() {
                     }
                     makeCurrentFragment(mainFrag, "mainFrag")
                     makeCurrentFragmentMain(homeFrag, "homeFrag")
-                    firebaseRequests.createNewUser(email)
+                    currentFrag = "mainFrag"
+                    currentFragMain = "homeFrag"
+                    firebaseRequests.createNewUser(email, name, surname)
                     Log.d("MainActivity", "Successfull!")
                 }
+        } else if (nameEditTextReg?.text.toString() == "") {
+            nameEditLayoutReg.error = "Введите имя"
+        } else if (surnameEditTextReg?.text.toString() == "") {
+            surnameEditLayoutReg.error = "Введите фамилию"
         } else if (mailEditTextReg?.text.toString() == "") {
             mailEditLayoutReg.error = "Введите почту"
         } else passwordEditLayoutReg.error = "Введите пароль"
     }
 
-    fun resetPassword(){
+    fun resetPassword() {
         mailResetLayout?.error = null
         if (mailResetText?.text.toString() != "") {
             val email = mailResetText?.text.toString()
@@ -168,37 +240,83 @@ class MainActivity : AppCompatActivity() {
                             "Email sent.",
                             Toast.LENGTH_SHORT
                         ).show()
+                    } else {
+                        Toast.makeText(
+                            this,
+                            "Sorry, but there is no such email",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        return@addOnCompleteListener
                     }
-                     else {
-                         Toast.makeText(
-                             this,
-                             "Sorry, but there is no such email",
-                             Toast.LENGTH_SHORT
-                         ).show()
-                         return@addOnCompleteListener
-                     }
                 }
         } else
             mailResetLayout?.error = "Введите почту"
     }
 
+    fun change(
+        bottomSheetFragment: BottomSheetFragment
+    ) {
+        nameEditLayoutChange.error = null
+        surnameEditLayoutChange.error = null
+        if (!(nameEditTextChange?.text.toString() == "" || surnameEditTextChange?.text.toString() == "")) {
+            val name = nameEditTextChange?.text.toString()
+            val surname = surnameEditTextChange?.text.toString()
+
+            Log.d("MainActivity", name)
+            Log.d("MainActivity", surname)
+
+            firebaseRequests.changeUser(name, surname)
+            makeCurrentFragment(mainFrag, "mainFrag")
+            makeCurrentFragmentMain(meFrag, "meFrag")
+            currentFrag = "mainFrag"
+            currentFragMain = "meFrag"
+            bottomSheetFragment.show(supportFragmentManager, "BottomSheetDialog")
+            Log.d("Change", "Successfull!")
+
+        } else if (nameEditTextChange?.text.toString() == "") {
+            nameEditLayoutChange.error = "Введите имя"
+        } else surnameEditLayoutChange.error = "Введите фамилию"
+    }
+
     fun onClick(view: View) {
+        val bottomSheetFragment = BottomSheetFragment()
+        val bottomSheetDialog = BottomSheetDialog(this)
         when (view.id) {
-            R.id.loginButton -> makeCurrentFragment(loginFrag, "loginFrag")
-            R.id.registrationButton -> makeCurrentFragment(registerFrag, "registerFrag")
+            R.id.loginButton -> {
+                makeCurrentFragment(loginFrag, "loginFrag")
+                currentFrag = "loginFrag"
+            }
+            R.id.registrationButton -> {
+                makeCurrentFragment(registerFrag, "registerFrag")
+                currentFrag = "registerFrag"
+            }
             R.id.loginButtonFrag -> {
                 authorization()
             }
             R.id.registrationButtonFrag -> {
                 registration()
             }
-            R.id.myFavoriteEvent -> makeCurrentFragmentMain(myFavoriteEventsFrag, "myTicketsFrag")
-            //R.id.myOrganizationsMe -> makeCurrentFragmentMain(myOrganizationsFrag, "myOrganizationFrag")
-            R.id.exitMe -> makeCurrentFragment(startFrag, "startFrag")
+            R.id.myTicketsMe -> {
+                makeCurrentFragmentMain(myTicketsEventsFrag, "myTicketsFrag")
+                currentFragMain = "myTicketsFrag"
+            }
+            R.id.myFavoriteEvent -> {
+                makeCurrentFragmentMain(myFavoriteEventsFrag, "myTicketsFrag")
+                currentFragMain = "myTicketsFrag"
+            }
+            R.id.myOrganizationsMe -> {
+                makeCurrentFragmentMain(myOrganizationsFrag, "myOrganizationFrag")
+                currentFragMain = "myOrganizationFrag"
+            }
+            R.id.exitMe -> {
+                makeCurrentFragment(startFrag, "startFrag")
+                currentFrag = "startFrag"
+            }
             R.id.recyclerViewCard -> {
                 itemFrag =
                     ItemRecyclerMore()
                 makeCurrentFragmentMain(itemFrag, "itemFrag")
+                currentFragMain = "itemFrag"
             }
             R.id.floating_action_button -> {
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://afisha.timepad.ru/"))
@@ -206,12 +324,41 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.resetButton -> {
                 makeCurrentFragment(resetPasswordFragment, "resetPasswordFragment")
+                currentFrag = "resetPasswordFragment"
             }
             R.id.resetButtonFrag -> resetPassword()
             R.id.aboutMe -> { //makeCurrentFragmentMain(aboutMe, "aboutMe")
-                val bottomSheetFragment = BottomSheetFragment()
-                bottomSheetFragment.show(supportFragmentManager, "BottomSheetDialog")
+                val bottomSheetView = LayoutInflater.from(this)
+                    .inflate(
+                        R.layout.fragment_about_me,
+                        findViewById(R.id.aboutMeFrag)
+                    )
+                val buttonChange = bottomSheetView.findViewById<Button>(R.id.changeAboutMe)
+                buttonChange.setOnClickListener(object : View.OnClickListener {
+                    override fun onClick(p0: View?) {
+                        bottomSheetDialog.dismiss()
+                        makeCurrentFragmentMain(changeAboutMe, "changeAboutMe")
+                    }
+                })
+                firebaseRequests.getAboutMe(bottomSheetView)
+                bottomSheetDialog?.setContentView(bottomSheetView)
+                bottomSheetDialog?.show()
+
+
+            }
+
+            R.id.changeButtonFrag -> {
+                change(bottomSheetFragment)
             }
         }
     }
+
+    override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
+        outState?.run {
+            putString("currentFrag", currentFragMain)
+            putString("currentFragMain", currentFrag)
+        }
+        super.onSaveInstanceState(outState, outPersistentState)
+    }
+
 }

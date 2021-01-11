@@ -1,8 +1,8 @@
 package view.fragments.meScreen.myOrganizationsScreen
 
-import model.clientData.Client
-import model.clientData.orders.Orders
-import model.clientData.organizations.Organizations
+import model.ClientData.Client
+import model.ClientData.orders.Orders
+import model.ClientData.organizations.Organizations
 import model.NetworkRequests
 import android.content.res.Configuration
 import android.os.Bundle
@@ -34,6 +34,10 @@ class MyOrganizationsFragment : Fragment() {
         var spanCount = 2
         numList = view.findViewById(R.id.recyclerViewMyOrganizations)
         if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            orientation = RecyclerView.VERTICAL
+            spanCount = 1
+        }
+        else {
             orientation = RecyclerView.VERTICAL
             spanCount = 1
         }

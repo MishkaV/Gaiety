@@ -1,33 +1,46 @@
 package view.fragments.homeScreen
 
-import model.eventData.Event
-import model.eventData.Value
-import model.NetworkRequests
-import presenter.homeScreen.NumAdapter
+
+import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
+import android.text.InputType
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
+import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gaiety.R
-
-import android.util.Log
-import android.widget.CompoundButton
-import com.google.android.material.chip.Chip
-import com.google.android.material.chip.ChipGroup
-
-
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.maxkeppeler.bottomsheets.calendar.CalendarMode
+import com.maxkeppeler.bottomsheets.calendar.CalendarSheet
+import com.maxkeppeler.bottomsheets.calendar.SelectionMode
+import com.maxkeppeler.bottomsheets.input.InputSheet
+import com.maxkeppeler.bottomsheets.input.type.InputEditText
+import model.EventData.Event
+import model.EventData.Value
+import model.NetworkRequests
+import presenter.homeScreen.NumAdapter
+import util.EndlessRecyclerViewScrollListener
+import java.util.*
 
 
 class HomeFragment : Fragment() {
     lateinit var numList: RecyclerView
-    private lateinit var chipGroup: ChipGroup
-    private var list : MutableList<String> = mutableListOf()
     private lateinit var numAdapter: NumAdapter
-
+    private lateinit var fab : FloatingActionButton
+    private lateinit var layoutManager : GridLayoutManager
+    private lateinit var progressBar : ProgressBar
+    private var cities : String? = null
+    private var keywords : String? = null
+    private var price_min : String? = null
+    private var price_max : String? = null
+    private var starts_at_min : String? = null
+    private var starts_at_max : String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,117 +60,191 @@ class HomeFragment : Fragment() {
             orientation = RecyclerView.VERTICAL
             spanCount = 1
         }
+        else {
+            orientation = RecyclerView.VERTICAL
+            spanCount = 2
+        }
 
-        val layoutManager = GridLayoutManager(requireContext(), spanCount, orientation, false)
+        layoutManager = GridLayoutManager(requireContext(), spanCount, orientation, false)
         numAdapter = createNumAdapter()
         numList.layoutManager = layoutManager
         numList.adapter = numAdapter
 
-        //ловим ChipGroup
-        chipGroup = view.findViewById(R.id.cityChips)
-        //создаем 4 Chips ставим каждый на прослушку и добавляем в chipGroup
-        val layoutInflater : LayoutInflater = LayoutInflater.from(context)
-        val chip1 : Chip = layoutInflater.inflate(R.layout.layout_chip_entry, chipGroup, false) as Chip
-        chip1.setText("Москва")
-        chipGroup.addView(chip1)
-        chip1.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
-            handleChipCheckChanged(
-                (buttonView as Chip),
-                isChecked
-            )
-        })
-        val chip2 : Chip = layoutInflater.inflate(R.layout.layout_chip_entry, chipGroup, false) as Chip
-        chip2.setText("Санкт-Петербург")
-        chipGroup.addView(chip2)
-        chip2.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
-            handleChipCheckChanged(
-                (buttonView as Chip),
-                isChecked
-            )
-        })
+        fab = view.findViewById<FloatingActionButton>(R.id.floating_action_button)
+        fab.setOnClickListener() {
+            callFilterBottomSheet()
+        }
 
-        val chip3 : Chip = layoutInflater.inflate(R.layout.layout_chip_entry, chipGroup, false) as Chip
-        chip3.setText("Новосибирск")
-        chipGroup.addView(chip3)
-        chip3.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
-            handleChipCheckChanged(
-                (buttonView as Chip),
-                isChecked
-            )
-        })
-
-        val chip4 : Chip = layoutInflater.inflate(R.layout.layout_chip_entry, chipGroup, false) as Chip
-        chip4.setText("Екатеринбург")
-        chipGroup.addView(chip4)
-        chip4.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
-            handleChipCheckChanged(
-                (buttonView as Chip),
-                isChecked
-            )
-        })
-
-
-
-
-        numList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                if (dy > 0) //check for scroll down
-                {
-                    val visibleItemCount = layoutManager.getChildCount()
-                    val totalItemCount = layoutManager.getItemCount()
-                    val pastVisiblesItems = layoutManager.findFirstVisibleItemPosition()
-
-                    if (visibleItemCount + pastVisiblesItems >= totalItemCount) {
-                        if (list.isEmpty()) {
-                            Log.v("TAG", "Last Item Wow !")
-                            NetworkRequests().eventRequest(
-                                numList,
-                                totalItemCount,
-                                numAdapter
-                            )
-                        } else {
-                            //когда скроллим, если список с чипами не пустой, то вызываем метод с доступом к api с фильром по городам
-                            Log.v("TAG", "Last Item Wow !")
-                            NetworkRequests().eventRequestFilteredByCity(
-                                numList,
-                                totalItemCount,
-                                numAdapter,
-                                list.joinToString(",")
-                            )
-                        }
-                    }
-                }
+        val scrollListener = object : EndlessRecyclerViewScrollListener(layoutManager) {
+            override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?) {
+                loadNextDataFromApi(page)
             }
-        })
-
+        }
+        progressBar = view.findViewById(R.id.progressBar)
+        numList.addOnScrollListener(scrollListener)
         NetworkRequests().eventRequest(numList, 0, numAdapter)
     }
 
-    fun createNumAdapter(): NumAdapter {
+    private fun createNumAdapter(): NumAdapter {
         val event = Event(0, listOf<Value>())
-        val numAdapter = NumAdapter(event)
-        return numAdapter
+        return NumAdapter(event)
     }
 
-    //обрабатываем нажатие на Chip
-    //при нажатии обнуляем список, проходим по всем чипам, добавляем в список текст отмеченных чипов
-    private fun handleChipCheckChanged(chip: Chip, isChecked: Boolean) {
-        list = mutableListOf<String>()
-        val count = chipGroup.childCount
-        for (i in 0 until count) {
-            val child : Chip = chipGroup.getChildAt(i) as Chip
-            if (!child.isChecked) {
-                continue
-            } else {
-                list.add(child.text.toString())
-            }
-        }
-        numAdapter.removeAllItems()
-        numAdapter.notifyDataSetChanged()
-        if (list.isEmpty()) {
-            NetworkRequests().eventRequest(numList, 0, numAdapter)
-        } else {
-            NetworkRequests().eventRequestFilteredByCity(numList, 0, numAdapter, list.joinToString(","))
-        }
+    fun loadNextDataFromApi(offset: Int) {
+        // Send an API request to retrieve appropriate paginated data
+        //  --> Send the request including an offset value (i.e `page`) as a query parameter.
+        //  --> Deserialize and construct new model objects from the API response
+        //  --> Append the new data objects to the existing set of items inside the array of items
+        //  --> Notify the adapter of the new items made with `notifyItemRangeInserted()`
+        val totalItemCount = layoutManager.itemCount
+        showProgressView()
+        NetworkRequests().eventRequestDataFiltered(
+            numList,
+            view,
+            totalItemCount,
+            numAdapter,
+            cities,
+            keywords,
+            price_min,
+            price_max,
+            starts_at_min,
+            starts_at_max
+        )
     }
+
+    fun showProgressView() {
+        progressBar.visibility = View.VISIBLE
+    }
+
+    fun hideProgressView() {
+        progressBar.visibility = View.INVISIBLE
+    }
+
+    private fun callFilterBottomSheet() {
+        val sheet = context?.let {
+            InputSheet().build(it) {
+                title(R.string.str_filter)
+                content(R.string.str_filter_help)
+
+                with(InputEditText {
+                    label(R.string.str_cities)
+                    hint(R.string.str_cities)
+                    cities?.let { defaultValue(it) }
+                    resultListener { value ->
+                        if (value != null) cities = value.toString()
+                    } // Input value changed when form finished
+                })
+
+                with(InputEditText {
+                    label(R.string.str_keywords)
+                    hint(R.string.str_keywords)
+                    keywords?.let { defaultValue(it) }
+                    resultListener { value ->
+                        if (value != null) keywords = value.toString()
+                    } // Input value changed when form finished
+                })
+
+                with(InputEditText {
+                    label(R.string.str_price_min)
+                    hint(R.string.str_price_min)
+                    price_min?.let { defaultValue(it) }
+
+                    resultListener { value ->
+                        if (value != null) {
+                            try {
+                                value.toString().toInt()
+                                price_min = value.toString()
+                            } catch (e: Exception) {
+                                Toast.makeText(
+                                    context,
+                                    R.string.price_error_message,
+                                    Toast.LENGTH_LONG
+                                ).show()
+                                callFilterBottomSheet()
+                            }
+                        }
+                    }
+                })
+
+                with(InputEditText {
+                    label(R.string.str_price_max)
+                    hint(R.string.str_price_max)
+                    price_max?.let { defaultValue(it) }
+                    resultListener { value ->
+                        if (value != null) {
+                            try {
+                                value.toString().toInt()
+                                price_max = value.toString()
+                            } catch (e: Exception) {
+                                Toast.makeText(
+                                    context,
+                                    R.string.price_error_message,
+                                    Toast.LENGTH_LONG
+                                ).show()
+                                callFilterBottomSheet()
+                            }
+                        }
+                    }
+                })
+
+                with(InputEditText {
+                    label(R.string.str_starts_at_min)
+                    hint(R.string.str_starts_at_min)
+                    if (starts_at_min != null && starts_at_max != null) {
+                        defaultValue("$starts_at_min - $starts_at_max")
+                    }
+                    changeListener {
+                        val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                        imm.hideSoftInputFromWindow(view?.windowToken, 0)
+                        context?.let { it1 ->
+                            CalendarSheet().show(it1) {
+                                title("Выберите промежуток дат") // Set the title of the bottom sheet
+                                selectionMode(SelectionMode.RANGE)
+                                calendarMode(CalendarMode.MONTH)
+                                maxRange(30)
+                                onPositive { dateStart, dateEnd ->
+                                    starts_at_min =
+                                        StringBuilder().append(dateStart.get(Calendar.DAY_OF_MONTH))
+                                            .append(".")
+                                            .append(dateStart.get(Calendar.MONTH) + 1)
+                                            .append(".")
+                                            .append(dateStart.get(Calendar.YEAR))
+                                            .toString()
+                                    if (dateEnd != null) {
+                                        starts_at_max =
+                                            StringBuilder().append(dateEnd.get(Calendar.DAY_OF_MONTH))
+                                                .append(".")
+                                                .append(dateEnd.get(Calendar.MONTH) + 1)
+                                                .append(".")
+                                                .append(dateEnd.get(Calendar.YEAR)).toString()
+                                    }
+                                }
+                            }
+                        }
+                        if (starts_at_min != null && starts_at_max != null) {
+                            defaultValue("$starts_at_min - $starts_at_max")
+                        }
+                    }
+                })
+                onNegative { }
+                onPositive {
+                    numAdapter.removeAllItems()
+                    numAdapter.notifyDataSetChanged()
+                        NetworkRequests().eventRequestDataFiltered(
+                            numList,
+                            view,
+                            0,
+                            numAdapter,
+                            cities,
+                            keywords,
+                            price_min,
+                            price_max,
+                            starts_at_min,
+                            starts_at_max
+                        )
+                    }
+                }
+            }
+            sheet?.show()
+        }
 }

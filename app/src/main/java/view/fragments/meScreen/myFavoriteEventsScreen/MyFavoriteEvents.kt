@@ -1,12 +1,9 @@
 package view.fragments.meScreen.myFavoriteEventsScreen
 
-import model.clientData.Client
-import model.clientData.orders.Orders
-import model.clientData.organizations.Organizations
-import model.NetworkRequests
+import model.EventData.Event
+import model.EventData.Value
 import android.content.res.Configuration
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gaiety.NumAdapterMyFavoriteEvent
 import com.example.gaiety.R
+import view.activities.firebaseRequests
 
 class MyFavoriteEvents : Fragment() {
     lateinit var numList: RecyclerView
@@ -25,15 +23,19 @@ class MyFavoriteEvents : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_mytickets, container, false)
+        return inflater.inflate(R.layout.fragment_favorite, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         var orientation = RecyclerView.HORIZONTAL
         var spanCount = 2
-        numList = view.findViewById(R.id.recyclerViewMyTickets)
+        numList = view.findViewById(R.id.recyclerViewFav)
         if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            orientation = RecyclerView.VERTICAL
+            spanCount = 1
+        }
+        else {
             orientation = RecyclerView.VERTICAL
             spanCount = 1
         }
@@ -42,28 +44,12 @@ class MyFavoriteEvents : Fragment() {
         val numAdapter = createNumAdapter()
         numList.layoutManager = layoutManager
         numList.adapter = numAdapter
-
-        numList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                if (dy > 0) //check for scroll down
-                {
-                    var visibleItemCount = layoutManager.getChildCount()
-                    var totalItemCount = layoutManager.getItemCount()
-                    var pastVisiblesItems = layoutManager.findFirstVisibleItemPosition()
-                    if (visibleItemCount + pastVisiblesItems >= totalItemCount) {
-                        Log.v("TAG", "Last Item Wow !")
-                        NetworkRequests().myTicketsRequest(numAdapter)
-                    }
-                }
-            }
-        })
-
-        NetworkRequests().myTicketsRequest(numAdapter)
+        firebaseRequests.getFavoriteEvents(numList)
     }
 
     fun createNumAdapter(): NumAdapterMyFavoriteEvent {
-        val client = Client(true, "","","", listOf<Organizations>(), listOf<Orders>())
-        val numAdapter = NumAdapterMyFavoriteEvent(client)
+        val event = Event(0, listOf<Value>())
+        val numAdapter = NumAdapterMyFavoriteEvent(event)
         return numAdapter
     }
 }

@@ -1,16 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/ic_home"
         android:icon="@drawable/ic_home_black_24dp"
-        android:title="Home"
-        android:onClick="changeFragmentsInMain"
+        android:title="Мероприятия"
+        app:exb_color="#FF8888"
         />
+
+    <item
+        android:id="@+id/ic_map"
+        android:icon="@drawable/ic_map_black"
+        android:title="Карта"
+        app:exb_color="#77dd77"
+        />
+
     <item
         android:id="@+id/ic_me"
         android:icon="@drawable/ic_accessibility_black_24dp"
-        android:title="Me"
-        android:onClick="changeFragmentsInMain"/>
+        android:title="Личный кабинет"
+        app:exb_color="#fa2"/>
 
 
 </menu>

@@ -1,7 +1,7 @@
 package presenter.homeScreen
 
-import model.eventData.Event
-import model.eventData.Value
+import model.EventData.Event
+import model.EventData.Value
 import view.activities.ItemMore
 import android.content.Intent
 import android.text.Html
@@ -20,13 +20,13 @@ import java.time.format.DateTimeFormatter
 class NumAdapter(var homeFeed: Event) : RecyclerView.Adapter<NumAdapter.NumHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NumHolder {
-        val itemHolder = LayoutInflater.from(parent?.context).inflate(R.layout.recyclerview_item, parent, false)
+        val itemHolder = LayoutInflater.from(parent.context).inflate(R.layout.recyclerview_item, parent, false)
         return NumHolder(itemHolder, homeFeed)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: NumHolder, position: Int) {
-        holder.itemView.homeName.text = Html.fromHtml(homeFeed.values.get(position).name)
+        holder.itemView.homeName.text = Html.fromHtml(homeFeed.values.get(position).name).toString()
         holder.itemView.homeCity.text = homeFeed.values.get(position).location.city
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssZ")
@@ -69,4 +69,5 @@ class NumAdapter(var homeFeed: Event) : RecyclerView.Adapter<NumAdapter.NumHolde
             }
         }
     }
+
 }
