@@ -1,23 +1,15 @@
 package model
 
-import android.content.Intent
-import android.net.Uri
-import android.os.Bundle
 import android.text.Html
 import android.util.Log
 import android.view.View
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.ProgressBar
-import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.gaiety.NumAdapterMyFavoriteEvent
 import com.example.gaiety.NumAdapterMyOrganizations
 import com.example.gaiety.NumAdapterMyTickets
 import com.example.gaiety.R
-import com.mapbox.mapboxsdk.Mapbox.getApplicationContext
 import com.mapbox.mapboxsdk.annotations.MarkerOptions
 import com.mapbox.mapboxsdk.geometry.LatLng
 import com.mapbox.mapboxsdk.maps.MapboxMap
@@ -34,10 +26,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import view.activities.ItemMore
-import view.activities.firebaseRequests
-import view.activities.MainActivity
-import view.fragments.MainFragment
 
 
 private const val TAG = "TAG_EVENT_REQUEST"
@@ -70,25 +58,26 @@ class NetworkRequests {
     ) {
         val api = createRetrofit(urlTimepad)
         val timepadApiRequests = api.create(TimepadApiRequests::class.java)
-        val call = timepadApiRequests.getEventData(10, skip, "location", "+starts_at", "Bearer "+ firebaseRequests.tokenGetter())
+        val call = timepadApiRequests.getEventData(10, skip, "location", "+starts_at")
 
         if (numAdapter.itemCount < 100) {
             call.enqueue(
                 object : Callback<Event> {
                     override fun onResponse(call: Call<Event>, response: Response<Event>) {
-                        if (response.isSuccessful) {
+                        if (response.body() != null) {
+                            //numAdapter.showProgress()
                             for (item in response.body()!!.values)
                                 if (!(item in numAdapter.homeFeed.values)) {
                                     numAdapter.addItem(item)
                                 }
                             numAdapter.notifyDataSetChanged()
-                            Log.d(TAG, "Success")
+                            //numAdapter.hideProgress()
                         }
+                        Log.d(TAG, "Success")
                     }
 
                     override fun onFailure(call: Call<Event>, t: Throwable) {
-                        Toast.makeText(getApplicationContext(),"У вас неправильный токен. Поменяйте его в Токен",
-                            Toast.LENGTH_SHORT).show()
+                        Log.d(TAG, "Someting wrong...")
                         Log.d(TAG, t.localizedMessage)
                     }
                 })
@@ -121,19 +110,20 @@ class NetworkRequests {
             starts_at_min,
             starts_at_max,
             "location",
-            "+starts_at",
-            "Bearer "+ firebaseRequests.tokenGetter()
+            "+starts_at"
         )
 
         call.enqueue(
             object : Callback<Event> {
                 override fun onResponse(call: Call<Event>, response: Response<Event>) {
                     if (response.body() != null) {
+                        //numAdapter.showProgress()
                         for (item in response.body()!!.values)
                             if (item !in numAdapter.homeFeed.values) {
                                 numAdapter.addItem(item)
                             }
                         numAdapter.notifyDataSetChanged()
+                        //numAdapter.hideProgress()
                         val progressBar = view?.findViewById<ProgressBar>(R.id.progressBar)
                         if (progressBar != null) {
                             progressBar.visibility = View.INVISIBLE
@@ -143,8 +133,6 @@ class NetworkRequests {
                 }
 
                 override fun onFailure(call: Call<Event>, t: Throwable) {
-                    Toast.makeText(getApplicationContext(),"У вас неправильный токен. Поменяйте его в Токен",
-                        Toast.LENGTH_SHORT).show()
                     Log.d(TAG, t.localizedMessage)
                 }
             })
@@ -158,7 +146,7 @@ class NetworkRequests {
     ) {
         val api = createRetrofit(urlTimepad)
         val timepadApiRequests = api.create(TimepadApiRequests::class.java)
-        val call = timepadApiRequests.getEventDecriptionData(id.toString(), "Bearer "+ firebaseRequests.tokenGetter())
+        val call = timepadApiRequests.getEventDecriptionData(id.toString())
 
         call.enqueue(
             object : Callback<EventDescription> {
@@ -170,51 +158,36 @@ class NetworkRequests {
                     call: Call<EventDescription>,
                     response: Response<EventDescription>
                 ) {
-                    numList.adapter = ItemMoreAdapter(response.body()!!, image)
-
-                    Log.d(TAG_EVEN_DESCRIPTION, "Success")
+                    if (response.body() != null) {
+                        numList.adapter = ItemMoreAdapter(response.body()!!, image)
+                        Log.d(TAG_EVEN_DESCRIPTION, "Success")
+                    }
                 }
             })
     }
 
-
     fun myTicketsRequest(
         numAdapter: NumAdapterMyTickets
     ) {
-        if (firebaseRequests.tokenGetter() == "339db094139f6229bbb3a20009c28dd0da832523") {
-            Toast.makeText(getApplicationContext(),"У вас нет токена. Получите его в Токен",
-                Toast.LENGTH_SHORT).show()
-        } else {
-            val api = createRetrofit(urlTimepad)
-            val timepadApiRequests = api.create(TimepadApiRequests::class.java)
-            val call = timepadApiRequests.getClientData(
-                "Bearer " + firebaseRequests.tokenGetter(),
-                "/introspect?token=" + firebaseRequests.tokenGetter()
-            )
+        val api = createRetrofit(urlTimepad)
+        val timepadApiRequests = api.create(TimepadApiRequests::class.java)
+        val call = timepadApiRequests.getClientData()
 
-            call.enqueue(
-                object : Callback<Client> {
-                    override fun onResponse(call: Call<Client>, response: Response<Client>) {
-                        if (response.isSuccessful) {
-                            for (item in response.body()!!.orders)
-                                if (!(item in numAdapter.homeFeed.orders)) {
-                                    numAdapter.addItem(item)
-                                }
-                            numAdapter.notifyDataSetChanged()
-                            Log.d(TAG, "Success")
-                        } else {
-                            Toast.makeText(getApplicationContext(),"Неправильный токен. Поменяйте его в Токен",
-                                Toast.LENGTH_SHORT).show()
+        call.enqueue(
+            object : Callback<Client> {
+                override fun onResponse(call: Call<Client>, response: Response<Client>) {
+                    for (item in response.body()!!.orders)
+                        if (!(item in numAdapter.homeFeed.orders)) {
+                            numAdapter.addItem(item)
                         }
-                    }
+                    numAdapter.notifyDataSetChanged()
+                    Log.d(TAG, "Success")
+                }
 
-                    override fun onFailure(call: Call<Client>, t: Throwable) {
-                        Toast.makeText(getApplicationContext(),"У вас неправильный токен. Поменяйте его в Токен",
-                            Toast.LENGTH_SHORT).show()
-                        Log.d(TAG, t.localizedMessage)
-                    }
-                })
-        }
+                override fun onFailure(call: Call<Client>, t: Throwable) {
+                    Log.d(TAG, t.localizedMessage)
+                }
+            })
     }
 
     fun eventFavRequest(
@@ -223,7 +196,7 @@ class NetworkRequests {
     ) {
         val api = createRetrofit(urlTimepad)
         val timepadApiRequests = api.create(TimepadApiRequests::class.java)
-        val call = timepadApiRequests.getEventFavData(id.toString(), "Bearer "+ firebaseRequests.tokenGetter())
+        val call = timepadApiRequests.getEventFavData(id.toString())
 
         call.enqueue(
             object : Callback<Value> {
@@ -240,9 +213,6 @@ class NetworkRequests {
                 }
 
                 override fun onFailure(call: Call<Value>, t: Throwable) {
-
-                    Toast.makeText(getApplicationContext(),"У вас неправильный токен. Поменяйте его в Токен",
-                        Toast.LENGTH_SHORT).show()
                     Log.d(TAG_EVEN_DESCRIPTION, t.localizedMessage)
                 }
             })
@@ -251,47 +221,32 @@ class NetworkRequests {
     fun myOrganizationsRequest(
         numAdapter: NumAdapterMyOrganizations
     ) {
-        if (firebaseRequests.tokenGetter() == "339db094139f6229bbb3a20009c28dd0da832523") {
-            Toast.makeText(getApplicationContext(),"У вас нет токена. Получите его в Токен",
-                Toast.LENGTH_SHORT).show()
-        } else {
-            val api = createRetrofit(urlTimepad)
-            val timepadApiRequests = api.create(TimepadApiRequests::class.java)
-            val call = timepadApiRequests.getClientData(
-                "Bearer " + firebaseRequests.tokenGetter(),
-                "/introspect?token=" + firebaseRequests.tokenGetter()
-            )
+        val api = createRetrofit(urlTimepad)
+        val timepadApiRequests = api.create(TimepadApiRequests::class.java)
+        val call = timepadApiRequests.getClientData()
 
-            call.enqueue(
-                object : Callback<Client> {
-                    override fun onResponse(call: Call<Client>, response: Response<Client>) {
-                        if (response.isSuccessful) {
-                            for (item in response.body()!!.organizations)
-                                if (!(item in numAdapter.homeFeed.organizations)) {
-                                    numAdapter.addItem(item)
-                                }
-                            numAdapter.notifyDataSetChanged()
-                            Log.d(TAG, "Success")
-                        } else {
-                            Toast.makeText(getApplicationContext(),"Неправильный токен. Поменяйте его в Токен",
-                                Toast.LENGTH_SHORT).show()
+        call.enqueue(
+            object : Callback<Client> {
+                override fun onResponse(call: Call<Client>, response: Response<Client>) {
+                    for (item in response.body()!!.organizations)
+                        if (!(item in numAdapter.homeFeed.organizations)) {
+                            numAdapter.addItem(item)
                         }
-                    }
+                    numAdapter.notifyDataSetChanged()
+                    Log.d(TAG, "Success")
+                }
 
-                    override fun onFailure(call: Call<Client>, t: Throwable) {
-                        Toast.makeText(getApplicationContext(),"У вас неправильный токен. Поменяйте его в Токен",
-                            Toast.LENGTH_SHORT).show()
-                        Log.d(TAG, t.localizedMessage)
-                    }
-                })
-        }
+                override fun onFailure(call: Call<Client>, t: Throwable) {
+                    Log.d(TAG, t.localizedMessage)
+                }
+            })
     }
 
 
     fun eventRequestMap(mapboxMap: MapboxMap, city: String) {
         val api = createRetrofit(urlTimepad)
         val timepadApiRequests = api.create(TimepadApiRequests::class.java)
-        val call = timepadApiRequests.getEventDataMap(100, city, "location","+starts_at", "Bearer "+ firebaseRequests.tokenGetter())
+        val call = timepadApiRequests.getEventDataMap(100, city, "location","+starts_at")
         call.enqueue(
             object : Callback<Event> {
                 override fun onResponse(call: Call<Event>, response: Response<Event>) {
@@ -299,7 +254,7 @@ class NetworkRequests {
                         for (item in response.body()!!.values) {
                             if (item.location != null) {
                                 if (item.location.coordinates != null) {
-                                    val marker = mapboxMap?.addMarker(
+                                    mapboxMap?.addMarker(
                                         MarkerOptions()
                                             .position(
                                                 LatLng(
@@ -317,8 +272,7 @@ class NetworkRequests {
                 }
 
                 override fun onFailure(call: Call<Event>, t: Throwable) {
-                    Toast.makeText(getApplicationContext(),"У вас неправильный токен. Поменяйте его в Токен",
-                        Toast.LENGTH_SHORT).show()
+                    Log.d(TAG, "Someting wrong...")
                     Log.d(TAG, t.localizedMessage)
                 }
             })

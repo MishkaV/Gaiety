@@ -1,14 +1,13 @@
 package view.fragments.homeScreen
-
-
 import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
-import android.text.InputType
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.CompoundButton
 import android.widget.ProgressBar
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -27,6 +26,10 @@ import model.NetworkRequests
 import presenter.homeScreen.NumAdapter
 import util.EndlessRecyclerViewScrollListener
 import java.util.*
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 
 class HomeFragment : Fragment() {
@@ -41,6 +44,10 @@ class HomeFragment : Fragment() {
     private var price_max : String? = null
     private var starts_at_min : String? = null
     private var starts_at_max : String? = null
+    private var list : MutableList<String> = mutableListOf()
+    private lateinit var chipGroup: ChipGroup
+    private val listOfCities = listOf("Москва", "Санкт-Петербург", "Новосибирск", "Екатеринбург", "Казань", "Нижний Новгород",
+    "Челябинск", "Самара", "Омск", "Ростов-на-Дону", "Уфа", "Красноярск", "Воронеж", "Пермь", "Волгоград")
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -73,6 +80,20 @@ class HomeFragment : Fragment() {
         fab = view.findViewById<FloatingActionButton>(R.id.floating_action_button)
         fab.setOnClickListener() {
             callFilterBottomSheet()
+        }
+
+        chipGroup = view.findViewById(R.id.cityChips)
+        val layoutInflater : LayoutInflater = LayoutInflater.from(context)
+        for (i in listOfCities) {
+            val chip : Chip = layoutInflater.inflate(R.layout.layout_chip_entry, chipGroup, false) as Chip
+            chip.text = i
+            chipGroup.addView(chip)
+            chip.setOnCheckedChangeListener(CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
+                handleChipCheckChanged(
+                    (buttonView as Chip),
+                    isChecked
+                )
+            })
         }
 
         val scrollListener = object : EndlessRecyclerViewScrollListener(layoutManager) {
@@ -116,13 +137,10 @@ class HomeFragment : Fragment() {
         progressBar.visibility = View.VISIBLE
     }
 
-    fun hideProgressView() {
-        progressBar.visibility = View.INVISIBLE
-    }
-
     private fun callFilterBottomSheet() {
         val sheet = context?.let {
             InputSheet().build(it) {
+                onNegative(R.string.refuse_sheet_button)
                 title(R.string.str_filter)
                 content(R.string.str_filter_help)
 
@@ -131,7 +149,7 @@ class HomeFragment : Fragment() {
                     hint(R.string.str_cities)
                     cities?.let { defaultValue(it) }
                     resultListener { value ->
-                        if (value != null) cities = value.toString()
+                        if (value != null && value == "") cities = null else if (value != null) cities = value.toString()
                     } // Input value changed when form finished
                 })
 
@@ -140,7 +158,7 @@ class HomeFragment : Fragment() {
                     hint(R.string.str_keywords)
                     keywords?.let { defaultValue(it) }
                     resultListener { value ->
-                        if (value != null) keywords = value.toString()
+                        if (value != null && value == "") keywords = null else if (value != null) keywords = value.toString()
                     } // Input value changed when form finished
                 })
 
@@ -148,9 +166,8 @@ class HomeFragment : Fragment() {
                     label(R.string.str_price_min)
                     hint(R.string.str_price_min)
                     price_min?.let { defaultValue(it) }
-
                     resultListener { value ->
-                        if (value != null) {
+                        if (value != null && value != "") {
                             try {
                                 value.toString().toInt()
                                 price_min = value.toString()
@@ -162,6 +179,8 @@ class HomeFragment : Fragment() {
                                 ).show()
                                 callFilterBottomSheet()
                             }
+                        } else if (value == "") {
+                            price_min = null
                         }
                     }
                 })
@@ -171,7 +190,7 @@ class HomeFragment : Fragment() {
                     hint(R.string.str_price_max)
                     price_max?.let { defaultValue(it) }
                     resultListener { value ->
-                        if (value != null) {
+                        if (value != null && value != "") {
                             try {
                                 value.toString().toInt()
                                 price_max = value.toString()
@@ -183,6 +202,8 @@ class HomeFragment : Fragment() {
                                 ).show()
                                 callFilterBottomSheet()
                             }
+                        } else if (value == "") {
+                            price_max = null
                         }
                     }
                 })
@@ -194,7 +215,8 @@ class HomeFragment : Fragment() {
                         defaultValue("$starts_at_min - $starts_at_max")
                     }
                     changeListener {
-                        val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                        val imm =
+                            context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                         imm.hideSoftInputFromWindow(view?.windowToken, 0)
                         context?.let { it1 ->
                             CalendarSheet().show(it1) {
@@ -202,6 +224,7 @@ class HomeFragment : Fragment() {
                                 selectionMode(SelectionMode.RANGE)
                                 calendarMode(CalendarMode.MONTH)
                                 maxRange(30)
+                                onNegative(R.string.refuse_sheet_button)
                                 onPositive { dateStart, dateEnd ->
                                     starts_at_min =
                                         StringBuilder().append(dateStart.get(Calendar.DAY_OF_MONTH))
@@ -247,4 +270,69 @@ class HomeFragment : Fragment() {
             }
             sheet?.show()
         }
+
+    private fun handleChipCheckChanged(chip: Chip, isChecked: Boolean) {
+        list = mutableListOf<String>()
+        val count = chipGroup.childCount
+        for (i in 0 until count) {
+            val child : Chip = chipGroup.getChildAt(i) as Chip
+            if (!child.isChecked) {
+                continue
+            } else {
+                list.add(child.text.toString())
+            }
+        }
+        if (cities == null || cities == "") {
+            val strBuilder: StringBuilder = StringBuilder()
+            cities = strBuilder.append(list.joinToString()).toString()
+        } else {
+            val regex = Regex("[\\w- ]+")
+            val listOfCurrentCities = regex.findAll(cities!!).map { it.groupValues[0] }.toList()
+            if (list.isNotEmpty()) {
+                val strBuilder : StringBuilder = StringBuilder(list.joinToString())
+                if (listOfCurrentCities.isNotEmpty()) {
+                    strBuilder.append(",")
+                    for (i in listOfCurrentCities) {
+                        if (i.trim() !in list && i.trim() !in listOfCities) {
+                            strBuilder.append("$i,")
+                        }
+                    }
+                    if (strBuilder.isNotEmpty()) {
+                        strBuilder.deleteCharAt(strBuilder.lastIndex)
+                    }
+                    cities = strBuilder.toString()
+                }
+            } else {
+                val strBuilder : StringBuilder = StringBuilder(list.joinToString())
+                if (listOfCurrentCities.isNotEmpty()) {
+                    for (i in listOfCurrentCities) {
+                        if (i.trim() !in list && i.trim() !in listOfCities) {
+                            strBuilder.append("$i,")
+                        }
+                    }
+                    if (strBuilder.isNotEmpty()) {
+                        strBuilder.deleteCharAt(strBuilder.lastIndex)
+                    }
+                    cities = strBuilder.toString()
+                }
+            }
+            if (cities == "") {
+                cities = null
+            }
+        }
+        numAdapter.removeAllItems()
+        numAdapter.notifyDataSetChanged()
+        val totalItemCount = layoutManager.itemCount
+        NetworkRequests().eventRequestDataFiltered(
+            numList,
+            view,
+            totalItemCount,
+            numAdapter,
+            cities,
+            keywords,
+            price_min,
+            price_max,
+            starts_at_min,
+            starts_at_max)
+    }
 }
