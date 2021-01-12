@@ -34,6 +34,7 @@ import kotlinx.android.synthetic.main.fragment_register.*
 import kotlinx.android.synthetic.main.fragment_reset_password.*
 import kotlinx.android.synthetic.main.fragment_token.*
 import presenter.meScreen.BottomSheetFragment
+import view.fragments.easternEggScreen.EasterEggScreen
 import view.fragments.meScreen.aboutMe.AboutMe
 import view.fragments.meScreen.aboutMe.ChangeAboutMe
 import view.fragments.meScreen.myFavoriteEventsScreen.MyFavoriteEvents
@@ -66,6 +67,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var mapFragment: view.fragments.mapScreen.MapFragment
 
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -85,6 +87,7 @@ class MainActivity : AppCompatActivity() {
         changeAboutMe = ChangeAboutMe()
         pkFrag = PkFragment()
         mapFragment = view.fragments.mapScreen.MapFragment()
+
 
         if (savedInstanceState != null) {
             currentFrag = savedInstanceState.getString("currentFrag")

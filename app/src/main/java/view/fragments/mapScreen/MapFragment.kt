@@ -34,6 +34,7 @@ import com.maxkeppeler.bottomsheets.input.InputSheet
 import com.maxkeppeler.bottomsheets.input.type.InputEditText
 import com.maxkeppeler.bottomsheets.input.type.InputRadioButtons
 import model.NetworkRequests
+import view.fragments.easternEggScreen.EasterEggScreen
 import java.util.*
 
 
@@ -75,6 +76,10 @@ class MapFragment : Fragment() {
         val floatButtonLink = view.findViewById<com.getbase.floatingactionbutton.FloatingActionButton>(R.id.floatingActioButtonLink)
         floatButton.setOnClickListener() {
             onClickFloatingButton()
+        }
+        floatButtonLink.setOnLongClickListener() {
+            val easterEggScreen = EasterEggScreen()
+            makeCurrentFragmentMain(easterEggScreen, "easterEggScreen")
         }
         floatButtonLink.setOnClickListener() {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://afisha.timepad.ru/"))
@@ -235,6 +240,15 @@ class MapFragment : Fragment() {
 
         bottomSheetDialog?.setContentView(bottomSheetView)
         bottomSheetDialog?.show()
+    }
+
+    private fun makeCurrentFragmentMain(fragment: Fragment, name: String): Boolean {
+        fragmentManager?.beginTransaction()?.apply {
+            replace(R.id.main_fragment, fragment)
+            addToBackStack(name.toString())
+            commit()
+        }
+        return true
     }
 }
 

@@ -31,4 +31,5 @@
             tools:listitem="@layout/recyclerview_item_favorite" />
 
     </RelativeLayout>
+
 </FrameLayout>

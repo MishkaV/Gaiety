@@ -26,6 +26,7 @@
         fab:fab_addButtonPlusIconColor="#000000"
         fab:fab_expandDirection="down"
         android:layout_gravity="left"
+        android:id="@+id/secretButton"
         tools:ignore="RtlHardcoded">
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/floatingActioButtonMap"
