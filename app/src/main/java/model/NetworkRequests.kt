@@ -37,6 +37,8 @@ private const val TAG_EVEN_DESCRIPTION = "TAG_EVEN_DESCRIPTION"
 
 class NetworkRequests {
     private val urlTimepad: String = "https://api.timepad.ru"
+    private val token_main: String = "339db094139f6229bbb3a20009c28dd0da832523"
+
 
     private fun createRetrofit(url: String): Retrofit {
         //Можно interceptor убрать(вместе с client в api), для логов
@@ -61,7 +63,7 @@ class NetworkRequests {
     ) {
         val api = createRetrofit(urlTimepad)
         val timepadApiRequests = api.create(TimepadApiRequests::class.java)
-        val call = timepadApiRequests.getEventData(10, skip, "location", "+starts_at", "Bearer "+ firebaseRequests.tokenGetter())
+        val call = timepadApiRequests.getEventData(10, skip, "location", "+starts_at", "Bearer "+ token_main)
 
         if (numAdapter.itemCount < 100) {
             call.enqueue(
@@ -114,7 +116,7 @@ class NetworkRequests {
             starts_at_max,
             "location",
             "+starts_at",
-            "Bearer "+ firebaseRequests.tokenGetter()
+            "Bearer "+ token_main
         )
 
         call.enqueue(
@@ -150,7 +152,7 @@ class NetworkRequests {
     ) {
         val api = createRetrofit(urlTimepad)
         val timepadApiRequests = api.create(TimepadApiRequests::class.java)
-        val call = timepadApiRequests.getEventDecriptionData(id.toString(), "Bearer "+ firebaseRequests.tokenGetter())
+        val call = timepadApiRequests.getEventDecriptionData(id.toString(), "Bearer "+token_main)
 
         call.enqueue(
             object : Callback<EventDescription> {
@@ -217,7 +219,7 @@ class NetworkRequests {
     ) {
         val api = createRetrofit(urlTimepad)
         val timepadApiRequests = api.create(TimepadApiRequests::class.java)
-        val call = timepadApiRequests.getEventFavData(id.toString(), "Bearer "+ firebaseRequests.tokenGetter())
+        val call = timepadApiRequests.getEventFavData(id.toString(), "Bearer "+ token_main)
 
         call.enqueue(
             object : Callback<Value> {
@@ -285,7 +287,7 @@ class NetworkRequests {
     fun eventRequestMap(mapboxMap: MapboxMap, city: String) {
         val api = createRetrofit(urlTimepad)
         val timepadApiRequests = api.create(TimepadApiRequests::class.java)
-        val call = timepadApiRequests.getEventDataMap(100, city, "location","+starts_at", "Bearer "+ firebaseRequests.tokenGetter())
+        val call = timepadApiRequests.getEventDataMap(100, city, "location","+starts_at", "Bearer "+ token_main)
         call.enqueue(
             object : Callback<Event> {
                 override fun onResponse(call: Call<Event>, response: Response<Event>) {

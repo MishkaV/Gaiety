@@ -26,6 +26,7 @@ tools:context="view.fragments.homeScreen.HomeFragment">
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:scrollbars="none"
+            android:layout_marginTop="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -56,9 +57,8 @@ tools:context="view.fragments.homeScreen.HomeFragment">
         android:id="@+id/floating_action_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
+        android:layout_gravity="bottom|center_horizontal"
         android:layout_marginBottom="24dp"
-        android:layout_marginEnd="24dp"
         app:srcCompat="@drawable/ic_filter_icon" />
 
 </FrameLayout>

@@ -11,19 +11,22 @@
         android:id="@+id/personalAreaMe"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/relativeLayoutMe"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="11dp"
+        android:layout_marginBottom="-5dp"
         android:fontFamily="@font/comfortaa_bold"
         android:gravity="center_vertical"
+        android:textSize="36sp"
         android:text="@string/myProfile"
-        android:textSize="36sp" />
+        />
 
     <RelativeLayout
         android:id="@+id/relativeLayoutMe"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/personalAreaMe">
+        android:layout_centerInParent="true">
 
 
         <com.google.android.material.button.MaterialButton
@@ -34,6 +37,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
+            android:layout_marginTop="48dp"
             android:onClick="onClick"
             android:text="@string/favoriteEvents"
             app:cornerRadius="20dp" />

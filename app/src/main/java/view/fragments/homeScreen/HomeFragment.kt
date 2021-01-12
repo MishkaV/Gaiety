@@ -140,7 +140,7 @@ class HomeFragment : Fragment() {
     private fun callFilterBottomSheet() {
         val sheet = context?.let {
             InputSheet().build(it) {
-                onNegative("Hello world")
+                onNegative(R.string.refuse_sheet_button)
                 title(R.string.str_filter)
                 content(R.string.str_filter_help)
 

@@ -52,4 +52,5 @@ class MyFavoriteEvents : Fragment() {
         val numAdapter = NumAdapterMyFavoriteEvent(event)
         return numAdapter
     }
+    
 }
